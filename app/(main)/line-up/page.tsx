@@ -154,7 +154,7 @@ export default function LineUpPage() {
   return (
     <main className="flex-1 bg-[#FAFAFA]">
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <section className="relative h-[50vh] min-h-80 w-full overflow-hidden rounded-t-xl bg-[#0A2E1F]">
+      <section className="relative h-[40vh] md:h-[50vh] min-h-80 w-full overflow-hidden bg-[#0A2E1F]">
         <Image
           src="/eventlineup1.png"
           alt="Event stage"
@@ -163,11 +163,11 @@ export default function LineUpPage() {
           priority
         />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_80%,rgba(197,250,0,0.12),transparent_70%)]" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10">
-          <p className="text-gray-300 text-sm font-bold uppercase tracking-widest mb-3">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 md:px-6 z-10">
+          <p className="text-gray-300 text-xs md:text-sm font-bold uppercase tracking-widest mb-3">
             Event Line Up
           </p>
-          <p className="text-white/70 text-base max-w-2xl leading-relaxed">
+          <p className="text-white/70 text-sm md:text-base max-w-2xl leading-relaxed">
             Three days of high-performance FMCG excellence, featuring industry
             titans, visionary designers, and innovative business leaders.
           </p>
@@ -175,20 +175,19 @@ export default function LineUpPage() {
       </section>
 
       {/* ── Tabs & Timeline ─────────────────────────────────────────────── */}
-      <section className="mx-auto px-6 py-0 max-w-7xl mt-8">
+      <section className="mx-auto px-4 md:px-6 py-0 max-w-5xl mt-8">
         {/* Tab Bar */}
-        <div className="flex border-b border-gray-200 overflow-x-auto pt-8 px-6 rounded-t-xl -mt-8 relative [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex border-b border-gray-200 overflow-x-auto bg-white pt-4 md:pt-8 px-4 md:px-6 rounded-t-xl -mt-8 relative z-20 shadow-sm scrollbar-hide">
           {DAY_TABS.map((tab) => {
             const isActive = activeDay === tab.key;
             return (
               <button
                 key={tab.key}
                 onClick={() => setActiveDay(tab.key)}
-                className={`shrink-0 px-8 py-5 text-xs font-black uppercase tracking-widest transition-colors border-b-2 -mb-px ${
-                  isActive
+                className={`shrink-0 px-4 md:px-8 py-4 md:py-5 text-[10px] md:text-xs font-black uppercase tracking-widest transition-colors border-b-2 -mb-px ${isActive
                     ? "border-[#0A2E1F] text-white bg-[#0A2E1F]"
                     : "border-transparent text-gray-400 hover:text-gray-700 bg-white"
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>
@@ -197,16 +196,16 @@ export default function LineUpPage() {
         </div>
 
         {/* Timeline Content */}
-        <div className="py-12 bg-[#FAFAFA] px-6 mb-10">
+        <div className="py-8 md:py-12 bg-white px-4 md:px-6 rounded-b-xl shadow-sm mb-12">
           {currentEvents.length > 0 ? (
             currentEvents.map((session, idx) => {
               const isLast = idx === currentEvents.length - 1;
               const IconComponent = session.Icon;
 
               return (
-                <div key={session.id} className="flex gap-6 mb-10">
-                  {/* Left Column: Icon + Vertical Line */}
-                  <div className="flex flex-col items-center shrink-0">
+                <div key={session.id} className="flex flex-col md:flex-row gap-4 md:gap-6 mb-10">
+                  {/* Desktop Left Column: Icon + Vertical Line (Hidden on Mobile) */}
+                  <div className="hidden md:flex flex-col items-center shrink-0">
                     <div
                       className={`w-10 h-10 ${session.iconBg} rounded-md flex items-center justify-center text-white relative z-10`}
                     >
@@ -214,26 +213,32 @@ export default function LineUpPage() {
                     </div>
                     {/* The connecting vertical line */}
                     {!isLast && (
-                      <div className="w-px flex-1 bg-gray-200 mt-2 -mb-50" />
+                      <div className="w-px flex-1 bg-gray-200 mt-2 -mb-10" />
                     )}
                   </div>
 
-                  {/* Center Column: Time */}
-                  <div className="shrink-0 w-24 pt-2">
+                  {/* Center Column: Time & Mobile Icon */}
+                  <div className="flex items-center gap-3 shrink-0 md:w-24 md:pt-2">
+                    {/* Mobile-only icon */}
+                    <div
+                      className={`md:hidden w-8 h-8 ${session.iconBg} rounded-md flex items-center justify-center text-white shrink-0`}
+                    >
+                      <IconComponent className="w-4 h-4" />
+                    </div>
                     <span className="text-sm font-black text-[#0A2E1F]">
                       {session.time}
                     </span>
                   </div>
 
                   {/* Right Column: Card */}
-                  <div className="flex-1 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                    <div className="flex justify-between items-start mb-3 gap-4">
-                      <h3 className="text-base font-black text-[#0A2E1F] leading-snug">
+                  <div className="flex-1 bg-white border border-gray-200 rounded-xl p-5 md:p-6 shadow-sm">
+                    <div className="flex flex-col md:flex-row justify-between md:items-start mb-3 gap-2 md:gap-4">
+                      <h3 className="text-base font-black text-[#0A2E1F] leading-snug order-2 md:order-1">
                         {session.title}
                       </h3>
                       {session.stage && (
                         <span
-                          className={`text-[10px] font-black px-3 py-1 rounded-sm uppercase tracking-widest shrink-0 ${session.stageBg}`}
+                          className={`text-[10px] w-fit font-black px-3 py-1 rounded-sm uppercase tracking-widest shrink-0 order-1 md:order-2 ${session.stageBg}`}
                         >
                           {session.stage}
                         </span>
@@ -246,13 +251,12 @@ export default function LineUpPage() {
 
                     {/* Inline Images (Runway Hall Style) */}
                     {session.images && (
-                      <div className="flex gap-2 mb-5">
+                      <div className="flex flex-wrap md:flex-nowrap gap-2 mb-5">
                         {session.images.map((img: string, i: number) => (
                           <div
                             key={i}
-                            className="relative h-24 flex-1 rounded-md overflow-hidden bg-gray-100"
+                            className="relative h-20 md:h-24 w-[calc(50%-0.25rem)] md:w-auto md:flex-1 rounded-md overflow-hidden bg-gray-100"
                           >
-                            {/* Fallback styling in case image fails to load during dev */}
                             <Image
                               src={img}
                               alt="Session highlight"
@@ -266,11 +270,11 @@ export default function LineUpPage() {
 
                     {/* Speakers & Prize Footer */}
                     {(session.speakers || session.prize) && (
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-gray-100">
                         {/* Speakers Section */}
                         {session.speakers && (
                           <div className="flex items-center">
-                            {/* Stacked Avatars Logic (Strategy Room Style) */}
+                            {/* Stacked Avatars Logic */}
                             {session.extraSpeakersCount ? (
                               <div className="flex items-center">
                                 <div className="flex -space-x-3">
@@ -294,7 +298,7 @@ export default function LineUpPage() {
                               </div>
                             ) : (
                               /* Standard Single/Double Speaker Logic */
-                              <div className="flex gap-4">
+                              <div className="flex flex-wrap gap-4">
                                 {session.speakers.map((speaker: any) => (
                                   <div
                                     key={speaker.id}
@@ -327,10 +331,10 @@ export default function LineUpPage() {
                           </div>
                         )}
 
-                        {/* Prize Section (Innovation Hub Style) */}
+                        {/* Prize Section */}
                         {session.prize && (
-                          <div className="flex items-center gap-2 text-sm font-bold text-[#0A2E1F]">
-                            <Banknote className="w-5 h-5 text-[#295A40]" />
+                          <div className="flex items-center gap-2 text-sm font-bold text-[#0A2E1F] bg-[#F0F8F4] px-3 py-2 rounded-md sm:bg-transparent sm:p-0">
+                            <Banknote className="w-5 h-5 text-[#295A40] shrink-0" />
                             {session.prize}
                           </div>
                         )}
@@ -350,25 +354,25 @@ export default function LineUpPage() {
 
       {/* ── Bottom CTA Banner ─────────────────────────────────────────── */}
       <section className="bg-[#0A2E1F] py-12 px-6">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           <div>
-            <h3 className="text-xl font-black text-white mb-1">
+            <h3 className="text-xl font-black text-white mb-2 md:mb-1">
               Don&apos;t Miss Out on the Action
             </h3>
             <p className="text-gray-400 text-sm">
               Limited seats available for Day 02 and Day 03 workshop sessions.
             </p>
           </div>
-          <div className="flex gap-4 flex-wrap">
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
             <Link
               href="#"
-              className="bg-[#C5FA00] text-[#0A2E1F] px-6 py-3 rounded-sm text-sm font-black hover:bg-[#b0df00] transition-colors"
+              className="bg-[#C5FA00] text-[#0A2E1F] px-6 py-3 rounded-sm text-sm font-black hover:bg-[#b0df00] transition-colors w-full sm:w-auto text-center"
             >
               Download Full PDF Schedule
             </Link>
             <Link
               href="/register"
-              className="border border-white/30 text-white px-6 py-3 rounded-sm text-sm font-bold hover:bg-white/10 transition-colors"
+              className="border border-white/30 text-white px-6 py-3 rounded-sm text-sm font-bold hover:bg-white/10 transition-colors w-full sm:w-auto text-center"
             >
               Secure Your Pass
             </Link>

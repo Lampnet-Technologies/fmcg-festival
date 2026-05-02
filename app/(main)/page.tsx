@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Image from "next/image";
-import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
-import { featuredSpeakersQuery } from "@/sanity/queries";
 import {
   Users,
   Building2,
@@ -22,6 +19,29 @@ import {
   BadgeCheck,
   MapPin,
 } from "lucide-react";
+import { urlFor } from "@/sanity/lib/image";
+
+
+const SCHEDULE_PREVIEW = [
+  {
+    day: "Day 1 · 09:00 AM",
+    title: "Opening Keynote: Future of Retail",
+    desc: "Industry leaders discuss the impact of AI on consumer analytics.",
+    img: "/event1.png",
+  },
+  {
+    day: "Day 1 · 02:00 PM",
+    title: "Panel: Sustainability in Packaging",
+    desc: "Case studies on circular economy initiatives from top brands.",
+    img: "/event2.png",
+  },
+  {
+    day: "Day 2 · 10:30 AM",
+    title: "Product Launch Arena",
+    desc: "Live unveiling of innovative products across all FMCG sectors.",
+    img: "/event3.png",
+  },
+];
 
 const STATS = [
   { icon: "Users", value: "12k+", label: "Attendees" },
@@ -61,11 +81,7 @@ const WHY_VISIT = [
 ];
 
 const EXHIBITION_SECTORS = [
-  {
-    icon: "UtensilsCrossed",
-    label: "Food & Beverage",
-    count: "350+ Exhibitors",
-  },
+  { icon: "UtensilsCrossed", label: "Food & Beverage", count: "350+ Exhibitors" },
   { icon: "Droplets", label: "Beauty & Hygiene", count: "120+ Exhibitors" },
   { icon: "Settings", label: "Tech & Automation", count: "80+ Exhibitors" },
   { icon: "Package", label: "Sustainable Pack", count: "80+ Exhibitors" },
@@ -75,7 +91,6 @@ const EXHIBITION_SECTORS = [
   { icon: "Heart", label: "Health & Wellness", count: "100+ Exhibitors" },
 ];
 
-// For demo purposes, these are hardcoded. In a real app, you'd fetch this from your CMS or an API.
 const NEWS_ITEMS = [
   {
     tag: "PRESS RELEASE",
@@ -91,8 +106,7 @@ const NEWS_ITEMS = [
     tag: "SOCIAL FEED",
     tagColor: "text-gray-500",
     date: "3 HOURS AGO",
-    title:
-      "Just finalized our exhibit plans for #FMCGFestival2024. Can't wait!!",
+    title: "Just finalized our exhibit plans for #FMCGFestival2024. Can't wait!!",
     desc: "@GlobalRetailer: Looking forward to meeting the next generation of supply chain disruptors in this hub.",
     cta: "Read More →",
     img: null,
@@ -184,7 +198,7 @@ export default async function HomePage() {
   };
 
   return (
-    <main className="flex-1 flex flex-col">
+    <main className="flex-1 flex flex-col overflow-x-hidden">
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden min-h-[92vh] flex items-center">
         {/* Background image */}
@@ -193,45 +207,45 @@ export default async function HomePage() {
             src="/Container.png"
             alt="FMCG Festival"
             fill
-            sizes="100wv"
+            sizes="100vw"
             className="object-cover"
             priority
           />
         </div>
 
-        <div className="relative z-10 mx-14 px-16 py-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        {/* Removed mx-14, used standard max-w-7xl fluid container */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="flex flex-col items-start gap-6">
-            <div className="inline-flex items-center gap-2 bg-[#C5FA00] text-[#0A2E1F] font-light text-xs px-4 py-2 rounded-sm uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 bg-[#C5FA00] text-[#0A2E1F] font-light text-xs px-4 py-2 rounded-sm uppercase tracking-widest text-center md:text-left">
               October 24–26, 2026 • The Innovation Hub
             </div>
 
-            <h1 className="text-2xl md:text-3xl font-black text-white leading-[1.05] max-w-2xl">
-              The Future of <span className="text-[#C5FA00]">FMCG</span> is
-              Here.
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] max-w-2xl">
+              The Future of <span className="text-[#C5FA00]">FMCG</span> is Here.
             </h1>
 
-            <p className="text-white text-lg max-w-xl leading-relaxed">
+            <p className="text-white text-base md:text-lg max-w-xl leading-relaxed">
               Connect with 500+ global brands, industry disruptors, and retail
               giants at the definitive festival for high-performance FMCG
               excellence.
             </p>
 
-            <p className="text-white text-lg max-w-xl leading-relaxed flex items-center">
+            <p className="text-white text-sm md:text-base max-w-xl leading-relaxed flex items-center">
               <MapPin size={20} className="mr-2 text-[#C5FA00] shrink-0" />
               Federal Palace Hotel, Victoria Island, Lagos
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto">
               <Link
                 href="/exhibitors"
-                className="bg-[#C5FA00] border border-[#C5FA00] text-[#0A2E1F] px-8 py-4 font-black text-sm rounded-sm hover:bg-[#0A2E1F] hover:text-[#C5FA00] transition-colors"
+                className="bg-[#C5FA00] border border-[#C5FA00] text-[#0A2E1F] px-8 py-4 font-black text-sm rounded-sm hover:bg-[#0A2E1F] hover:text-[#C5FA00] transition-colors text-center w-full sm:w-auto"
               >
                 Join Exhibitors
               </Link>
               <Link
                 href="/sponsorship"
-                className="border border-white/20 text-white px-8 py-4 font-bold text-sm rounded-sm hover:bg-white/10 transition-colors"
+                className="border border-white/20 text-white px-8 py-4 font-bold text-sm rounded-sm hover:bg-white/10 transition-colors text-center w-full sm:w-auto"
               >
                 Become a Sponsor
               </Link>
@@ -239,35 +253,28 @@ export default async function HomePage() {
           </div>
 
           {/* Right Countdown */}
-          <div className="flex items-center justify-center lg:justify-end mt-20">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-8 w-full max-w-lg">
-              <p className="text-white text-lg font-semibold mb-6">
+          <div className="flex items-center justify-center lg:justify-end mt-8 lg:mt-20">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 md:p-8 w-full max-w-lg">
+              <p className="text-white text-base md:text-lg font-semibold mb-6 text-center lg:text-left">
                 Countdown to Festival
               </p>
-              <div className="grid grid-cols-4 gap-4">
+              {/* Stacked 2x2 on mobile, 4 columns on tablets+ */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="text-center">
-                  <p className="text-3xl font-black text-black">182</p>
-                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">
-                    Days
-                  </p>
+                  <p className="text-3xl font-black text-white">182</p>
+                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">Days</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-black text-black">14</p>
-                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">
-                    Hours
-                  </p>
+                  <p className="text-3xl font-black text-white">14</p>
+                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">Hours</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-black text-black">45</p>
-                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">
-                    Minutes
-                  </p>
+                  <p className="text-3xl font-black text-white">45</p>
+                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">Minutes</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-black text-black">22</p>
-                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">
-                    Seconds
-                  </p>
+                  <p className="text-3xl font-black text-white">22</p>
+                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">Seconds</p>
                 </div>
               </div>
             </div>
@@ -277,16 +284,16 @@ export default async function HomePage() {
 
       {/* ── Mission Section ──────────────────────────────────── */}
       <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left column - Text and Stats */}
           <div>
-            <h2 className="text-2xl md:text-2xl font-black text-[#0A2E1F] mb-4">
+            <h2 className="text-3xl font-black text-[#0A2E1F] mb-4">
               About the FMCG Festival
             </h2>
-            <p className="text-gray-600 leading-relaxed mb-4">
+            <p className="text-gray-600 leading-relaxed mb-4 font-semibold">
               Driving the Future of Africa&apos;s FMCG Sector
             </p>
-            <p className="text-gray-600 leading-relaxed mb-8">
+            <p className="text-gray-600 leading-relaxed mb-8 text-sm md:text-base">
               The FMCG Festival is more than just a trade show; it&apos;s a
               strategic platform where the world&apos;s most influential brands
               meet disruptive innovators. In an era of rapid digital
@@ -294,19 +301,17 @@ export default async function HomePage() {
               space for the industry to align, innovate, and grow.
             </p>
 
-            {/* Stats row */}
-            <div className="grid grid-cols-2 gap-6 mb-8">
+            {/* Stats row - 2 columns */}
+            <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8">
               {STATS.map((s) => (
                 <div
                   key={s.label}
-                  className="flex flex-col items-start gap-4 p-6 bg-white border border-gray-300 rounded-lg"
+                  className="flex flex-col items-start gap-4 p-4 md:p-6 bg-white border border-gray-200 rounded-lg"
                 >
                   <div className="text-[#0A2E1F]">{getIcon(s.icon)}</div>
                   <div>
-                    <p className="font-normal text-lg text-[#0A2E1F]">
-                      {s.value}
-                    </p>
-                    <p className="text-sm text-gray-400 uppercase tracking-widest">
+                    <p className="font-bold text-lg text-[#0A2E1F]">{s.value}</p>
+                    <p className="text-xs md:text-sm text-gray-400 uppercase tracking-widest mt-1">
                       {s.label}
                     </p>
                   </div>
@@ -314,28 +319,29 @@ export default async function HomePage() {
               ))}
             </div>
 
-            {/* Button */}
             <Link
               href="/about"
-              className="inline-block bg-[#0A2E1F] text-white px-8 py-4 rounded-sm text-sm font-black hover:bg-[#062015] transition-colors"
+              className="inline-block bg-[#0A2E1F] text-white px-8 py-4 rounded-sm text-sm font-black hover:bg-[#062015] transition-colors w-full sm:w-auto text-center"
             >
               Learn More About Us
             </Link>
           </div>
 
           {/* Right column - Image with floating quote card */}
-          <div className="relative">
-            <div className="relative h-100 md:h-150 rounded-xl overflow-hidden bg-gray-100">
+          <div className="relative mt-8 lg:mt-0">
+            {/* Fixed invalid height classes */}
+            <div className="relative h-100 md:h-125 rounded-xl overflow-hidden bg-gray-100">
               <Image
                 src="/homepage2.png"
                 alt="Handshake at festival"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
-            {/* Floating quote */}
-            <div className="absolute -bottom-6 -left-4 bg-[#C5FA00] border rounded-xl px-6 py-5 max-w-xs">
-              <p className="text-sm text-[#0A2E1F] italic leading-snug">
+            {/* Floating quote - adjusted positioning for mobile */}
+            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 md:left-4 md:translate-x-0 bg-[#C5FA00] border rounded-xl px-6 py-5 w-11/12 max-w-70 shadow-lg">
+              <p className="text-sm text-[#0A2E1F] italic leading-snug font-medium text-center md:text-left">
                 &ldquo;The catalyst for retail transformation in Lagos.&rdquo;
               </p>
             </div>
@@ -344,26 +350,26 @@ export default async function HomePage() {
       </section>
 
       {/* ── Why Exhibit & Visit ───────────────────────────────── */}
-      <section className="pt-20 pb-10 px-6 bg-white border-2 border-gray-200">
-        <div className="mx-14">
+      <section className="pt-20 pb-10 px-6 bg-white border-y-2 border-gray-100">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-2xl font-normal text-[#0A2E1F] mb-4">
+            <h2 className="text-3xl font-bold text-[#0A2E1F] mb-4">
               Why Exhibit & Visit?
             </h2>
             <div className="w-20 h-1 bg-[#506600] mx-auto rounded-full" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
             {/* Why Exhibit */}
-            <div>
-              <h3 className="font-normal border-l-3 border-[#506600] pl-4 text-[#0A2E1F] text-base mb-6">
+            <div className="order-2 lg:order-1">
+              <h3 className="font-bold border-l-4 border-[#506600] pl-4 text-[#0A2E1F] text-lg mb-6">
                 Why Exhibit?
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-6">
                 {WHY_EXHIBIT.map((item) => (
                   <li
                     key={item.text}
-                    className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"
+                    className="flex items-start gap-4 text-sm text-gray-600 leading-relaxed"
                   >
                     <span className="text-[#84A900] mt-0.5 shrink-0">
                       {getIcon(item.icon)}
@@ -374,34 +380,33 @@ export default async function HomePage() {
               </ul>
               <Link
                 href="/exhibitors"
-                className="mt-8 inline-block bg-[#0A2E1F] text-white px-6 py-3 rounded-sm text-sm font-black hover:bg-[#062015] transition-colors"
+                className="mt-8 inline-block bg-[#0A2E1F] text-white px-8 py-4 rounded-sm text-sm font-black hover:bg-[#062015] transition-colors w-full sm:w-auto text-center"
               >
                 Book Your Stand
               </Link>
             </div>
 
             {/* Center image */}
-            <div className="relative w-full h-80 md:h-150 rounded-2xl overflow-hidden">
+            <div className="relative w-full h-75 md:h-100 lg:h-125 rounded-2xl overflow-hidden order-1 lg:order-2 shadow-sm">
               <Image
                 src="/homepage3.png"
                 alt="Exhibition"
                 fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                loading="eager"
+                sizes="(max-width: 1024px) 100vw, 33vw"
                 className="object-cover"
               />
             </div>
 
             {/* Why Visit */}
-            <div>
-              <h3 className="font-normal border-l-3 border-[#506600] pl-4 text-[#0A2E1F] text-base mb-6">
+            <div className="order-3">
+              <h3 className="font-bold border-l-4 border-[#506600] pl-4 text-[#0A2E1F] text-lg mb-6">
                 Why Visit?
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-6">
                 {WHY_VISIT.map((item) => (
                   <li
                     key={item.text}
-                    className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"
+                    className="flex items-start gap-4 text-sm text-gray-600 leading-relaxed"
                   >
                     <span className="text-[#84A900] mt-0.5 shrink-0">
                       {getIcon(item.icon)}
@@ -412,7 +417,7 @@ export default async function HomePage() {
               </ul>
               <Link
                 href="/register"
-                className="mt-8 inline-block border border-[#0A2E1F] text-[#0A2E1F] px-6 py-3 rounded-sm text-sm font-bold hover:bg-gray-50 transition-colors"
+                className="mt-8 inline-block border-2 border-[#0A2E1F] text-[#0A2E1F] px-8 py-4 rounded-sm text-sm font-bold hover:bg-gray-50 transition-colors w-full sm:w-auto text-center"
               >
                 Register to Visit
               </Link>
@@ -423,65 +428,69 @@ export default async function HomePage() {
 
       {/* ── Our Sponsors Sectors ────────────────────────────────── */}
       <section className="py-20 px-6 bg-[#F2F4EF]">
-        <div className="text-center mb-14">
-          <h2 className="text-2xl font-bold text-[#0A2E1F] mb-4 uppercase tracking-widest">
-            Our Sponsors
-          </h2>
-          <p className="text-gray-500 text-sm">
-            Proudly partnering with industry leaders to drive innovation and
-            excellence in FMCG.
-          </p>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center justify-center">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="shrink-0 flex flex-col items-center gap-2">
-              <Image
-                src={`/partner${i + 1}.png`}
-                alt={`Partner ${i + 1}`}
-                width={120}
-                height={50}
-                className="object-contain opacity-80 "
-              />
-            </div>
-          ))}
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-xl md:text-2xl font-bold text-[#0A2E1F] mb-4 uppercase tracking-widest">
+              Our Sponsors
+            </h2>
+            <p className="text-gray-500 text-sm max-w-2xl mx-auto">
+              Proudly partnering with industry leaders to drive innovation and
+              excellence in FMCG.
+            </p>
+          </div>
+          {/* Changed layout for better scaling on mobile */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center justify-center">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="shrink-0 flex justify-center max-w-auto max-h-auto">
+                <Image
+                  src={`/partner${i + 1}.png`}
+                  alt={`Partner ${i + 1}`}
+                  width={100}
+                  height={40}
+                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 12.5vw"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── Exhibition Sectors ────────────────────────────────── */}
       <section className="py-20 px-6 bg-[#f8f8f5]">
-        <div className="mx-14">
-          <div className="mb-10">
-            <h2 className="text-2xl font-black text-[#0A2E1F] mb-1">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-10 text-center md:text-left">
+            <h2 className="text-3xl font-black text-[#0A2E1F] mb-2">
               Exhibition Sectors
             </h2>
             <p className="text-gray-500 text-sm">
               A comprehensive showcase of the entire FMCG value chain.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {EXHIBITION_SECTORS.map((sector) => (
               <div
                 key={sector.label}
-                className="bg-white border border-gray-300 rounded-xl p-10 flex flex-col items-center gap-4 hover:shadow-sm transition-shadow cursor-pointer"
+                className="bg-white border border-gray-200 rounded-xl p-8 flex flex-col items-center text-center gap-4 hover:shadow-md transition-all cursor-pointer"
               >
-                <div className="text-[#0f1b16] rounded-xl p-5 bg-[#F2F4EF]">
+                <div className="text-[#0A2E1F] rounded-full p-4 bg-[#F2F4EF]">
                   {getIcon(sector.icon)}
                 </div>
                 <div>
-                  <p className="font-normal text-[#0A2E1F] text-lg">
+                  <p className="font-bold text-[#0A2E1F] text-lg">
                     {sector.label}
                   </p>
-                  <p className="text-[11px] text-gray-400 font-light mt-0.5 items-center flex flex-col gap-1 uppercase tracking-widest">
+                  <p className="text-[11px] text-gray-500 font-bold mt-2 uppercase tracking-widest">
                     {sector.count}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-          <div className="text-center mt-12">
+          <div className="text-center mt-14">
             <Link
               href="/exhibitors"
-              className="bg-[#0A2E1F] text-white px-6 py-3 rounded-sm font-semibold text-xl hover:bg-[#062015] transition-colors inline-block"
+              className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
             >
               Book Your Stand
             </Link>
@@ -491,23 +500,23 @@ export default async function HomePage() {
 
       {/* ── 2024 Keynote Lineup ───────────────────────────────── */}
       <section className="py-20 px-6 bg-[#F2F4EF]">
-        <div className="mx-14">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-x1 font-normal text-[#506600] uppercase tracking-widest mb-2">
-              2024 Keynote Lineup
+            <p className="text-xs font-bold text-[#506600] uppercase tracking-widest mb-2">
+              2026 Keynote Lineup
             </p>
-            <h2 className="text-lg font-normal text-[#0A2E1F]">
+            <h2 className="text-3xl font-black text-[#0A2E1F]">
               Industry Visionaries
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {SPEAKERS.map((speaker: any) => (
               <div
                 key={speaker._id || speaker.name}
-                className="group cursor-pointer"
+                className="group cursor-pointer flex flex-col h-full"
               >
-                <div className="relative h-100 w-full rounded-xl overflow-hidden bg-gray-200 flex flex-col justify-end">
+                <div className="relative h-75 md:h-90 w-full rounded-xl overflow-hidden bg-gray-200 flex flex-col justify-end">
                   {speaker.image && (
                     <Image
                       src={
@@ -517,29 +526,30 @@ export default async function HomePage() {
                       }
                       alt={speaker.name}
                       fill
-                      className="object-cover h-150 grayscale group-hover:grayscale-0 transition-all duration-500"
+                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                   )}
-                  <div className="absolute inset-0 bg-linear-to-t from-[#002E16]/40 to-transparent" />
-                  <div className="relative p-4 flex flex-col gap-1">
-                    <h3 className="text-xl font-normal text-white">
+                  <div className="absolute inset-0 bg-linear-to-t from-[#002E16]/80 via-transparent to-transparent" />
+                  <div className="relative p-5 flex flex-col gap-1">
+                    <h3 className="text-xl font-bold text-white">
                       {speaker.name}
                     </h3>
-                    <p className="text-sm text-[#b0df00]">{speaker.role}</p>
+                    <p className="text-xs font-bold uppercase tracking-wider text-[#C5FA00]">
+                      {speaker.role}
+                    </p>
                   </div>
                 </div>
-                <p className="text-gray-600 font-normal mt-3 italic leading-snug">
-                  &ldquo;{speaker.quote || "Shaping the future of FMCG."}
-                  &rdquo;
+                <p className="text-gray-600 text-sm mt-4 italic leading-relaxed">
+                  &ldquo;{speaker.quote || "Shaping the future of FMCG."}&rdquo;
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-14">
             <Link
               href="/line-up"
-              className="bg-[#0A2E1F] text-white px-6 py-3 rounded-sm font-semibold text-xl hover:bg-[#062015] transition-colors inline-block"
+              className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
             >
               View All 120+ Speakers
             </Link>
@@ -547,74 +557,152 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Event Line-up Preview ────────────────────────────── */}
+      <section className="py-20 px-6 bg-[#0A2E1F]">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-14 text-center md:text-left">
+            <h2 className="text-3xl font-black text-white mb-4">
+              Event Line-up
+            </h2>
+            <p className="text-[#7CB48C] max-w-2xl text-sm md:text-base leading-relaxed">
+              A carefully curated schedule featuring global keynotes,
+              interactive panels, and networking galas.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-6 w-full mx-auto isolate">
+            {SCHEDULE_PREVIEW.map((item, i) => {
+              const isReversed = i % 2 !== 0;
+
+              return (
+                <div
+                  key={i}
+                  className={`relative flex flex-col w-full bg-none rounded-xl overflow-hidden min-h-75 ${isReversed ? "md:flex-row-reverse" : "md:flex-row"
+                    }`}
+                >
+                  {/* The Mid White Line */}
+                  <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-white/20 transform -translate-x-1/2 z-10" />
+
+                  {/* The Small Green Circle */}
+                  <div className="hidden md:block absolute left-1/2 top-1/2 w-4 h-4 rounded-full bg-[#C5FA00] transform -translate-x-1/2 -translate-y-1/2 z-20 shadow-[0_0_15px_rgba(197,250,0,0.5)]" />
+
+                  {/* Image Container */}
+                  <div className="relative w-full md:w-1/2 h-56 md:h-auto border border-white/10 rounded-t-xl md:rounded-xl overflow-hidden">
+                    <Image
+                      src={item.img}
+                      alt={item.title}
+                      fill
+                      className="object-cover opacity-80"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+
+                  {/* Text Container */}
+                  <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center bg-white/5 md:bg-transparent rounded-b-xl md:rounded-none border border-white/10 border-t-0 md:border-0">
+                    <p
+                      className={`w-full text-[#C5FA00] text-xs font-bold uppercase tracking-widest mb-3 ${isReversed ? "md:text-right" : "md:text-left"
+                        }`}
+                    >
+                      {item.day}
+                    </p>
+
+                    <h3
+                      className={`w-full text-white text-xl md:text-2xl font-bold mb-3 leading-snug ${isReversed ? "md:text-right" : "md:text-left"
+                        }`}
+                    >
+                      {item.title}
+                    </h3>
+
+                    <p
+                      className={`w-full text-gray-300 text-sm leading-relaxed ${isReversed ? "md:text-right" : "md:text-left"
+                        }`}
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="text-center mt-16">
+            <Link
+              href="#"
+              className="border-2 border-white/30 text-white px-8 py-4 rounded-sm text-sm font-bold hover:bg-white hover:text-[#0A2E1F] transition-colors inline-block w-full sm:w-auto"
+            >
+              Download Full Schedule (PDF)
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── #FMCGFestival Updates ─────────────────────────────── */}
       <section className="py-20 px-6 bg-[#F2F4EF]">
-        <div className="mx-14">
-          <div className="flex justify-between items-center mb-10">
-            <h2 className="text-xl font-black text-[#0A2E1F]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-12">
+            <h2 className="text-2xl md:text-3xl font-black text-[#0A2E1F]">
               #FMCGFestival Updates
             </h2>
             <div className="flex gap-2">
-              <button className="w-9 h-9 border border-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-50">
+              <button className="w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center text-[#0A2E1F] hover:bg-white transition-colors bg-transparent">
                 ‹
               </button>
-              <button className="w-9 h-9 border border-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-50">
+              <button className="w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center text-[#0A2E1F] hover:bg-white transition-colors bg-transparent">
                 ›
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {NEWS_ITEMS.map((item, i) => (
               <div
                 key={i}
-                className={`rounded-sm overflow-hidden border border-gray-100 flex flex-col ${
-                  item.center ? "bg-white" : "bg-white"
-                }`}
+                className="rounded-xl overflow-hidden border border-gray-200 bg-white flex flex-col shadow-sm hover:shadow-md transition-shadow"
               >
                 {/* Image top */}
                 {item.img && (
                   <div
-                    className={`relative h-44 w-full shrink-0 ${
-                      item.imgDark ? "bg-gray-900" : "bg-gray-100"
-                    }`}
+                    className={`relative h-48 w-full shrink-0 ${item.imgDark ? "bg-gray-900" : "bg-gray-100"
+                      }`}
                   >
                     <Image
                       src={item.img}
                       alt={item.title}
                       fill
-                      className={`object-cover ${item.imgDark ? "opacity-60" : "opacity-80"}`}
+                      className={`object-cover ${item.imgDark ? "opacity-70" : "opacity-100"
+                        }`}
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                 )}
                 {/* No image — centered icon */}
                 {!item.img && item.center && (
-                  <div className="h-44 flex items-center justify-center bg-gray-50">
-                    <div className="text-gray-300">{getIcon("Camera")}</div>
+                  <div className="h-48 flex items-center justify-center bg-gray-50 border-b border-gray-100">
+                    <div className="text-gray-400">{getIcon("Camera")}</div>
                   </div>
                 )}
 
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex items-center gap-3 mb-3">
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="flex items-center gap-4 mb-4">
                     <span
-                      className={`text-[10px] font-black uppercase tracking-widest ${item.tagColor}`}
+                      className={`text-[10px] font-bold uppercase tracking-widest ${item.tagColor}`}
                     >
                       {item.tag}
                     </span>
-                    <span className="text-[10px] text-gray-300 font-bold">
+                    <span className="text-[10px] text-gray-400 font-medium">
                       {item.date}
                     </span>
                   </div>
-                  <p className="text-sm font-black text-[#0A2E1F] leading-snug mb-2">
+                  <p className="text-lg font-bold text-[#0A2E1F] leading-snug mb-3">
                     {item.title}
                   </p>
-                  <p className="text-xs text-gray-500 leading-relaxed flex-1">
+                  <p className="text-sm text-gray-500 leading-relaxed flex-1">
                     {item.desc}
                   </p>
                   {item.cta && (
                     <Link
                       href="#"
-                      className="mt-4 text-xs font-black text-[#0A2E1F] hover:underline"
+                      className="mt-6 text-xs font-bold text-[#84A900] hover:text-[#0A2E1F] transition-colors"
                     >
                       {item.cta}
                     </Link>
@@ -628,33 +716,36 @@ export default async function HomePage() {
 
       {/* ── Become Part of the Movement ───────────────────────── */}
       <section className="py-20 px-6 bg-[#0A2E1F] text-white">
-        <div className="mx-14">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-normal mb-2">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-black mb-4">
               Become Part of the Movement
             </h2>
-            <p className="text-sm text-gray-100 max-w-xl mx-auto">
+            <p className="text-sm text-gray-300 max-w-2xl mx-auto leading-relaxed">
               Whether you&apos;re looking to exhibit your latest innovations or
               gain exclusive industry insights, FMCG Festival is your gateway to
               the future.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto ">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {BOTTOM_CTA.map((block) => (
               <div
                 key={block.eyebrow}
-                className={`border border-gray-600 bg-white/10 opacity-90 rounded-sm p-8 flex flex-col gap-4`}
+                className="border border-white/20 bg-white/5 rounded-xl p-8 md:p-10 flex flex-col justify-between gap-6 hover:bg-white/10 transition-colors"
               >
-                <h3 className="text-lg font-normal text-white">
-                  {block.eyebrow}
-                </h3>
-                <p className="text-sm text-gray-100 leading-relaxed max-w-2xl">
-                  {block.body}
-                </p>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-4">
+                    {block.eyebrow}
+                  </h3>
+                  <p className="text-sm text-gray-300 leading-relaxed max-w-md">
+                    {block.body}
+                  </p>
+                </div>
+                {/* Removed mr-40 to fix mobile overflow */}
                 <Link
                   href={block.href}
-                  className={`mt-2 mr-40 inline-block px-6 py-3 rounded-xs text-sm font-black transition-colors ${block.ctaStyle}`}
+                  className={`inline-block px-8 py-4 rounded-sm text-sm font-bold transition-colors w-full sm:w-max text-center ${block.ctaStyle}`}
                 >
                   {block.cta}
                 </Link>
