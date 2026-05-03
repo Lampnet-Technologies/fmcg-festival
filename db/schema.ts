@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, integer, serial } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, integer, serial, uuid } from "drizzle-orm/pg-core";
 
 // Users table (Synced with Clerk)
 export const users = pgTable("users", {
@@ -12,11 +12,12 @@ export const users = pgTable("users", {
 
 // Registrations / Transactions table
 export const registrations = pgTable("registrations", {
-    id: serial("id").primaryKey(),
+    id: uuid("id").primaryKey().defaultRandom(),
     userId: text("user_id").references(() => users.id).notNull(),
     purchaseType: text("purchase_type").notNull(), // e.g., 'ticket_vip', 'sponsorship_gold'
     amountPaid: integer("amount_paid").notNull(), // Stored in Kobo
     status: text("status").default("pending"), // 'pending', 'successful', 'failed'
     paystackReference: text("paystack_reference").unique(),
+    ticketNumber: text("ticket_number").unique(), // Unique ticket identifier for QR codes
     createdAt: timestamp("created_at").defaultNow(),
 });

@@ -1,8 +1,8 @@
 import { type SchemaTypeDefinition } from 'sanity'
-import { speaker } from './speaker'
-import { exhibitor } from './exhibitor'
-import { session } from './session'
+import { updateSchema } from './update'
+import { exhibitorSchema } from './exhibitor'
+
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [speaker, exhibitor, session],
+    types: [updateSchema, exhibitorSchema],
 }

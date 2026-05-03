@@ -24,20 +24,30 @@ export const exhibitorsQuery = groq`
   }
 `;
 
-// Fetch all sessions for the Schedule
-export const sessionsQuery = groq`
-  *[_type == "session"] | order(time asc) {
+// Fetch all updates/blog posts for the Updates page
+export const updatesQuery = groq`
+  *[_type == "update"] | order(publishedAt desc) {
     _id,
     title,
-    day,
-    time,
-    stage,
-    description,
-    speakers[]->{
-      _id,
-      name,
-      role,
-      image
-    }
+    slug,
+    tag,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body
+  }
+`;
+
+// Fetch a single update by slug
+export const singleUpdateQuery = groq`
+  *[_type == "update" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    tag,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body
   }
 `;

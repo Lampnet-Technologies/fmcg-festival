@@ -644,71 +644,64 @@ export default async function HomePage() {
               #FMCGFestival Updates
             </h2>
             <div className="flex gap-2">
-              <button className="w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center text-[#0A2E1F] hover:bg-white transition-colors bg-transparent">
-                ‹
-              </button>
-              <button className="w-10 h-10 border border-gray-300 rounded-full flex items-center justify-center text-[#0A2E1F] hover:bg-white transition-colors bg-transparent">
-                ›
-              </button>
+              {/* Replaced text arrows with actual navigation logic/buttons */}
+              <Link
+                href="/updates"
+                className="bg-white border border-gray-300 px-6 py-2.5 rounded-full text-sm font-bold text-[#0A2E1F] hover:bg-[#0A2E1F] hover:text-white transition-colors"
+              >
+                View All Updates
+              </Link>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Assuming NEWS_ITEMS is mapped from your Sanity fetch */}
             {NEWS_ITEMS.map((item, i) => (
-              <div
+              <Link
+                href={`/updates/${i}`} // Dynamic route linking
                 key={i}
-                className="rounded-xl overflow-hidden border border-gray-200 bg-white flex flex-col shadow-sm hover:shadow-md transition-shadow"
+                className="group rounded-xl overflow-hidden border border-gray-200 bg-white flex flex-col shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                {/* Image top */}
-                {item.img && (
-                  <div
-                    className={`relative h-48 w-full shrink-0 ${item.imgDark ? "bg-gray-900" : "bg-gray-100"
-                      }`}
-                  >
+                {/* Image Container with Zoom Hover Effect */}
+                {item.img ? (
+                  <div className={`relative h-56 w-full shrink-0 overflow-hidden ${item.imgDark ? "bg-gray-900" : "bg-gray-100"}`}>
                     <Image
                       src={item.img}
                       alt={item.title}
                       fill
-                      className={`object-cover ${item.imgDark ? "opacity-70" : "opacity-100"
-                        }`}
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className={`object-cover transition-transform duration-500 group-hover:scale-105 ${item.imgDark ? "opacity-70" : "opacity-100"}`}
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </div>
-                )}
-                {/* No image — centered icon */}
-                {!item.img && item.center && (
-                  <div className="h-48 flex items-center justify-center bg-gray-50 border-b border-gray-100">
-                    <div className="text-gray-400">{getIcon("Camera")}</div>
+                ) : (
+                  <div className="h-56 flex items-center justify-center bg-gray-50 border-b border-gray-100 overflow-hidden">
+                    <div className="text-gray-400 group-hover:scale-110 transition-transform duration-500">
+                      {getIcon("Camera")}
+                    </div>
                   </div>
                 )}
 
+                {/* Card Content */}
                 <div className="p-8 flex flex-col flex-1">
                   <div className="flex items-center gap-4 mb-4">
-                    <span
-                      className={`text-[10px] font-bold uppercase tracking-widest ${item.tagColor}`}
-                    >
-                      {item.tag}
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#84A900]">
+                      {item.tag || "UPDATE"}
                     </span>
-                    <span className="text-[10px] text-gray-400 font-medium">
+                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
                       {item.date}
                     </span>
                   </div>
-                  <p className="text-lg font-bold text-[#0A2E1F] leading-snug mb-3">
+                  <h3 className="text-xl font-bold text-[#0A2E1F] leading-snug mb-3 group-hover:text-[#84A900] transition-colors">
                     {item.title}
-                  </p>
+                  </h3>
                   <p className="text-sm text-gray-500 leading-relaxed flex-1">
                     {item.desc}
                   </p>
-                  {item.cta && (
-                    <Link
-                      href="#"
-                      className="mt-6 text-xs font-bold text-[#84A900] hover:text-[#0A2E1F] transition-colors"
-                    >
-                      {item.cta}
-                    </Link>
-                  )}
+                  <div className="mt-6 flex items-center text-xs font-black text-[#0A2E1F] group-hover:text-[#84A900] transition-colors">
+                    Read Article <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

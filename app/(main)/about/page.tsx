@@ -253,7 +253,7 @@ export default function AboutPage() {
                 </div>
               </div>
               <Link
-                href="/exhibitors"
+                href="/visitor-profile"
                 className="mt-8 inline-block bg-[#0A2E1F] text-white px-6 py-4 rounded-sm text-sm font-black hover:bg-[#062015] transition-colors"
               >
                 See Visitor Profile

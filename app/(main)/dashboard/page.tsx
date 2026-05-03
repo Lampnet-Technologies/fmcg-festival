@@ -18,56 +18,67 @@ export default async function DashboardPage(props: {
     redirect("/sign-in");
   }
 
-  // 1. Check database status
-  const userRegistration = await db
+  // 1. Fetch ALL registrations for this user (Removed .limit(1))
+  const userRegistrations = await db
     .select()
     .from(registrations)
-    .where(eq(registrations.userId, user.id))
-    .limit(1);
+    .where(eq(registrations.userId, user.id));
 
-  const registration = userRegistration[0];
-
-  if (!registration) {
+  // If they have no tickets at all, send them to register
+  if (!userRegistrations || userRegistrations.length === 0) {
     redirect("/register");
   }
 
   // --- THE FIX: HYBRID VERIFICATION ---
-  // If it's pending AND we just came back from Paystack (reference in URL)
-  if (registration.status === "pending" && searchParams.reference) {
-    try {
-      // Manually ask Paystack if this specific transaction was successful
-      const verifyRes = await fetch(`https://api.paystack.co/transaction/verify/${searchParams.reference}`, {
-        headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
-        },
-        cache: "no-store"
-      });
-      
-      const verifyData = await verifyRes.json();
+  let showFullPendingScreen = false;
 
-      if (verifyData.data?.status === "success") {
-        // Update the registration to successful
-        await db.update(registrations)
-          .set({ status: 'successful' })
-          .where(eq(registrations.paystackReference, searchParams.reference));
+  // Check if we just came back from Paystack (reference in URL)
+  if (searchParams.reference) {
+    // Find the specific ticket that matches this Paystack reference
+    const pendingReg = userRegistrations.find(
+      (r) => r.status === "pending" && r.paystackReference === searchParams.reference
+    );
 
-        // Update user role if they bought a sponsorship/exhibitor pass
-        if (registration.purchaseType !== 'visitor') {
-          await db.update(users)
-            .set({ role: registration.purchaseType })
-            .where(eq(users.id, user.id));
+    if (pendingReg) {
+      try {
+        // Manually ask Paystack if this specific transaction was successful
+        const verifyRes = await fetch(`https://api.paystack.co/transaction/verify/${searchParams.reference}`, {
+          headers: {
+            Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+          },
+          cache: "no-store"
+        });
+        
+        const verifyData = await verifyRes.json();
+
+        if (verifyData.data?.status === "success") {
+          // Update the specific registration to successful
+          await db.update(registrations)
+            .set({ status: 'successful' })
+            .where(eq(registrations.paystackReference, searchParams.reference));
+
+          // Update user role if they bought a sponsorship/exhibitor pass
+          if (pendingReg.purchaseType !== 'visitor') {
+            await db.update(users)
+              .set({ role: pendingReg.purchaseType })
+              .where(eq(users.id, user.id));
+          }
+
+          // Manually update our local variable so the UI renders the ticket immediately
+          pendingReg.status = "successful";
+        } else {
+          // If Paystack says it's not successful yet, show the full-page loader
+          showFullPendingScreen = true;
         }
-
-        // Manually update our local variable so the UI renders the ticket immediately
-        registration.status = "successful";
+      } catch (err) {
+        console.error("Manual verification failed:", err);
+        showFullPendingScreen = true;
       }
-    } catch (err) {
-      console.error("Manual verification failed:", err);
     }
   }
 
-  // 3. Handle pending state (if verification above didn't pass or they navigated here directly)
-  if (registration.status === "pending") {
+  // 3. Handle pending state ONLY for the ticket currently being processed
+  if (showFullPendingScreen) {
     return (
       <main className="flex-1 bg-gray-50 flex items-center justify-center p-6">
         <div className="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center max-w-md">
@@ -82,9 +93,6 @@ export default async function DashboardPage(props: {
     );
   }
 
-  // 4. Format the tier display name
-  const displayTier = registration.purchaseType.replace('sponsorship_', '').toUpperCase();
-
   return (
     <main className="flex-1 bg-gray-50 py-16 px-6">
       <div className="max-w-4xl mx-auto">
@@ -94,67 +102,99 @@ export default async function DashboardPage(props: {
           <h1 className="text-4xl font-black text-[#0A2E1F] mb-2">
             Welcome, {user.firstName || "Attendee"}!
           </h1>
-          <p className="text-gray-600">Here is your official pass for the 2026 FMCG Festival.</p>
+          <p className="text-gray-600">
+            {userRegistrations.length > 1 
+              ? "Here are your official passes for the 2026 FMCG Festival." 
+              : "Here is your official pass for the 2026 FMCG Festival."}
+          </p>
         </div>
 
-        {/* The Digital Pass */}
-        <div className="bg-[#0A2E1F] rounded-xl flex flex-col md:flex-row shadow-2xl overflow-hidden relative">
-          <div className="w-full md:w-3 bg-[#C5FA00]"></div>
-
-          <div className="p-8 md:p-12 flex-1 text-white flex flex-col justify-between">
-            <div>
-              <span className="bg-white/10 text-[#C5FA00] px-3 py-1 rounded-sm text-xs font-bold tracking-widest uppercase mb-6 inline-block border border-white/20">
-                {displayTier} PASS
-              </span>
-              <h2 className="text-3xl font-bold mb-1">
-                {user.firstName} {user.lastName}
-              </h2>
-              <p className="text-gray-400 text-sm mb-8">{user.emailAddresses[0]?.emailAddress}</p>
-
-              <div className="grid grid-cols-2 gap-6 border-t border-white/10 pt-6">
-                <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Date</p>
-                  <p className="font-semibold text-sm">Nov 24 - 26, 2026</p>
+        {/* Map through all the user's tickets */}
+        <div className="space-y-8">
+          {userRegistrations.map((registration) => {
+            
+            // Inline Pending Card (For abandoned checkouts that aren't currently verifying)
+            if (registration.status === "pending") {
+              return (
+                <div key={registration.id || registration.paystackReference} className="bg-white border border-yellow-200 rounded-xl p-6 flex items-center justify-between shadow-sm">
+                  <div>
+                    <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-sm text-[10px] font-black tracking-widest uppercase mb-2 inline-block">
+                      Pending Payment
+                    </span>
+                    <h3 className="text-lg font-bold text-[#0A2E1F]">
+                      {registration.purchaseType.replace('sponsorship_', '').toUpperCase()} PASS
+                    </h3>
+                    <p className="text-sm text-gray-500 mt-1">Ref: {registration.paystackReference}</p>
+                  </div>
+                  <RefreshButton />
                 </div>
-                <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Location</p>
-                  <p className="font-semibold text-sm">Grand Convention Center, VI</p>
+              );
+            }
+
+            // Successful Ticket Card
+            const displayTier = registration.purchaseType.replace('sponsorship_', '').toUpperCase();
+
+            return (
+              <div key={registration.id || registration.paystackReference} className="bg-[#0A2E1F] rounded-xl flex flex-col md:flex-row shadow-2xl overflow-hidden relative">
+                <div className="w-full md:w-3 bg-[#C5FA00]"></div>
+
+                <div className="p-8 md:p-12 flex-1 text-white flex flex-col justify-between">
+                  <div>
+                    <span className="bg-white/10 text-[#C5FA00] px-3 py-1 rounded-sm text-xs font-bold tracking-widest uppercase mb-6 inline-block border border-white/20">
+                      {displayTier} PASS
+                    </span>
+                    <h2 className="text-3xl font-bold mb-1">
+                      {user.firstName} {user.lastName}
+                    </h2>
+                    <p className="text-gray-400 text-sm mb-8">{user.emailAddresses[0]?.emailAddress}</p>
+
+                    <div className="grid grid-cols-2 gap-6 border-t border-white/10 pt-6">
+                      <div>
+                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Date</p>
+                        <p className="font-semibold text-sm">Nov 24 - 26, 2026</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Location</p>
+                        <p className="font-semibold text-sm">Federal Palace Hotel, VI</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-8 md:p-12 flex flex-col items-center justify-center border-l-2 border-dashed border-gray-200 relative shrink-0">
+                    <div className="absolute -top-4 -left-4 w-8 h-8 bg-[#0A2E1F] rounded-full hidden md:block"></div>
+                    <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gray-50 rounded-full hidden md:block"></div>
+                    
+                    <div className="bg-white p-2 border border-gray-200 rounded-lg shadow-sm mb-4">
+                      <QRCode 
+                        value={registration.paystackReference || user.id} 
+                        size={150} 
+                        fgColor="#0A2E1F"
+                      />
+                    </div>
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest text-center">Scan for Entry</p>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-8 md:p-12 flex flex-col items-center justify-center border-l-2 border-dashed border-gray-200 relative">
-             <div className="absolute -top-4 -left-4 w-8 h-8 bg-[#0A2E1F] rounded-full hidden md:block"></div>
-             <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gray-50 rounded-full hidden md:block"></div>
-             
-             <div className="bg-white p-2 border border-gray-200 rounded-lg shadow-sm mb-4">
-                <QRCode 
-                  value={registration.paystackReference || user.id} 
-                  size={150} 
-                  fgColor="#0A2E1F"
-                />
-             </div>
-             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Scan for Entry</p>
-          </div>
+            );
+          })}
         </div>
 
         {/* Quick Links */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
-           <Link href="/line-up" className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center group">
+            <Link href="/line-up" className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center group">
               <div>
                 <h3 className="font-bold text-[#0A2E1F]">View Event Schedule</h3>
                 <p className="text-sm text-gray-500 mt-1">Plan your day and bookmark sessions.</p>
               </div>
               <span className="text-2xl group-hover:translate-x-1 transition-transform text-[#C5FA00]">→</span>
-           </Link>
-           <Link href="/exhibitors" className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center group">
+            </Link>
+            <Link href="/exhibitors#directory" className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex justify-between items-center group">
               <div>
                 <h3 className="font-bold text-[#0A2E1F]">Exhibitor Map</h3>
                 <p className="text-sm text-gray-500 mt-1">Locate booths and interactive demos.</p>
               </div>
               <span className="text-2xl group-hover:translate-x-1 transition-transform text-[#C5FA00]">→</span>
-           </Link>
+            </Link>
         </div>
 
       </div>

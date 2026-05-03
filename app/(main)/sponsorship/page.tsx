@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Users, TrendingUp, BadgeCheck, Download } from "lucide-react";
+import { Users, TrendingUp, BadgeCheck, Download, CheckCircle2Icon } from "lucide-react";
 
 const WHY_SPONSOR = [
   {
@@ -90,8 +90,13 @@ const TIERS = [
   },
 ];
 
-// Placeholder logos for "Proudly Supported By"
-const PARTNER_LOGOS = ["🌐", "Gen", "▪", "◈", "tupone"];
+const PARTNER_LOGOS = [
+  "/support1.png",
+  "/support2.png",
+  "/support3.png",
+  "/support4.png",
+  "/support5.png",
+];
 
 export default function SponsorshipPage() {
   return (
@@ -140,31 +145,28 @@ export default function SponsorshipPage() {
             {WHY_SPONSOR.map((item) => (
               <div
                 key={item.title}
-                className={`bg-white rounded-xl p-8 border border-gray-100 shadow-sm flex flex-col justify-center ${
-                  item.wide ? "md:col-span-3" : "md:col-span-2"
-                }`}
+                className={`bg-white rounded-xl p-8 border border-gray-100 shadow-sm flex flex-col justify-center ${item.wide ? "md:col-span-3" : "md:col-span-2"
+                  }`}
               >
                 {/* 
             Internal Layout: 
             Uses flex-col usually, but switches to flex-row if the card has stats 
           */}
                 <div
-                  className={`flex ${
-                    item.stats
+                  className={`flex ${item.stats
                       ? "flex-col lg:flex-row lg:items-center gap-8 justify-between"
                       : "flex-col gap-5"
-                  }`}
+                    }`}
                 >
                   {/* Left Side: Icon, Title, and Description */}
                   <div className="flex-1 flex flex-col gap-4">
                     {/* Only render icon container if an icon exists */}
                     {item.icon && (
                       <div
-                        className={`w-12 h-12 rounded-lg flex items-center justify-center text-xl shrink-0 ${
-                          item.accent
+                        className={`w-12 h-12 rounded-lg flex items-center justify-center text-xl shrink-0 ${item.accent
                             ? "bg-[#C5FA00] text-[#0A2E1F]"
                             : "bg-[#A8EAC2] text-[#0A2E1F]" // Soft mint green for non-accented icons
-                        }`}
+                          }`}
                       >
                         {item.icon}
                       </div>
@@ -202,7 +204,7 @@ export default function SponsorshipPage() {
         </div>
       </section>
       {/* ── Sponsorship Tiers ─────────────────────────────────── */}
-      <section className="py-20 px-6 bg-[#EDEEE9]">
+      <section id="sponsorship-tiers" className="py-20 px-6 bg-[#EDEEE9]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-xl font-normal text-[#0A2E1F] mb-2">
@@ -217,11 +219,10 @@ export default function SponsorshipPage() {
             {TIERS.map((tier) => (
               <div
                 key={tier.name}
-                className={`relative rounded-xl p-7 flex flex-col ${
-                  tier.dark
+                className={`relative rounded-xl p-7 flex flex-col ${tier.dark
                     ? "bg-[#0A2E1F] text-white shadow-2xl scale-105"
                     : "bg-white border border-gray-200 text-[#0A2E1F]"
-                }`}
+                  }`}
               >
                 {tier.popular && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C5FA00] text-[#0A2E1F] text-[10px] font-black px-3 py-1 rounded-sm uppercase tracking-widest">
@@ -230,16 +231,14 @@ export default function SponsorshipPage() {
                 )}
 
                 <h3
-                  className={`text-lg font-normal mb-1 ${
-                    tier.dark ? "text-white" : "text-[#0A2E1F]"
-                  }`}
+                  className={`text-lg font-normal mb-1 ${tier.dark ? "text-white" : "text-[#0A2E1F]"
+                    }`}
                 >
                   {tier.name}
                 </h3>
                 <p
-                  className={`text-xs font-bold mb-6 ${
-                    tier.dark ? "text-gray-400" : "text-[#0A2E1F]"
-                  }`}
+                  className={`text-xs font-bold mb-6 ${tier.dark ? "text-gray-400" : "text-[#0A2E1F]"
+                    }`}
                 >
                   {tier.price}
                 </p>
@@ -248,16 +247,14 @@ export default function SponsorshipPage() {
                   {tier.features.map((feature) => (
                     <li
                       key={feature}
-                      className={`flex items-start gap-2 text-sm ${
-                        tier.dark ? "text-gray-300" : "text-gray-600"
-                      }`}
+                      className={`flex items-start gap-2 text-sm ${tier.dark ? "text-gray-300" : "text-gray-600"
+                        }`}
                     >
                       <span
-                        className={`mt-0.5 shrink-0 ${
-                          tier.dark ? "text-[#C5FA00]" : "text-[#84A900]"
-                        }`}
+                        className={`mt-0.5 shrink-0 ${tier.dark ? "text-[#C5FA00]" : "text-[#84A900]"
+                          }`}
                       >
-                        ⊘
+                        <CheckCircle2Icon className="w-4 h-4" />
                       </span>
                       {feature}
                     </li>
@@ -274,11 +271,10 @@ export default function SponsorshipPage() {
                 ) : (
                   <Link
                     href={`/register?tier=${tier.param}`}
-                    className={`block w-full text-center py-3 rounded-sm font-black text-sm transition-colors ${
-                      tier.dark
+                    className={`block w-full text-center py-3 rounded-sm font-black text-sm transition-colors ${tier.dark
                         ? "bg-[#C5FA00] text-[#0A2E1F] hover:bg-[#b0df00]"
                         : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                    }`}
+                      }`}
                   >
                     Select Tier
                   </Link>
@@ -296,12 +292,17 @@ export default function SponsorshipPage() {
             Proudly Supported By
           </p>
           <div className="flex items-center justify-center gap-10 flex-wrap">
-            {PARTNER_LOGOS.map((logo, i) => (
+            {PARTNER_LOGOS.map((logoPath, i) => (
               <div
                 key={i}
-                className="w-20 h-20 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs font-bold"
+                className="relative w-28 h-12 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100"
               >
-                {logo}
+                <Image
+                  src={logoPath}
+                  alt={`Supporting Partner ${i + 1}`}
+                  fill
+                  className="object-contain"
+                />
               </div>
             ))}
           </div>

@@ -3,7 +3,6 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/db";
 import { registrations, users } from "@/db/schema";
-import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 
 const PRICING = {
@@ -14,11 +13,20 @@ const PRICING = {
     sponsorship_gold: 2500000000,
 };
 
-export async function processRegistration(formData: FormData) {
+type RegistrationResult =
+    | { success: true; type: "free" }
+    | { success: true; type: "payment"; authorizationUrl: string };
+
+export async function processRegistration(formData: FormData): Promise<RegistrationResult> {
     const user = await currentUser();
     if (!user?.id) throw new Error("You must be logged in to register.");
 
-    const tier = formData.get("tier") as keyof typeof PRICING;
+    const tierValue = formData.get("tier");
+    if (typeof tierValue !== "string" || !(tierValue in PRICING)) {
+        throw new Error("Invalid ticket tier selected.");
+    }
+
+    const tier = tierValue as keyof typeof PRICING;
     const amountInKobo = PRICING[tier];
     const reference = `FMCG_${new Date().getTime()}_${user.id.slice(-5)}`;
 
@@ -63,7 +71,7 @@ export async function processRegistration(formData: FormData) {
             status: "successful",
             paystackReference: reference,
         });
-        redirect("/dashboard");
+        return { success: true, type: "free" };
     }
 
     // 2. For paid tiers, create a "pending" record
@@ -101,5 +109,5 @@ export async function processRegistration(formData: FormData) {
         throw new Error("Payment initialization failed");
     }
 
-    redirect(data.data.authorization_url);
+    return { success: true, type: "payment", authorizationUrl: data.data.authorization_url };
 }

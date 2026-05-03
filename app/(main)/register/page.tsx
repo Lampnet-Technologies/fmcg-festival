@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import RegistrationForm from "./RegistrationForm";
 import { Calendar, MapPin, CheckIcon, Mail } from "lucide-react";
 
@@ -16,6 +17,7 @@ export default async function RegisterPage(props: {
 
   const searchParams = await props.searchParams;
   const initialTier = searchParams.tier || "visitor";
+  const isSponsorTier = initialTier.startsWith("sponsorship");
 
   return (
     <main className="flex-1 bg-[#f8f8f5] py-16 px-6">
@@ -30,6 +32,22 @@ export default async function RegisterPage(props: {
               Join the largest gathering of FMCG stakeholders, innovators, and
               leaders. Choose your ticket type below.
             </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center justify-center rounded-sm border border-[#0A2E1F] bg-white px-5 py-3 text-sm font-semibold text-[#0A2E1F] hover:bg-[#f0f7eb] transition"
+              >
+                View Dashboard
+              </Link>
+              {isSponsorTier && (
+                <Link
+                  href="/sponsorship#sponsorship-tiers"
+                  className="inline-flex items-center justify-center rounded-sm bg-[#C5FA00] px-5 py-3 text-sm font-semibold text-[#0A2E1F] hover:bg-[#b0df00] transition"
+                >
+                  Choose another sponsorship tier
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* We extract the form to a Client Component to handle state/submission */}

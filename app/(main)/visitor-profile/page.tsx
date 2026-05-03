@@ -153,11 +153,19 @@ export default function VisitorProfilePage() {
           <h1 className="text-xl md:text-2xl font-normal text-white leading-tight max-w-xl mb-4">
             Who Attends the Festival?
           </h1>
-          <p className="text-white/70 text-base max-w-xl leading-relaxed">
+          <p className="text-white/70 text-base max-w-xl leading-relaxed mb-8">
             A high-performance ecosystem designed for the architects of the FMCG
             world. Connect with the industry&apos;s most influential
             decision-makers.
           </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center justify-center rounded-full bg-[#C5FA00] px-6 py-3 text-sm font-bold text-[#0A2E1F] hover:bg-[#b0df00] transition"
+            >
+              View Dashboard
+            </Link>
+          </div>
         </div>
       </section>
 
