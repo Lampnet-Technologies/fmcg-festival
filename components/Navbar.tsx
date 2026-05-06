@@ -8,16 +8,20 @@ import { Menu, X, ChevronDown } from "lucide-react";
 // 1. Refactored Data Structure: Support for standard links and dropdown menus
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "Exhibitors", href: "/exhibitors" },
   { label: "Sponsorship", href: "/sponsorship" },
   {
-    label: "Discover",
+    label: "Event",
     subLinks: [
+      { label: "About", href: "/about" },
       { label: "Event Line Up", href: "/line-up" },
-      { label: "Exhibitor Profile", href: "/exhibitors" },
+      { label: "Blog/News", href: "/updates" },
+      { label: "Contact", href: "/contact" },
       { label: "Visitor Profile", href: "/visitor-profile" },
     ],
   },
+  { label: "Partners", href: "/partner" },
+  { label: "Profile", href: "/dashboard" },
 ];
 
 export function Navbar() {
@@ -92,7 +96,7 @@ export function Navbar() {
           <Show when="signed-out">
             <SignInButton>
               <button className="text-sm font-bold text-gray-600 hover:text-[#0A2E1F] transition-colors">
-                Login
+                LogIn
               </button>
             </SignInButton>
           </Show>
@@ -181,7 +185,7 @@ export function Navbar() {
                 <div className="flex flex-col space-y-5 mb-6">
                   <SignInButton>
                     <button onClick={closeMenu} className="text-lg font-bold text-gray-600 text-left">
-                      Login
+                      LogIn
                     </button>
                   </SignInButton>
                 </div>

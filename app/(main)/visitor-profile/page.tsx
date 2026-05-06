@@ -158,12 +158,12 @@ export default function VisitorProfilePage() {
             world. Connect with the industry&apos;s most influential
             decision-makers.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap items-left gap-4">
             <Link
               href="/dashboard"
-              className="inline-flex items-center justify-center rounded-full bg-[#C5FA00] px-6 py-3 text-sm font-bold text-[#0A2E1F] hover:bg-[#b0df00] transition"
+              className="inline-flex rounded-full bg-[#C5FA00] px-6 py-3 text-sm font-bold text-[#0A2E1F] hover:bg-[#b0df00] transition"
             >
-              View Dashboard
+              View Your Profile
             </Link>
           </div>
         </div>

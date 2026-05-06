@@ -38,6 +38,38 @@ const STATS = [
   },
 ];
 
+// Added data for the Exhibition Booth Costs
+const BOOTH_COSTS = [
+  {
+    title: "Exhibitor Booth (Blue)",
+    desc: "Includes 4sqr metre booth",
+    price: "$500.00 / ₦700,000",
+    param: "exhibitor_4sqm",
+    bgClass: "bg-blue-100"
+  },
+  {
+    title: "Exhibitor Booth (Orange)",
+    desc: "Includes 6sqr metre booth",
+    price: "$1000.00 / ₦1,400,000",
+    param: "exhibitor_6sqm",
+    bgClass: "bg-orange-100"
+  },
+  {
+    title: "Exhibitor Booth (Green)",
+    desc: "Includes 9sqr metre booth",
+    price: "$1500.00 / ₦2,100,000",
+    param: "exhibitor_9sqm",
+    bgClass: "bg-green-100"
+  },
+  {
+    title: "Exhibitor Booth (Purple)",
+    desc: "Includes 15sqr metre booth",
+    price: "$2000.00 / ₦3,000,000",
+    param: "exhibitor_15sqm",
+    bgClass: "bg-purple-100"
+  },
+];
+
 export default async function ExhibitorsPage() {
   // Fetch data securely on the server
   const exhibitors = await client.fetch(exhibitorsQuery);
@@ -68,7 +100,7 @@ export default async function ExhibitorsPage() {
                 Exhibition Map
               </Link>
               <Link
-                href="#"
+                href="#booth-costs"
                 className="border border-[#0A2E1F] text-[#0A2E1F] px-6 py-4 rounded-sm text-sm font-normal hover:bg-gray-50 transition-colors"
               >
                 Download Guide
@@ -92,8 +124,8 @@ export default async function ExhibitorsPage() {
                 strokeWidth={2}
               />
               <div>
-                <p className="text-xl font-black text-[#0A2E1F]">400+</p>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                <p className="text-xl font-normal text-[#0A2E1F] mb-1">450+</p>
+                <p className="text-xs font-normal text-gray-500 uppercase tracking-widest">
                   Global Exhibitors
                 </p>
               </div>
@@ -130,6 +162,109 @@ export default async function ExhibitorsPage() {
       {/* ── Interactive Featured Directory ────────────────────── */}
       <FeaturedDirectory exhibitors={exhibitors} />
 
+
+      {/* ── Booth Costs & Accommodation ───────────────────────── */}
+      <section className="py-20 px-6 max-w-7xl mx-auto" id="booth-costs">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+          {/* Left Column: Booth Costs (Takes up 2/3 of the grid) */}
+          <div className="lg:col-span-2">
+            <h2 className="text-center md:text-left text-lg font-bold text-[#0A2E1F] uppercase tracking-widest mb-8">
+              The FMCG Festival Exhibition Booth
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {BOOTH_COSTS.map((booth) => (
+                <div
+                  key={booth.param}
+                  className={`border border-gray-200 rounded-xl p-7 flex flex-col h-full shadow-sm ${booth.bgClass}`}
+                >
+                  <div className="grow">
+                    <h3 className="text-2xl font-bold text-[#0A2E1F] mb-2">
+                      {booth.title}
+                    </h3>
+                    <p className="text-gray-500 mb-6 font-medium">
+                      {booth.desc}
+                    </p>
+                    <p className="text-lg font-bold text-[#0A2E1F] mb-8">
+                      {booth.price}
+                    </p>
+                  </div>
+                  <Link
+                    href={`/register?tier=${booth.param}`}
+                    className="block w-full text-center py-3 bg-[#C5FA00] text-[#0A2E1F] font-black rounded-sm hover:bg-[#b0df00] transition-colors"
+                  >
+                    Select Booth
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column: Accommodation (Takes up 1/3 of the grid) */}
+          <div className="lg:col-span-1">
+            <h2 className="text-center md:text-left text-lg font-bold text-[#0A2E1F] uppercase tracking-widest mb-8">
+              Hotel / Accomodation
+            </h2>
+            <div className="bg-[#ebf4ee] rounded-lg p-8 flex flex-col h-full justify-between">
+              <div>
+                {/* Oriental Hotel Block */}
+                <div className="mb-8">
+                  <h3 className="text-lg font-bold text-[#0A2E1F] mb-4">
+                    Oriental hotel Accomodation
+                  </h3>
+                  <p className="text-[#0A2E1F] font-bold mb-3">3 nights- $1000</p>
+                  <p className="text-[#0A2E1F] font-bold">5 nights- $1500</p>
+                </div>
+
+                <hr className="border-t border-[#c6dfd0] my-8" />
+
+                {/* Ocean Gold Airbnb Block */}
+                <div className="mb-4">
+                  <h3 className="text-lg font-bold text-[#0A2E1F] mb-4">
+                    Ocean Gold Airbnb
+                  </h3>
+                  <p className="text-[#0A2E1F] font-bold mb-3">5 nights- $1000</p>
+                  <p className="text-[#0A2E1F] font-bold">3 nights- $75</p>
+                </div>
+              </div>
+
+              {/* Google Form Link Button */}
+              {/*   <Link
+                href="https://forms.google.com/your-form-link-here"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full text-center py-3 mt-4 bg-[#0A2E1F] text-white font-bold rounded hover:bg-[#062015] transition-colors"
+              >
+                Book Accommodation
+              </Link> */}
+              <Link
+                href="/contact"
+                className="block w-full text-center py-3 mt-2 bg-[#0A2E1F] text-white font-bold rounded hover:bg-[#062015] transition-colors"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* ── Map Section ──────────────────────────────────────── */}
+      <section>
+        <h2 className="text-left text-xl font-normal text-[#0A2E1F] uppercase tracking-widest mb-8 mx-10 mt-10">
+          The FMCG Festival Exhibition Floor Plan
+        </h2>
+        <div className="relative h-100 md:h-180 rounded-xl overflow-hidden bg-[#f4f4f0] mx-10 mb-20 mt-2">
+          <Image
+            src="/exhibitor2.png"
+            alt="Exhibition Map"
+            fill
+            className="object-cover"
+          />
+        </div>
+      </section>
+
       {/* ── Visitor Profile & Buying Power ───────────────────── */}
       <section className="py-20 px-6 bg-[#EDEEE9] border-t border-gray-200 rounded-lg mx-10 mb-20 mt-20">
         <div className="max-w-7xl mx-auto">
@@ -159,6 +294,14 @@ export default async function ExhibitorsPage() {
                 </p>
               </div>
             ))}
+          </div>
+          <div className="text-center mt-14">
+            <Link
+              href="/register?booth=general"
+              className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
+            >
+              Register Now
+            </Link>
           </div>
         </div>
       </section>

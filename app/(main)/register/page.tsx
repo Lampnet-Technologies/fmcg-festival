@@ -18,6 +18,7 @@ export default async function RegisterPage(props: {
   const searchParams = await props.searchParams;
   const initialTier = searchParams.tier || "visitor";
   const isSponsorTier = initialTier.startsWith("sponsorship");
+  const isExhibitorTier = initialTier.startsWith("exhibitor");
 
   return (
     <main className="flex-1 bg-[#f8f8f5] py-16 px-6">
@@ -37,7 +38,7 @@ export default async function RegisterPage(props: {
                 href="/dashboard"
                 className="inline-flex items-center justify-center rounded-sm border border-[#0A2E1F] bg-white px-5 py-3 text-sm font-semibold text-[#0A2E1F] hover:bg-[#f0f7eb] transition"
               >
-                View Dashboard
+                View Your Profile
               </Link>
               {isSponsorTier && (
                 <Link
@@ -45,6 +46,14 @@ export default async function RegisterPage(props: {
                   className="inline-flex items-center justify-center rounded-sm bg-[#C5FA00] px-5 py-3 text-sm font-semibold text-[#0A2E1F] hover:bg-[#b0df00] transition"
                 >
                   Choose another sponsorship tier
+                </Link>
+              )}
+              {isExhibitorTier && (
+                <Link
+                  href="/exhibitors#booth-costs"
+                  className="inline-flex items-center justify-center rounded-sm bg-[#C5FA00] px-5 py-3 text-sm font-semibold text-[#0A2E1F] hover:bg-[#b0df00] transition"
+                >
+                  Choose another exhibitor booth
                 </Link>
               )}
             </div>

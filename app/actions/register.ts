@@ -7,11 +7,19 @@ import { eq } from "drizzle-orm";
 
 const PRICING = {
     visitor: 0,
-    exhibitor: 25000000,
-    sponsorship_bronze: 500000000,
-    sponsorship_silver: 1200000000,
-    sponsorship_gold: 2500000000,
-};
+    // Exhibitor Tiers
+    exhibitor: 25000000,        // ₦250,000
+    exhibitor_4sqm: 70000000,   // ₦700,000
+    exhibitor_6sqm: 140000000,  // ₦1,400,000
+    exhibitor_9sqm: 210000000,  // ₦2,100,000
+    exhibitor_15sqm: 300000000, // ₦3,000,000
+    // Sponsorship Tiers
+    sponsorship_bronze: 500000000,   // ₦5,000,000
+    sponsorship_silver: 1000000000,  // ₦10,000,000
+    sponsorship_gold: 2000000000,    // ₦20,000,000
+    sponsorship_category: 4000000000, // ₦40,000,000
+    sponsorship_headline: 5000000000  // ₦50,000,000
+} as const;
 
 type RegistrationResult =
     | { success: true; type: "free" }

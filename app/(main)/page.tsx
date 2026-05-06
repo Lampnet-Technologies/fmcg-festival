@@ -5,7 +5,7 @@ import {
   Users,
   Building2,
   Globe,
-  Mic2,
+  CircleStarIcon,
   UtensilsCrossed,
   Droplets,
   Settings,
@@ -25,29 +25,29 @@ import { urlFor } from "@/sanity/lib/image";
 const SCHEDULE_PREVIEW = [
   {
     day: "Day 1 · 09:00 AM",
-    title: "Opening Keynote: Future of Retail",
-    desc: "Industry leaders discuss the impact of AI on consumer analytics.",
+    title: "Opening Ceremony/Conference & Exhibition",
+    desc: "Keynotes from industry leaders set the stage for three days of innovation and networking.",
     img: "/event1.png",
   },
   {
-    day: "Day 1 · 02:00 PM",
-    title: "Panel: Sustainability in Packaging",
-    desc: "Case studies on circular economy initiatives from top brands.",
+    day: "Day 2 · 09:00 AM",
+    title: "Conference & Exhibition",
+    desc: "Panels explore the rise of direct-to-consumer brands and sustainable packaging innovations.",
     img: "/event2.png",
   },
   {
-    day: "Day 2 · 10:30 AM",
-    title: "Product Launch Arena",
-    desc: "Live unveiling of innovative products across all FMCG sectors.",
+    day: "Day 3 · 10:00 AM",
+    title: "Pitch competition/Fashion show/Closing ceremony",
+    desc: "Finalists present innovations in sustainable packaging to a panel of retail giants.",
     img: "/event3.png",
   },
 ];
 
 const STATS = [
-  { icon: "Users", value: "12k+", label: "Attendees" },
+  { icon: "Users", value: "5k", label: "Attendees" },
   { icon: "Building2", value: "450+", label: "Exhibitors" },
-  { icon: "Globe", value: "65+", label: "Countries" },
-  { icon: "Mic2", value: "120+", label: "Speakers" },
+  { icon: "Globe", value: "20+", label: "Countries" },
+  { icon: "CircleStarIcon", value: "95+", label: "Local & Global Brand" },
 ];
 
 const WHY_EXHIBIT = [
@@ -178,7 +178,7 @@ export default async function HomePage() {
     Users,
     Building2,
     Globe,
-    Mic2,
+    CircleStarIcon,
     UtensilsCrossed,
     Droplets,
     Settings,
@@ -204,10 +204,10 @@ export default async function HomePage() {
         {/* Background image */}
         <div className="absolute inset-0">
           <Image
-            src="/Container.png"
+            src="/mainhero.png"
             alt="FMCG Festival"
             fill
-            sizes="100vw"
+            sizes="90vw"
             className="object-cover"
             priority
           />
@@ -221,14 +221,13 @@ export default async function HomePage() {
               October 24–26, 2026 • The Innovation Hub
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] max-w-2xl">
-              The Future of <span className="text-[#C5FA00]">FMCG</span> is Here.
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-white leading-[1.1] max-w-2xl">
+              The <span className="text-[#C5FA00]">FMCG</span> Festival
             </h1>
 
             <p className="text-white text-base md:text-lg max-w-xl leading-relaxed">
-              Connect with 500+ global brands, industry disruptors, and retail
-              giants at the definitive festival for high-performance FMCG
-              excellence.
+              A global platform connecting the FMCG value chain, fostering
+              innovation, and driving growth across the continent.
             </p>
 
             <p className="text-white text-sm md:text-base max-w-xl leading-relaxed flex items-center">
@@ -340,7 +339,7 @@ export default async function HomePage() {
               />
             </div>
             {/* Floating quote - adjusted positioning for mobile */}
-            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 md:left-4 md:translate-x-0 bg-[#C5FA00] border rounded-xl px-6 py-5 w-11/12 max-w-70 shadow-lg">
+            <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 md:left-[-8] md:translate-x-0 bg-[#C5FA00] rounded-xl px-6 py-5 w-11/12 max-w-100 shadow-lg">
               <p className="text-sm text-[#0A2E1F] italic leading-snug font-medium text-center md:text-left">
                 &ldquo;The catalyst for retail transformation in Lagos.&rdquo;
               </p>
@@ -387,7 +386,7 @@ export default async function HomePage() {
             </div>
 
             {/* Center image */}
-            <div className="relative w-full h-75 md:h-100 lg:h-125 rounded-2xl overflow-hidden order-1 lg:order-2 shadow-sm">
+            <div className="relative w-full h-75 md:h-100 lg:h-125 rounded-2xl bg-white overflow-hidden order-1 lg:order-2 isolate">
               <Image
                 src="/homepage3.png"
                 alt="Exhibition"
@@ -439,19 +438,27 @@ export default async function HomePage() {
             </p>
           </div>
           {/* Changed layout for better scaling on mobile */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center justify-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 items-center justify-center">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="shrink-0 flex justify-center max-w-auto max-h-auto">
                 <Image
                   src={`/partner${i + 1}.png`}
                   alt={`Partner ${i + 1}`}
-                  width={100}
-                  height={40}
+                  width={200}
+                  height={150}
                   className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 12.5vw"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw"
                 />
               </div>
             ))}
+          </div>
+          <div className="text-center mt-14">
+            <Link
+              href="/sponsorship"
+              className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
+            >
+              Become A Sponsor
+            </Link>
           </div>
         </div>
       </section>

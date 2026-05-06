@@ -26,23 +26,59 @@ const TIER_DETAILS: Record<
     description: "Includes 3x3m booth, 2 staff passes, and branding visibility.",
     price: "$450.00 / ₦250,000",
   },
+  exhibitor_4sqm: {
+    type: "Exhibitor Booth",
+    title: "4 sqm Exhibitor Booth",
+    description: "Includes 4sqm booth space, 2 staff passes, and exhibition listing.",
+    price: "$500.00 / ₦700,000",
+  },
+  exhibitor_6sqm: {
+    type: "Exhibitor Booth",
+    title: "6 sqm Exhibitor Booth",
+    description: "Includes 6sqm booth space, 2 staff passes, and premium exhibition placement.",
+    price: "$1000.00 / ₦1,400,000",
+  },
+  exhibitor_9sqm: {
+    type: "Exhibitor Booth",
+    title: "9 sqm Exhibitor Booth",
+    description: "Includes 9sqm booth space, 2 staff passes, and enhanced branding visibility.",
+    price: "$1500.00 / ₦2,100,000",
+  },
+  exhibitor_15sqm: {
+    type: "Exhibitor Booth",
+    title: "15 sqm Exhibitor Booth",
+    description: "Includes 15sqm booth space, 2 staff passes, and premium placement with extra exposure.",
+    price: "$2000.00 / ₦3,000,000",
+  },
   sponsorship_bronze: {
     type: "Bronze Sponsorship",
     title: "Bronze Sponsorship",
     description: "Logo placement, exhibition space, and 2 delegate passes.",
     price: "₦5M / $5,000",
   },
+  sponsorship_headline: {
+    type: "Headline / Category Sponsorship",
+    title: "Headline / Category Sponsorship",
+    description: "Exclusive headline sponsor credit, billboards, private networking slots, and keynote visibility.",
+    price: "₦50M / $50,000",
+  },
   sponsorship_silver: {
     type: "Silver Sponsorship",
     title: "Silver Sponsorship",
     description: "Standard booth, media coverage, and logo exposure.",
-    price: "₦12M / $12,000",
+    price: "₦10M / $10,000",
+  },
+  sponsorship_category: {
+    type: "Category Sponsorship",
+    title: "Category Sponsorship",
+    description: "Exclusive category sponsor credit, billboards, and premium event exposure.",
+    price: "₦40M / $40,000",
   },
   sponsorship_gold: {
     type: "Gold Sponsorship",
     title: "Gold Sponsorship",
     description: "Prime booth, keynote visibility, and premium branding.",
-    price: "₦25M / $25,000",
+    price: "₦20M / $20,000",
   },
 };
 
@@ -57,8 +93,10 @@ export default function RegistrationForm({
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const tierData = TIER_DETAILS[selectedTier];
+  const tierData = TIER_DETAILS[selectedTier] || TIER_DETAILS.visitor;
   const isSponsorshipTier = selectedTier.startsWith("sponsorship");
+  const isExhibitorTier = selectedTier.startsWith("exhibitor");
+  const isPaidTier = selectedTier !== "visitor";
   const buttonText = selectedTier === "visitor" ? "Complete Registration" : "Continue to Payment";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,16 +146,16 @@ export default function RegistrationForm({
               </span>
             </div>
 
-            {isSponsorshipTier && (
+            {isPaidTier && (
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-sm text-gray-700">
-                  You selected a sponsorship tier. All sponsorship registrations are paid and will continue to Paystack.
+                  You selected a paid tier. Payments are processed securely via Paystack.
                 </p>
                 <Link
-                  href="/sponsorship#sponsorship-tiers"
+                  href={isSponsorshipTier ? "/sponsorship#sponsorship-tiers" : "/exhibitors"}
                   className="inline-flex items-center justify-center rounded-sm border border-[#0A2E1F] px-4 py-2 text-sm font-semibold text-[#0A2E1F] hover:bg-[#F0F7EA] transition"
                 >
-                  Choose another sponsorship tier
+                  {isSponsorshipTier ? "Choose another sponsorship tier" : "Choose another exhibitor booth"}
                 </Link>
               </div>
             )}
@@ -175,43 +213,9 @@ export default function RegistrationForm({
         </div>
       </div>
 
-      {!isSponsorshipTier && (
-        <>
-          <h3 className="text-sm font-bold text-[#0A2E1F] mb-4">Select Ticket Type</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <div
-              onClick={() => setSelectedTier("visitor")}
-              className={`cursor-pointer border-2 p-4 rounded-lg transition-colors ${selectedTier === "visitor" ? "border-[#0A2E1F] bg-green-50" : "border-gray-200"}`}
-            >
-              <div className="flex justify-between items-center mb-2">
-                <h4 className="font-bold text-[#0A2E1F]">Visitor Pass</h4>
-                <div
-                  className={`w-4 h-4 rounded-full border-2 ${selectedTier === "visitor" ? "border-[#0A2E1F] bg-[#0A2E1F]" : "border-gray-300"}`}
-                ></div>
-              </div>
-              <p className="text-sm text-gray-500 mb-2">Access to all sessions and networking areas.</p>
-              <p className="text-xs font-bold text-green-700">Free Registration</p>
-            </div>
-
-            <div
-              onClick={() => setSelectedTier("exhibitor")}
-              className={`cursor-pointer border-2 p-4 rounded-lg transition-colors ${selectedTier === "exhibitor" ? "border-[#0A2E1F] bg-green-50" : "border-gray-200"}`}
-            >
-              <div className="flex justify-between items-center mb-2">
-                <h4 className="font-bold text-[#0A2E1F]">Exhibitor Booth</h4>
-                <div
-                  className={`w-4 h-4 rounded-full border-2 ${selectedTier === "exhibitor" ? "border-[#0A2E1F] bg-[#0A2E1F]" : "border-gray-300"}`}
-                ></div>
-              </div>
-              <p className="text-sm text-gray-500 mb-2">Includes 3x3m booth, 2 staff passes, and branding.</p>
-              <p className="text-xs font-bold text-[#0A2E1F]">$450.00 / ₦250,000</p>
-            </div>
-          </div>
-        </>
-      )}
 
       {/* Warning for Sponsorship URLs */}
-      {selectedTier.includes("sponsorship") && (
+      {isSponsorshipTier && (
         <div className="bg-[#C5FA00]/20 p-4 rounded-md mb-8 border border-[#C5FA00]">
           <p className="text-sm font-bold text-[#0A2E1F]">
             You have pre-selected the{" "}

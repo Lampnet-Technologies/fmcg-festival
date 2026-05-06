@@ -4,8 +4,8 @@ import { db } from "@/db";
 import { registrations, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
-import QRCode from "react-qr-code";
 import RefreshButton from "./RefreshButton";
+import TicketCard from "@/components/TicketCard";
 
 // Next.js 15 requires searchParams to be a Promise
 export default async function DashboardPage(props: { 
@@ -111,72 +111,17 @@ export default async function DashboardPage(props: {
 
         {/* Map through all the user's tickets */}
         <div className="space-y-8">
-          {userRegistrations.map((registration) => {
-            
-            // Inline Pending Card (For abandoned checkouts that aren't currently verifying)
-            if (registration.status === "pending") {
-              return (
-                <div key={registration.id || registration.paystackReference} className="bg-white border border-yellow-200 rounded-xl p-6 flex items-center justify-between shadow-sm">
-                  <div>
-                    <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-sm text-[10px] font-black tracking-widest uppercase mb-2 inline-block">
-                      Pending Payment
-                    </span>
-                    <h3 className="text-lg font-bold text-[#0A2E1F]">
-                      {registration.purchaseType.replace('sponsorship_', '').toUpperCase()} PASS
-                    </h3>
-                    <p className="text-sm text-gray-500 mt-1">Ref: {registration.paystackReference}</p>
-                  </div>
-                  <RefreshButton />
-                </div>
-              );
-            }
-
-            // Successful Ticket Card
-            const displayTier = registration.purchaseType.replace('sponsorship_', '').toUpperCase();
-
-            return (
-              <div key={registration.id || registration.paystackReference} className="bg-[#0A2E1F] rounded-xl flex flex-col md:flex-row shadow-2xl overflow-hidden relative">
-                <div className="w-full md:w-3 bg-[#C5FA00]"></div>
-
-                <div className="p-8 md:p-12 flex-1 text-white flex flex-col justify-between">
-                  <div>
-                    <span className="bg-white/10 text-[#C5FA00] px-3 py-1 rounded-sm text-xs font-bold tracking-widest uppercase mb-6 inline-block border border-white/20">
-                      {displayTier} PASS
-                    </span>
-                    <h2 className="text-3xl font-bold mb-1">
-                      {user.firstName} {user.lastName}
-                    </h2>
-                    <p className="text-gray-400 text-sm mb-8">{user.emailAddresses[0]?.emailAddress}</p>
-
-                    <div className="grid grid-cols-2 gap-6 border-t border-white/10 pt-6">
-                      <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Date</p>
-                        <p className="font-semibold text-sm">Nov 24 - 26, 2026</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Location</p>
-                        <p className="font-semibold text-sm">Federal Palace Hotel, VI</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white p-8 md:p-12 flex flex-col items-center justify-center border-l-2 border-dashed border-gray-200 relative shrink-0">
-                    <div className="absolute -top-4 -left-4 w-8 h-8 bg-[#0A2E1F] rounded-full hidden md:block"></div>
-                    <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gray-50 rounded-full hidden md:block"></div>
-                    
-                    <div className="bg-white p-2 border border-gray-200 rounded-lg shadow-sm mb-4">
-                      <QRCode 
-                        value={registration.paystackReference || user.id} 
-                        size={150} 
-                        fgColor="#0A2E1F"
-                      />
-                    </div>
-                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest text-center">Scan for Entry</p>
-                </div>
-              </div>
-            );
-          })}
+          {userRegistrations.map((registration) => (
+            <TicketCard
+              key={registration.id || registration.paystackReference}
+              registration={registration}
+              user={{
+                firstName: user.firstName || "Attendee",
+                lastName: user.lastName || "",
+                email: user.emailAddresses[0]?.emailAddress || "",
+              }}
+            />
+          ))}
         </div>
 
         {/* Quick Links */}

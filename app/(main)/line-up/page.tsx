@@ -8,6 +8,66 @@ import { Mic, Shirt, Users, Rocket, Banknote } from "lucide-react";
 
 // ── Hardcoded Event Data ──────────────────────────────────────────────────
 const EVENT_SCHEDULE: Record<string, any[]> = {
+  day0: [
+    {
+      id: "d1-1",
+      time: "Day 01",
+      title: "Opening Ceremony/Conference & Exhibition",
+      stage: "MAIN STAGE",
+      stageBg: "bg-gray-100 text-gray-500",
+      iconBg: "bg-[#0A2E1F]",
+      Icon: Mic,
+      description:
+        "FMCG Industry professionals will engage in thought provoking conferences, panel discussions by global leaders. Opportunity to showcase products, services and innovations by exhibitors from local and international brands thus providing a networking, trade, partnership, investment and business expansion platform to all exhibitors.",
+      speakers: [
+        {
+          id: "s1",
+          name: "Sir Arthur Sterling",
+          role: "CEO, Global Consumer Dynamics",
+          image: "/eventprofile1.png",
+        },
+      ],
+    },
+    {
+      id: "d1-2",
+      time: "Day 02",
+      title: "Conference & Exhibition",
+      stage: "RUNWAY HALL",
+      stageBg: "bg-[#FDF2F2] text-[#9B4848]",
+      iconBg: "bg-[#4A2028]",
+      Icon: Shirt,
+      description:
+        "The conference will further provide deep insights into current trends, standards and strategies essential for transforming the FMCG sector, alongside B2B exhibition for further networking.",
+      images: ["/EP1.png", "/Ep2.png", "/EP3.png"],
+      speakers: [
+        {
+          id: "s2",
+          name: "Elena Vane",
+          role: "Creative Director, Eco-Luxe Collective",
+          image: "/eventprofile2.png",
+        },
+      ],
+    },
+    {
+      id: "d1-3",
+      time: "Day 03",
+      title: "Pitch competition/Fashion show/Closing ceremony",
+      stage: "STRATEGY ROOM",
+      stageBg: "bg-[#F7FBEB] text-[#718F2E]",
+      iconBg: "bg-[#4B5E1E]",
+      Icon: Users,
+      description:
+        "Emerging entrepreneurs and start ups in the FMCG sector will pitch great ideas to investors. Winners will be awarded funding, mentorship and global market opportunities. Top and emerging designers, fashionpreneurs and creative industry leaders across the globe will showcase their creative craft expressing arts, culture and the dynamic evolution through fashion.",
+
+      speakers: [
+        { id: "s3", image: "/eventprofile3.png" },
+        { id: "s4", image: "/eventprofile4.png" },
+        { id: "s5", image: "/eventprofile5.png" },
+      ],
+      extraSpeakersCount: 2,
+    },
+  ],
+
   day1: [
     {
       id: "d1-1",
@@ -79,6 +139,7 @@ const EVENT_SCHEDULE: Record<string, any[]> = {
       prize: "$250,000 Equity Investment Prize",
     },
   ],
+
   day2: [
     {
       id: "d2-1",
@@ -115,6 +176,7 @@ const EVENT_SCHEDULE: Record<string, any[]> = {
       ],
     },
   ],
+
   day3: [
     {
       id: "d3-1",
@@ -139,14 +201,15 @@ const EVENT_SCHEDULE: Record<string, any[]> = {
 };
 
 const DAY_TABS = [
-  { key: "day1", label: "DAY 01: THE FUTURE OF FMCG" },
-  { key: "day2", label: "DAY 02: SUSTAINABILITY & LOGISTICS" },
-  { key: "day3", label: "DAY 03: THE GLOBAL MARKETPLACE" },
+  { key: "day0", label: "EVENT LINE UP" },
+  /*   { key: "day1", label: "DAY 01: THE FUTURE OF FMCG" },
+    { key: "day2", label: "DAY 02: SUSTAINABILITY & LOGISTICS" },
+    { key: "day3", label: "DAY 03: THE GLOBAL MARKETPLACE" }, */
 ];
 
 export default function LineUpPage() {
   // State to track which day is currently active
-  const [activeDay, setActiveDay] = useState<string>("day1");
+  const [activeDay, setActiveDay] = useState<string>("day0");
 
   // Retrieve the events for the selected day
   const currentEvents = EVENT_SCHEDULE[activeDay] || [];
@@ -185,8 +248,8 @@ export default function LineUpPage() {
                 key={tab.key}
                 onClick={() => setActiveDay(tab.key)}
                 className={`shrink-0 px-4 md:px-8 py-4 md:py-5 text-[10px] md:text-xs font-black uppercase tracking-widest transition-colors border-b-2 -mb-px ${isActive
-                    ? "border-[#0A2E1F] text-white bg-[#0A2E1F]"
-                    : "border-transparent text-gray-400 hover:text-gray-700 bg-white"
+                  ? "border-[#0A2E1F] text-white bg-[#0A2E1F]"
+                  : "border-transparent text-gray-400 hover:text-gray-700 bg-white"
                   }`}
               >
                 {tab.label}

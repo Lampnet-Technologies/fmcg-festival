@@ -5,19 +5,6 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
-import { Utensils, Droplets, Cpu, Package, } from "lucide-react";
-
-// Helper function to dynamically assign icons based on Sanity category
-function CategoryIcon({ category }: { category?: string }) {
-    if (!category) return <Package className="w-3.5 h-3.5" />;
-
-    const cat = category.toUpperCase();
-    if (cat.includes("FOOD") || cat.includes("BEVERAGE")) return <Utensils className="w-3.5 h-3.5" />;
-    if (cat.includes("PERSONAL") || cat.includes("CARE")) return <Droplets className="w-3.5 h-3.5" />;
-    if (cat.includes("TECH") || cat.includes("PROCESSING")) return <Cpu className="w-3.5 h-3.5" />;
-
-    return <Package className="w-3.5 h-3.5" />;
-}
 
 export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] }) {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -49,7 +36,7 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                         <div className="relative w-full md:w-1/2 bg-[#319B91] p-8 flex flex-col justify-center items-center text-center min-h-62.5">
                             <div className="absolute top-4 left-4">
                                 <span className="bg-[#0A2E1F] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-sm shadow-sm">
-                                    Premium Partner
+                                    Food Tech
                                 </span>
                             </div>
                             <div className="w-54 h-54 relative mb-4 opacity-90">
@@ -60,18 +47,15 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                         </div>
                         {/* Right Content Block */}
                         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-                            <span className="text-[10px] font-black text-[#506600] uppercase tracking-widest flex items-center gap-1.5 mb-2">
-                                <Utensils className="w-3.5 h-3.5" /> FOOD & BEVERAGES
-                            </span>
                             <h3 className="text-xl font-black text-[#0A2E1F] mb-3">VitaHarvest Global</h3>
                             <p className="text-sm text-gray-500 leading-relaxed mb-6">
                                 Leading the transition to plant-based proteins with proprietary extrusion technology and sustainable sourcing networks across 40 countries.
                             </p>
-                            <div className="flex flex-wrap gap-2">
+                            {/*  <div className="flex flex-wrap gap-2">
                                 <span className="bg-[#F2F4EF] text-gray-600 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-sm">Sustainability</span>
                                 <span className="bg-[#F2F4EF] text-gray-600 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-sm">Supply Chain</span>
                                 <span className="bg-[#F2F4EF] text-gray-600 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-sm">B2B</span>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
@@ -80,16 +64,11 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                         <div key={exhibitor._id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
                             <div>
                                 <span className="text-[10px] font-black text-[#506600] uppercase tracking-widest flex items-center gap-1.5 mb-3">
-                                    <CategoryIcon category={exhibitor.category} />
-                                    {exhibitor.category?.replace("_", " ") || "EXHIBITOR"}
+                                    {exhibitor.companyName}
                                 </span>
-                                <h3 className="text-lg font-black text-[#0A2E1F] mb-3">{exhibitor.companyName}</h3>
-                                <p className="text-sm text-gray-500 leading-relaxed mb-6 line-clamp-4">
-                                    {exhibitor.description}
-                                </p>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-gray-100 rounded-md overflow-hidden relative shrink-0 border border-gray-200">
+                                <div className="w-10 h-10 bg-[#84A900] rounded-md overflow-hidden relative shrink-0 border border-gray-200">
                                     <Image
                                         src={exhibitor.logo ? urlFor(exhibitor.logo).url() : "/default.png"}
                                         alt="logo"
@@ -97,9 +76,6 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                                         className="object-cover"
                                     />
                                 </div>
-                                <span className="text-sm font-medium text-gray-600">
-                                    {exhibitor.boothLocation || "Booth TBD"}
-                                </span>
                             </div>
                         </div>
                     ))}

@@ -221,7 +221,7 @@ export default function AboutPage() {
           <div className="text-center mt-12">
             <Link
               href="/exhibitors"
-              className="bg-none text-[#0A2E1F] px-6 py-3 font-semibold text-xl hover:text-white transition-colors inline-block border-b-3 border-[#0A2E1F] hover:border-white"
+              className="bg-none text-[#0A2E1F] px-2 py-3 font-semibold text-xl hover:text-white transition-colors inline-block border-b-2 border-[#0A2E1F] hover:border-white"
             >
               See Exhibitors
             </Link>
