@@ -1,15 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Utensils,
-  Droplets,
-  Home,
   Cpu,
-  Package,
   ShoppingCart,
   Factory,
-  Truck,
-  ConciergeBell,
   CheckCircle2,
   Check,
   TrendingUp,
@@ -20,6 +14,7 @@ import {
   Target,
 } from "lucide-react";
 
+/*
 const EXHIBITOR_SECTORS = [
   {
     icon: Utensils,
@@ -46,7 +41,7 @@ const EXHIBITOR_SECTORS = [
     label: "Packaging",
     sub: "Eco-friendly & Smart Solutions",
   },
-];
+]; */
 
 const WHO_ATTENDS_PROFILES = [
   {
@@ -140,10 +135,12 @@ export default function VisitorProfilePage() {
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative h-[72vh] min-h-100 overflow-hidden bg-[#082317]">
         <Image
-          src="/Container.png"
+          src="/homepage-main-hero.png"
           alt="Festival attendees silhouette"
           fill
           className="object-cover opacity-40"
+          loading="eager"
+          sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
         <div className="absolute inset-0 z-10 flex flex-col justify-center px-8 md:px-16 pb-14">
@@ -251,6 +248,8 @@ export default function VisitorProfilePage() {
                               alt={item.title}
                               fill
                               className="object-cover"
+                              loading="eager"
+                              sizes="(max-width: 768px) 100vw, 50vw"
                             />
                           </div>
                         )}

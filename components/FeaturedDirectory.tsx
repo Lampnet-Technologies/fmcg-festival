@@ -40,7 +40,7 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                                 </span>
                             </div>
                             <div className="w-54 h-54 relative mb-4 opacity-90">
-                                <Image src="/FoodTech.png" alt="Saffe Work" fill className="object-contain" />
+                                <Image src="/FoodTech.png" alt="Saffe Work" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
                             </div>
                             <h3 className="text-white text-2xl font-black uppercase tracking-widest">Food Tech</h3>
                             <p className="text-white/80 font-medium tracking-widest uppercase text-sm mt-1">Saffe Work</p>
@@ -74,6 +74,7 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                                         alt="logo"
                                         fill
                                         className="object-cover"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                     />
                                 </div>
                             </div>

@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import { urlFor } from "@/sanity/lib/image";
 
-
 const SCHEDULE_PREVIEW = [
   {
     day: "Day 1 · 09:00 AM",
@@ -204,7 +203,7 @@ export default async function HomePage() {
         {/* Background image */}
         <div className="absolute inset-0">
           <Image
-            src="/mainhero.png"
+            src="/homepage-main-hero.png"
             alt="FMCG Festival"
             fill
             sizes="90vw"
@@ -213,7 +212,6 @@ export default async function HomePage() {
           />
         </div>
 
-        {/* Removed mx-14, used standard max-w-7xl fluid container */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="flex flex-col items-start gap-6">
@@ -257,7 +255,6 @@ export default async function HomePage() {
               <p className="text-white text-base md:text-lg font-semibold mb-6 text-center lg:text-left">
                 Countdown to Festival
               </p>
-              {/* Stacked 2x2 on mobile, 4 columns on tablets+ */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="text-center">
                   <p className="text-3xl font-black text-white">182</p>
@@ -300,7 +297,6 @@ export default async function HomePage() {
               space for the industry to align, innovate, and grow.
             </p>
 
-            {/* Stats row - 2 columns */}
             <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8">
               {STATS.map((s) => (
                 <div
@@ -328,7 +324,6 @@ export default async function HomePage() {
 
           {/* Right column - Image with floating quote card */}
           <div className="relative mt-8 lg:mt-0">
-            {/* Fixed invalid height classes */}
             <div className="relative h-100 md:h-125 rounded-xl overflow-hidden bg-gray-100">
               <Image
                 src="/homepage2.png"
@@ -338,7 +333,6 @@ export default async function HomePage() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
-            {/* Floating quote - adjusted positioning for mobile */}
             <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 md:left-[-8] md:translate-x-0 bg-[#C5FA00] rounded-xl px-6 py-5 w-11/12 max-w-100 shadow-lg">
               <p className="text-sm text-[#0A2E1F] italic leading-snug font-medium text-center md:text-left">
                 &ldquo;The catalyst for retail transformation in Lagos.&rdquo;
@@ -425,40 +419,81 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Our Sponsors Sectors ────────────────────────────────── */}
-      <section className="py-20 px-6 bg-[#F2F4EF]">
+      {/* ── Our Partners ──────────────────────────────────────── */}
+      <section className="py-24 px-6 bg-[#f8f9f5]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-xl md:text-2xl font-bold text-[#0A2E1F] mb-4 uppercase tracking-widest">
-              Our Sponsors
+          {/* Header & Buttons */}
+          <div className="text-center mb-16">
+            <h2 className="text-base font-bold text-[#0A2E1F] mb-3 uppercase tracking-widest">
+              Our Partners
             </h2>
-            <p className="text-gray-500 text-sm max-w-2xl mx-auto">
-              Proudly partnering with industry leaders to drive innovation and
-              excellence in FMCG.
+            <p className="text-[#0A2E1F] text-base mb-8">
+              Supported by Industry Leaders
             </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/sponsorship"
+                className="bg-[#0A2E1F] border-2 border-[#0A2E1F] text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-[#062015] hover:border-[#062015] transition-colors"
+              >
+                Become a Partner
+              </Link>
+              <Link
+                href="/sponsorship#sponsorship-tiers"
+                className="bg-transparent border-2 border-[#0A2E1F] text-[#0A2E1F] px-6 py-2.5 rounded text-sm font-bold hover:bg-[#0A2E1F]/5 transition-colors"
+              >
+                See all Sponsors
+              </Link>
+            </div>
           </div>
-          {/* Changed layout for better scaling on mobile */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 items-center justify-center">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="shrink-0 flex justify-center max-w-auto max-h-auto">
-                <Image
-                  src={`/partner${i + 1}.png`}
-                  alt={`Partner ${i + 1}`}
-                  width={200}
-                  height={150}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 20vw"
-                />
+
+          {/* Partner Rows */}
+          <div className="flex flex-col gap-8 md:gap-10">
+            {/* International Partners Row */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+              <h3 className="text-xl md:text-2xl font-bold text-[#0A2E1F] w-full md:w-1/5 text-center md:text-left leading-tight">
+                International<br className="hidden md:block" /> Partners
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full md:w-4/5">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div
+                    key={`intl-${i}`}
+                    className="relative h-32 md:h-40 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-6 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <Image
+                      src={`/partner${i + 1}.png`}
+                      alt={`International Partner ${i + 1}`}
+                      fill
+                      className="object-contain p-6"
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="text-center mt-14">
-            <Link
-              href="/sponsorship"
-              className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
-            >
-              Become A Sponsor
-            </Link>
+            </div>
+
+            {/* Local Partners Row */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+              {/* Logos on the left for desktop, ordered first for mobile */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full md:w-4/5 order-2 md:order-1">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div
+                    key={`local-${i}`}
+                    className="relative h-32 md:h-40 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-6 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <Image
+                      src={`/partner${i + 5}.png`}
+                      alt={`Local Partner ${i + 1}`}
+                      fill
+                      className="object-contain p-6"
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                    />
+                  </div>
+                ))}
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-[#0A2E1F] w-full md:w-1/5 text-center md:text-right leading-tight order-1 md:order-2">
+                Local<br className="hidden md:block" /> Partners
+              </h3>
+            </div>
           </div>
         </div>
       </section>
@@ -534,6 +569,7 @@ export default async function HomePage() {
                       alt={speaker.name}
                       fill
                       className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                      sizes="(max-width: 768px) 100vw, 25vw"
                     />
                   )}
                   <div className="absolute inset-0 bg-linear-to-t from-[#002E16]/80 via-transparent to-transparent" />
@@ -651,7 +687,6 @@ export default async function HomePage() {
               #FMCGFestival Updates
             </h2>
             <div className="flex gap-2">
-              {/* Replaced text arrows with actual navigation logic/buttons */}
               <Link
                 href="/updates"
                 className="bg-white border border-gray-300 px-6 py-2.5 rounded-full text-sm font-bold text-[#0A2E1F] hover:bg-[#0A2E1F] hover:text-white transition-colors"
@@ -662,10 +697,9 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Assuming NEWS_ITEMS is mapped from your Sanity fetch */}
             {NEWS_ITEMS.map((item, i) => (
               <Link
-                href={`/updates/${i}`} // Dynamic route linking
+                href={`/updates/${i}`}
                 key={i}
                 className="group rounded-xl overflow-hidden border border-gray-200 bg-white flex flex-col shadow-sm hover:shadow-xl transition-all duration-300"
               >
@@ -742,7 +776,6 @@ export default async function HomePage() {
                     {block.body}
                   </p>
                 </div>
-                {/* Removed mr-40 to fix mobile overflow */}
                 <Link
                   href={block.href}
                   className={`inline-block px-8 py-4 rounded-sm text-sm font-bold transition-colors w-full sm:w-max text-center ${block.ctaStyle}`}

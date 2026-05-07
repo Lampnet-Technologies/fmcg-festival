@@ -115,6 +115,7 @@ export default async function ExhibitorsPage() {
               alt="Exhibition Hall"
               fill
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
               loading="eager"
             />
             {/* Badge */}
@@ -261,6 +262,7 @@ export default async function ExhibitorsPage() {
             alt="Exhibition Map"
             fill
             className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       </section>

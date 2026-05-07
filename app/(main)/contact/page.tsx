@@ -165,10 +165,11 @@ export default function ContactPage() {
           <div className="relative lg:w-1/2 h-80 lg:h-auto bg-gray-100">
             {/* Replace this with an actual image of a map, the venue, or a Google Maps embed */}
             <Image
-              src="/homepage3.png" // You can swap this for a map screenshot
+              src="/homepage3.png" // Placeholder image - replace with actual map or venue photo
               alt="Federal Palace Hotel Map"
               fill
               className="object-cover opacity-80 mix-blend-multiply"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
             {/* Visual map pin overlay just for design flair */}
             <div className="absolute inset-0 flex items-center justify-center">

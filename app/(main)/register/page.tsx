@@ -96,6 +96,7 @@ export default async function RegisterPage(props: {
                   alt="Venue"
                   fill
                   className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
             </div>

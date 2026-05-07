@@ -223,6 +223,7 @@ export default function LineUpPage() {
           alt="Event stage"
           fill
           className="object-cover opacity-40"
+          sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_80%,rgba(197,250,0,0.12),transparent_70%)]" />
@@ -325,6 +326,7 @@ export default function LineUpPage() {
                               alt="Session highlight"
                               fill
                               className="object-cover"
+                              sizes="(max-width: 768px) 100vw, 50vw"
                             />
                           </div>
                         ))}
@@ -351,6 +353,7 @@ export default function LineUpPage() {
                                         alt="Speaker"
                                         fill
                                         className="object-cover"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                       />
                                     </div>
                                   ))}
@@ -374,6 +377,7 @@ export default function LineUpPage() {
                                           alt={speaker.name || "Speaker"}
                                           fill
                                           className="object-cover"
+                                          sizes="(max-width: 768px) 100vw, 50vw"
                                         />
                                       </div>
                                     )}

@@ -12,6 +12,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/webhooks/clerk',
   '/api/webhooks/paystack',
   'studio(.*)',
+  '/partner',
  /*  '/profile', */
 ]);
 

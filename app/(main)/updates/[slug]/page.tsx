@@ -54,6 +54,7 @@ const portableTextComponents = {
                         width={800}
                         height={400}
                         className="w-full rounded-xl"
+                        sizes="(max-width: 768px) 100vw, 50vw"
                     />
                     {value?.alt && <figcaption className="text-sm text-gray-600 mt-2">{value.alt}</figcaption>}
                 </figure>
@@ -126,6 +127,7 @@ export default async function SingleUpdatePage({ params }: { params: Promise<{ s
                             alt={post.title}
                             fill
                             className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 50vw"
                             priority
                         />
                     </div>

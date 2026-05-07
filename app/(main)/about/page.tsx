@@ -106,6 +106,7 @@ export default function AboutPage() {
           alt="FMCG Festival Hall"
           fill
           className="object-cover"
+          sizes="100vw"
           priority
         />
         <div className="absolute inset-0 bg-black/30" />
@@ -164,6 +165,7 @@ export default function AboutPage() {
                 alt="Handshake at festival"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
             {/* Floating quote */}
@@ -344,6 +346,7 @@ export default function AboutPage() {
                       alt={item.title}
                       fill
                       className="object-cover opacity-60"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
 

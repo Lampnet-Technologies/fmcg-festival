@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   Users,
-  Utensils,
 } from "lucide-react";
 
 
@@ -61,6 +60,7 @@ export default async function partnerPage() {
               fill
               className="object-cover"
               loading="eager"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
             {/* Badge */}
             <div className="absolute bottom-1 left-[-6] bg-white/90 backdrop-blur-sm rounded-lg px-5 py-3 flex items-center gap-3 shadow-lg">
@@ -92,7 +92,7 @@ export default async function partnerPage() {
               </span>
             </div>
             <div className="w-54 h-54 relative mb-4 opacity-90">
-              <Image src="/partner4.png" alt="Sinbol" fill className="object-contain" />
+              <Image src="/partner4.png" alt="Sinbol" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
           {/* Right Content Block */}
@@ -113,7 +113,7 @@ export default async function partnerPage() {
               </span>
             </div>
             <div className="w-54 h-54 relative mb-4 opacity-90">
-              <Image src="/partner4.png" alt="Coronation Merchant Bank" fill className="object-contain" />
+              <Image src="/partner4.png" alt="Coronation Merchant Bank" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
           {/* Right Content Block */}
@@ -134,7 +134,7 @@ export default async function partnerPage() {
               </span>
             </div>
             <div className="w-54 h-54 relative mb-4 opacity-90">
-              <Image src="/partner4.png" alt="AfroPack Engineering" fill className="object-contain" />
+              <Image src="/partner4.png" alt="AfroPack Engineering" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
           {/* Right Content Block */}

@@ -363,6 +363,7 @@ export default function SponsorshipPage() {
                       alt={`International Sponsor ${i + 1}`}
                       fill
                       className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                 ))}
@@ -383,6 +384,7 @@ export default function SponsorshipPage() {
                       alt={`Local Sponsor ${i + 1}`}
                       fill
                       className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                 ))}
