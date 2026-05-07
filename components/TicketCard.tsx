@@ -203,7 +203,11 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
                     <button
                         type="button"
                         onClick={handleDownload}
-                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
+                        className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                            registration.purchaseType === 'visitor'
+                                ? 'border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                : 'border-white/20 bg-white/10 text-white hover:bg-white/20'
+                        }`}
                     >
                         <DownloadCloud className="w-4 h-4" />
                         Download

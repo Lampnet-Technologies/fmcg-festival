@@ -78,6 +78,7 @@ export default async function UpdatesPage() {
                                             fill
                                             className="object-cover group-hover:scale-105 transition-transform"
                                             sizes="(max-width: 768px) 100vw, 50vw"
+                                            loading="eager"
                                         />
                                     </div>
                                 )}

@@ -53,7 +53,7 @@ const TIERS = [
   },
   {
     name: "Headline/ Category",
-    price: "₦50M / $50,000",
+    price: "₦40M / $40,000",
     features: [
       "20 Sqr Exhibition Booth",
       "Exclusive headline sponsor credit",
@@ -80,7 +80,7 @@ const TIERS = [
   },
   {
     name: "Category",
-    price: "₦40M / $40,000",
+    price: "₦30M / $30,000",
     features: [
       "20 Sqr mtr exhibition Booth",
       "Exclusive headline sponsor credit",

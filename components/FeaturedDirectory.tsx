@@ -61,26 +61,29 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
 
                     {/* 2. Mapped Sanity Cards */}
                     {displayedExhibitors.map((exhibitor) => (
-                        <div key={exhibitor._id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-                            <div>
-                                <span className="text-[10px] font-black text-[#506600] uppercase tracking-widest flex items-center gap-1.5 mb-3">
+                        <div
+                            key={exhibitor._id}
+                            className="relative border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col min-h-50 group bg-[#0A2E1F]"
+                        >
+                            {/* The Badge */}
+                            <div className="relative z-10 mb-4 text-center sm:text-left">
+                                <span className={`text-[10px] font-black uppercase tracking-widest items-center gap-1.5 px-3 py-1 rounded-sm shadow-sm inline-flex ${exhibitor.logo ? 'text-white bg-black/80' : 'text-[#84A900] bg-white'}`}>
                                     {exhibitor.companyName}
                                 </span>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-[#84A900] rounded-md overflow-hidden relative shrink-0 border border-gray-200">
-                                    <Image
-                                        src={exhibitor.logo ? urlFor(exhibitor.logo).url() : "/default.png"}
-                                        alt="logo"
-                                        fill
-                                        className="object-cover"
-                                        sizes="(max-width: 768px) 100vw, 50vw"
-                                    />
-                                </div>
+
+                            {/* The Image Wrapper - Completely transparent, no borders, just fills the card */}
+                            <div className="relative w-full flex-1 flex items-center justify-center min-h-25 z-0">
+                                <Image
+                                    src={exhibitor.logo ? urlFor(exhibitor.logo).url() : "/partner-logo-placeholder.png"}
+                                    alt={`${exhibitor.companyName} logo`}
+                                    fill
+                                    className="object-contain transition-transform duration-300 group-hover:scale-105"
+                                    sizes="(max-width: 768px) 50vw, 250px"
+                                />
                             </div>
                         </div>
                     ))}
-
                     {/* 3. Hardcoded CTA Card (Always at the end) */}
                     <div className="bg-[#0A2E1F] rounded-xl p-8 flex flex-col items-center justify-center text-center text-white shadow-md">
                         <div className="w-12 h-12 bg-white text-[#0A2E1F] rounded-full flex items-center justify-center text-2xl font-light mb-4">

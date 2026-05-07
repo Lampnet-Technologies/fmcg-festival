@@ -92,7 +92,7 @@ const SCHEDULE_PREVIEW = [
     day: "Day 2 · 10:30 AM",
     title: "Product Launch Arena",
     desc: "Live unveiling of innovative products across all FMCG sectors.",
-    img: "/event3.png",
+    img: "/event4.png",
   },
 ];
 

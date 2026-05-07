@@ -92,7 +92,7 @@ export default async function partnerPage() {
               </span>
             </div>
             <div className="w-54 h-54 relative mb-4 opacity-90">
-              <Image src="/partner4.png" alt="Sinbol" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
+              <Image src="/partner3.png" alt="Sinbol" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
           {/* Right Content Block */}
@@ -113,7 +113,7 @@ export default async function partnerPage() {
               </span>
             </div>
             <div className="w-54 h-54 relative mb-4 opacity-90">
-              <Image src="/partner4.png" alt="Coronation Merchant Bank" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
+              <Image src="/partner1.png" alt="Coronation Merchant Bank" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
           </div>
           {/* Right Content Block */}

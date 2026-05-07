@@ -92,14 +92,14 @@ export default async function SingleUpdatePage({ params }: { params: Promise<{ s
         <main className="flex-1 bg-white min-h-screen pb-20">
 
             {/* Back Button Container */}
-            <div className="max-w-3xl mx-auto px-6 pt-10 pb-6">
+            <div className="mx-auto px-6 pt-10 pb-6">
                 <Link href="/updates" className="inline-flex items-center text-sm font-bold text-gray-500 hover:text-[#0A2E1F] transition-colors">
                     <ChevronLeft className="w-4 h-4 mr-1" /> Back to all updates
                 </Link>
             </div>
 
             {/* Article Header */}
-            <header className="max-w-3xl mx-auto px-6 mb-10">
+            <header className="max-w-7xl mx-auto px-6 mb-10">
                 <div className="flex items-center gap-3 mb-6">
                     <span className="bg-[#EBEBE8] text-[#0A2E1F] text-[10px] px-3 py-1 font-black uppercase tracking-widest rounded-sm">
                         {post.tag}
@@ -135,7 +135,7 @@ export default async function SingleUpdatePage({ params }: { params: Promise<{ s
             )}
 
             {/* Portable Text Content (The actual blog body) */}
-            <article className="max-w-3xl mx-auto px-6 text-gray-700">
+            <article className="max-w-7xl mx-auto px-6 text-gray-700">
                 {post.body && post.body.length > 0 ? (
                     <PortableText value={post.body} components={portableTextComponents} />
                 ) : (

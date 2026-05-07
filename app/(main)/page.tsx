@@ -38,7 +38,7 @@ const SCHEDULE_PREVIEW = [
     day: "Day 3 · 10:00 AM",
     title: "Pitch competition/Fashion show/Closing ceremony",
     desc: "Finalists present innovations in sustainable packaging to a panel of retail giants.",
-    img: "/event3.png",
+    img: "/event4.png",
   },
 ];
 
@@ -97,7 +97,7 @@ const NEWS_ITEMS = [
     date: "OCT 12, 2024",
     title: '"Circular Hub" Zone announced for the 2024 Main Floor.',
     desc: "The festival expands its sustainability footprint with a dedicated pavilion for circular packaging.",
-    cta: "Read More →",
+    cta: "/updates/circular-hub-zone-announced-for-the-2024-main-floor",
     img: "/blog-img1.png",
     imgDark: true,
   },
@@ -107,7 +107,7 @@ const NEWS_ITEMS = [
     date: "3 HOURS AGO",
     title: "Just finalized our exhibit plans for #FMCGFestival2024. Can't wait!!",
     desc: "@GlobalRetailer: Looking forward to meeting the next generation of supply chain disruptors in this hub.",
-    cta: "Read More →",
+    cta: "/updates/just-finalized-our-exhibit-plans-for-fmcgfestival2024-can-t-wait",
     img: null,
     center: true,
   },
@@ -117,7 +117,7 @@ const NEWS_ITEMS = [
     date: "OCT 16, 2024",
     title: "Q&A: Julian Vance on the future of GenAI in FMCG packaging.",
     desc: "Discover how artificial intelligence is slashing prototyping times for major global brands by up to 70%.",
-    cta: "Read Interview →",
+    cta: "/updates/q-and-a-julian-vance-on-the-future-of-genai-in-fmcg-packaging",
     img: "/blog-img2.png",
     imgDark: false,
   },
@@ -454,7 +454,7 @@ export default async function HomePage() {
                 International<br className="hidden md:block" /> Partners
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full md:w-4/5">
-                {Array.from({ length: 4 }).map((_, i) => (
+                {Array.from({ length: 3 }).map((_, i) => (
                   <div
                     key={`intl-${i}`}
                     className="relative h-32 md:h-40 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-6 shadow-sm hover:shadow-md transition-shadow"
@@ -475,13 +475,13 @@ export default async function HomePage() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
               {/* Logos on the left for desktop, ordered first for mobile */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full md:w-4/5 order-2 md:order-1">
-                {Array.from({ length: 4 }).map((_, i) => (
+                {Array.from({ length: 3 }).map((_, i) => (
                   <div
                     key={`local-${i}`}
                     className="relative h-32 md:h-40 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-6 shadow-sm hover:shadow-md transition-shadow"
                   >
                     <Image
-                      src={`/partner${i + 5}.png`}
+                      src={`/partner${i + 4}.png`}
                       alt={`Local Partner ${i + 1}`}
                       fill
                       className="object-contain p-6"
@@ -589,14 +589,14 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <div className="text-center mt-14">
+         {/*  <div className="text-center mt-14">
             <Link
               href="/line-up"
               className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
             >
               View All 120+ Speakers
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -699,7 +699,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {NEWS_ITEMS.map((item, i) => (
               <Link
-                href={`/updates/${i}`}
+                href={item.cta}
                 key={i}
                 className="group rounded-xl overflow-hidden border border-gray-200 bg-white flex flex-col shadow-sm hover:shadow-xl transition-all duration-300"
               >

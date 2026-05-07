@@ -17,8 +17,8 @@ const PRICING = {
     sponsorship_bronze: 500000000,   // ₦5,000,000
     sponsorship_silver: 1000000000,  // ₦10,000,000
     sponsorship_gold: 2000000000,    // ₦20,000,000
-    sponsorship_category: 4000000000, // ₦40,000,000
-    sponsorship_headline: 5000000000  // ₦50,000,000
+    sponsorship_category: 3000000000, // ₦40,000,000
+    sponsorship_headline: 4000000000  // ₦50,000,000
 } as const;
 
 type RegistrationResult =
