@@ -166,7 +166,7 @@ export default function ContactPage() {
           <div className="relative lg:w-1/2 h-80 lg:h-auto bg-gray-100">
             {/* Replace this with an actual image of a map, the venue, or a Google Maps embed */}
             <Image
-              src="/homepage3.png" // Placeholder image - replace with actual map or venue photo
+              src="/exhibitor2.png" // Placeholder image - replace with actual map or venue photo
               alt="Oriental Hotel Map"
               fill
               className="object-cover opacity-80 mix-blend-multiply"
