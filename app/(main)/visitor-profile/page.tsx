@@ -188,7 +188,7 @@ export default function VisitorProfilePage() {
                 WHO_ATTENDS_PROFILES[1],
                 WHO_ATTENDS_PROFILES[2],
                 WHO_ATTENDS_PROFILES[3],
-              ].map((item, index) => {
+              ].map((item) => {
                 const Icon = item.icon;
                 return (
                   <div

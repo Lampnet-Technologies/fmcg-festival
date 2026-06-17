@@ -9,70 +9,42 @@ import {
   Cpu,
   Package,
   Users,
+  CheckCircle2,
 } from "lucide-react";
 import FeaturedDirectory from "@/components/FeaturedDirectory";
+import { BOOTH_TIERS, TIER_DETAILS } from "@/lib/event";
 
 const SECTORS = [
   { icon: Utensils, label: "Food & Bev" },
-  { icon: Droplets, label: "Personal Care" },
-  { icon: Home, label: "Household" },
+  { icon: Droplets, label: "Manufacturing" },
+  { icon: Home, label: "Beauty & Household" },
   { icon: Cpu, label: "Tech" },
   { icon: Package, label: "Packaging" },
 ];
 
 const STATS = [
   {
-    value: "65%",
+    value: "5000+",
     label: "Decision Makers",
     desc: "Visitors with C-level, VP, or Director level purchasing authority.",
   },
   {
     value: "$12B+",
     label: "Estimated Budget",
-    desc: "Total collective purchasing power of registered attendees for 2024.",
+    desc: "Total collective purchasing power of registered attendees for the current festival cycle.",
   },
   {
-    value: "85+",
+    value: "20+",
     label: "Countries",
     desc: "Global representation from retailers across 5 continents.",
   },
 ];
 
-// Added data for the Exhibition Booth Costs
-const BOOTH_COSTS = [
-  {
-    title: "Exhibitor Booth (Blue)",
-    desc: "Includes 4sqr metre booth",
-    price: "$500.00 / ₦700,000",
-    param: "exhibitor_4sqm",
-    bgClass: "bg-blue-100"
-  },
-  {
-    title: "Exhibitor Booth (Orange)",
-    desc: "Includes 6sqr metre booth",
-    price: "$1000.00 / ₦1,400,000",
-    param: "exhibitor_6sqm",
-    bgClass: "bg-orange-100"
-  },
-  {
-    title: "Exhibitor Booth (Green)",
-    desc: "Includes 9sqr metre booth",
-    price: "$1500.00 / ₦2,100,000",
-    param: "exhibitor_9sqm",
-    bgClass: "bg-green-100"
-  },
-  {
-    title: "Exhibitor Booth (Purple)",
-    desc: "Includes 15sqr metre booth",
-    price: "$2000.00 / ₦3,000,000",
-    param: "exhibitor_15sqm",
-    bgClass: "bg-purple-100"
-  },
-];
-
 export default async function ExhibitorsPage() {
-  // Fetch data securely on the server
-  const exhibitors = await client.fetch(exhibitorsQuery);
+  const exhibitors = await client.fetch(exhibitorsQuery).catch((error) => {
+    console.error("Failed to fetch exhibitors from Sanity:", error);
+    return [];
+  });
 
   return (
     <main className="flex-1 bg-[#f4f4f0]">
@@ -88,9 +60,7 @@ export default async function ExhibitorsPage() {
               Meet the Pioneers of FMCG.
             </h1>
             <p className="text-gray-600 leading-relaxed mb-8 max-w-md">
-              Discover over 400 world-class exhibitors showcasing innovation
-              across the entire FMCG value chain—from global food brands to
-              cutting-edge sustainable packaging solutions.
+              Our B2B exhibition platform offers an opportunity to showcase of products, services and innovations by exhibitors from local and international brands thus providing a networking, trade, partnership, investment and business expansion platform to all exhibitors.
             </p>
             <div className="flex gap-4 flex-wrap">
               <Link
@@ -109,26 +79,28 @@ export default async function ExhibitorsPage() {
           </div>
 
           {/* Right – hero image with overlay badge */}
-          <div className="relative h-80 md:h-110 rounded-xl overflow-hidden bg-[#f4f4f0]">
-            <Image
-              src="/exhibitor1.png"
-              alt="Exhibition Hall"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              loading="eager"
-            />
-            {/* Badge */}
-            <div className="absolute bottom-1 left-[-6] bg-white/90 backdrop-blur-sm rounded-lg px-5 py-3 flex items-center gap-3 shadow-lg">
-              <Users
-                className="w-6 h-6 text-[#0A2E1F] shrink-0"
-                strokeWidth={2}
+          <div className="relative h-80 md:h-110 rounded-xl overflow-visible bg-[#f4f4f0]">
+            <div className="absolute inset-0 rounded-xl overflow-hidden">
+              <Image
+                src="/exhibitor1.png"
+                alt="Exhibition Hall"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                loading="eager"
               />
-              <div>
-                <p className="text-xl font-normal text-[#0A2E1F] mb-1">450+</p>
-                <p className="text-xs font-normal text-gray-500 uppercase tracking-widest">
-                  Global Exhibitors
-                </p>
+              {/* Badge */}
+              <div className="absolute bottom-[-12] left-[-12] z-20 bg-white/90 backdrop-blur-sm rounded-xl border border-gray-300 px-5 py-3 flex items-center gap-3 shadow-lg">
+                <Users
+                  className="w-6 h-6 text-[#0A2E1F] shrink-0"
+                  strokeWidth={2}
+                />
+                <div>
+                  <p className="text-xl font-normal text-[#0A2E1F] mb-1">70+</p>
+                  <p className="text-xs font-normal text-gray-500 uppercase tracking-widest">
+                    Global Exhibitors
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -174,24 +146,29 @@ export default async function ExhibitorsPage() {
               The FMCG Festival Exhibition Booth
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {BOOTH_COSTS.map((booth) => (
+              {BOOTH_TIERS.map((booth) => (
                 <div
-                  key={booth.param}
+                  key={booth.tier}
                   className={`border border-gray-200 rounded-xl p-7 flex flex-col h-full shadow-sm ${booth.bgClass}`}
                 >
                   <div className="grow">
                     <h3 className="text-2xl font-bold text-[#0A2E1F] mb-2">
                       {booth.title}
                     </h3>
-                    <p className="text-gray-500 mb-6 font-medium">
-                      {booth.desc}
+                    <p className="text-gray-500 mb-4 font-medium flex items-center gap-2">
+                      <CheckCircle2 className="w-6 h-6 text-[#0A2E1F]" />{booth.desc}
                     </p>
+                    {booth.desc2 && (
+                      <p className="text-gray-500 mb-4 font-medium flex items-center gap-2">
+                        <CheckCircle2 className="w-6 h-6 text-[#0A2E1F]" />{booth.desc2}
+                      </p>
+                    )}
                     <p className="text-lg font-bold text-[#0A2E1F] mb-8">
-                      {booth.price}
+                      {TIER_DETAILS[booth.tier].price}
                     </p>
                   </div>
                   <Link
-                    href={`/register?tier=${booth.param}`}
+                    href={`/register?tier=${booth.tier}`}
                     className="block w-full text-center py-3 bg-[#C5FA00] text-[#0A2E1F] font-black rounded-sm hover:bg-[#b0df00] transition-colors"
                   >
                     Select Booth
@@ -204,14 +181,14 @@ export default async function ExhibitorsPage() {
           {/* Right Column: Accommodation (Takes up 1/3 of the grid) */}
           <div className="lg:col-span-1">
             <h2 className="text-center md:text-left text-lg font-bold text-[#0A2E1F] uppercase tracking-widest mb-8">
-              Hotel / Accomodation
+              Hotel / Accommodation
             </h2>
             <div className="bg-[#ebf4ee] rounded-lg p-8 flex flex-col h-full justify-between">
               <div>
                 {/* Oriental Hotel Block */}
                 <div className="mb-8">
                   <h3 className="text-lg font-bold text-[#0A2E1F] mb-4">
-                    Oriental hotel Accomodation
+                    Oriental Hotel Accommodation
                   </h3>
                   <p className="text-[#0A2E1F] font-bold mb-3">3 nights- $1000</p>
                   <p className="text-[#0A2E1F] font-bold">5 nights- $1500</p>
@@ -299,7 +276,7 @@ export default async function ExhibitorsPage() {
           </div>
           <div className="text-center mt-14">
             <Link
-              href="/register?booth=general"
+              href="/register"
               className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
             >
               Register Now

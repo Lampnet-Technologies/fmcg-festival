@@ -28,8 +28,8 @@ const EXHIBITOR_SECTORS = [
   },
   {
     icon: Home,
-    label: "Household Care",
-    sub: "Cleaning & Maintenance",
+    label: "Manufacturing",
+    sub: "Production, Fabrication & Assembly",
   },
   {
     icon: Settings,
@@ -77,20 +77,20 @@ const WHO_ATTENDS = [
 
 const SCHEDULE_PREVIEW = [
   {
-    day: "Day 1 · 09:00 AM",
-    title: "Opening Keynote: Future of Retail",
+    day: "Day 1",
+    title: "Opening Ceremony/Conference & Exhibition Day",
     desc: "Industry leaders discuss the impact of AI on consumer analytics.",
     img: "/event1.png",
   },
   {
-    day: "Day 1 · 02:00 PM",
-    title: "Panel: Sustainability in Packaging",
+    day: "Day 2",
+    title: "Conference & Exhibition Day ",
     desc: "Case studies on circular economy initiatives from top brands.",
     img: "/event2.png",
   },
   {
-    day: "Day 2 · 10:30 AM",
-    title: "Product Launch Arena",
+    day: "Day 3",
+    title: "Pitch competition/Fashion show/Closing ceremony.",
     desc: "Live unveiling of innovative products across all FMCG sectors.",
     img: "/event4.png",
   },
@@ -143,13 +143,13 @@ export default function AboutPage() {
             {/* Stats row */}
             <div className="grid grid-cols-2 gap-6">
               <div className="border-l-4 border-[#C5FA00] pl-4">
-                <p className="text-2xl font-black text-[#0A2E1F]">250+</p>
+                <p className="text-2xl font-black text-[#0A2E1F]">70+</p>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mt-1">
                   Global Exhibitors
                 </p>
               </div>
               <div className="border-l-4 border-[#C5FA00] pl-4">
-                <p className="text-2xl font-black text-[#0A2E1F]">15k+</p>
+                <p className="text-2xl font-black text-[#0A2E1F]">5k+</p>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mt-1">
                   Annual Attendees
                 </p>
@@ -202,18 +202,17 @@ export default function AboutPage() {
                 <div
                   key={sector.label}
                   // Apply the 6-column math based on the array index
-                  className={`bg-white border-2 border-gray-300 rounded-xl p-6 flex items-start gap-4 hover:shadow-sm transition-shadow ${
-                    index < 2 ? "md:col-span-3" : "md:col-span-2"
-                  }`}
+                  className={`bg-white border-2 border-gray-300 rounded-xl p-6 flex items-start gap-4 hover:shadow-sm transition-shadow ${index < 2 ? "md:col-span-3" : "md:col-span-2"
+                    }`}
                 >
                   <div>
                     <div className="text-[#0f1b16] rounded-xl p-3 bg-[#F2F4EF] inline-flex items-center justify-center mb-8">
                       <Icon className="text-xl shrink-0" strokeWidth={2.5} />
                     </div>
-                    <h3 className="font-normal text-[#0A2E1F]">
+                    <h3 className="font-bold text-[#0A2E1F]">
                       {sector.label}
                     </h3>
-                    <p className="text-xs text-gray-400 mt-1">{sector.sub}</p>
+                    <p className="text-xs font-bold text-[#717971] mt-1">{sector.sub}</p>
                   </div>
                 </div>
               );
@@ -256,7 +255,7 @@ export default function AboutPage() {
               </div>
               <Link
                 href="/visitor-profile"
-                className="mt-8 inline-block bg-[#0A2E1F] text-white px-6 py-4 rounded-sm text-sm font-black hover:bg-[#062015] transition-colors"
+                className="mt-8 inline-block bg-[#0A2E1F] text-white px-6 py-4 rounded-sm text-sm font-black hover:bg-[#C5FA00] hover:text-white transition-colors"
               >
                 See Visitor Profile
               </Link>
@@ -269,15 +268,14 @@ export default function AboutPage() {
                 return (
                   <div
                     key={item.label}
-                    className={`rounded-xl p-6 flex flex-col gap-3 ${
-                      item.dark
+                    className={`rounded-xl p-6 flex flex-col gap-3 ${item.dark
                         ? "bg-[#0A2E1F] text-white"
                         : item.accent
                           ? "bg-[#C5FA00] text-[#0A2E1F]"
                           : item.muted
                             ? "bg-[#C0C9BF] text-[#0A2E1F]"
                             : "bg-[#C0C9BF] text-[#0A2E1F]"
-                    }`}
+                      }`}
                   >
                     <Icon
                       className="w-8 h-8"
@@ -286,16 +284,14 @@ export default function AboutPage() {
                     />
 
                     <h3
-                      className={`font-bold text-sm ${
-                        item.dark ? "text-white" : "text-[#0A2E1F]"
-                      }`}
+                      className={`font-bold text-sm ${item.dark ? "text-white" : "text-[#0A2E1F]"
+                        }`}
                     >
                       {item.label}
                     </h3>
                     <p
-                      className={`text-xs leading-relaxed ${
-                        item.dark ? "text-gray-300" : "text-gray-600"
-                      }`}
+                      className={`text-xs leading-relaxed ${item.dark ? "text-gray-300" : "text-gray-600"
+                        }`}
                     >
                       {item.desc}
                     </p>
@@ -329,9 +325,8 @@ export default function AboutPage() {
                 <div
                   key={i}
                   // Conditionally apply flex-row-reverse based on the isReversed boolean
-                  className={`relative flex flex-col w-full bg-none rounded-xl overflow-hidden min-h-75 ${
-                    isReversed ? "md:flex-row-reverse" : "md:flex-row"
-                  }`}
+                  className={`relative flex flex-col w-full bg-none rounded-xl overflow-hidden min-h-75 ${isReversed ? "md:flex-row-reverse" : "md:flex-row"
+                    }`}
                 >
                   {/* 1. The Mid White Line */}
                   <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-white transform -translate-x-1/2 z-10" />
@@ -354,30 +349,28 @@ export default function AboutPage() {
                   <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
                     {/* First Text (Day): Conditionally mirror alignment */}
                     <p
-                      className={`w-full text-[#C5FA00] text-xs font-black uppercase tracking-widest mb-3 text-left ${
-                        isReversed ? "md:text-right" : "md:text-left"
-                      }`}
+                      className={`w-full text-[#C5FA00] text-xs font-black uppercase tracking-widest mb-3 text-left ${isReversed ? "md:text-right" : "md:text-left"
+                        }`}
                     >
                       {item.day}
                     </p>
 
                     {/* Middle Text (Title): Always point towards the center line */}
                     <h3
-                      className={`w-full text-white text-xl font-normal mb-2 text-left ${
-                        isReversed ? "md:text-right" : "md:text-left"
-                      }`}
+                      className={`w-full text-white text-xl font-normal mb-2 text-left ${isReversed ? "md:text-right" : "md:text-left"
+                        }`}
                     >
                       {item.title}
                     </h3>
 
                     {/* Last Text (Desc): Conditionally mirror alignment */}
-                    <p
+                    {/*  <p
                       className={`w-full text-[#7CB48C] text-sm leading-relaxed text-left ${
                         isReversed ? "md:text-right" : "md:text-left"
                       }`}
                     >
                       {item.desc}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               );

@@ -10,6 +10,7 @@ import {
   Ticket,
   Building2
 } from "lucide-react";
+import { EVENT_DETAILS } from "@/lib/event";
 
 const DIRECTORY = [
   {
@@ -119,7 +120,7 @@ export default function ContactPage() {
               Festival Headquarters
             </h2>
             <p className="text-gray-500 text-sm leading-relaxed mb-8">
-              The 2026 FMCG Festival will be hosted at the premier Federal Palace Hotel, situated in the heart of Victoria Island, Lagos. Please note that access to the exhibition floor requires prior registration.
+              The {EVENT_DETAILS.year} FMCG Festival will be hosted at the premier {EVENT_DETAILS.venue}, situated in the heart of Victoria Island, Lagos. Please note that access to the exhibition floor requires prior registration.
             </p>
 
             <div className="space-y-6">
@@ -130,7 +131,7 @@ export default function ContactPage() {
                 <div>
                   <p className="text-sm font-bold text-[#0A2E1F] mb-1">Location</p>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Federal Palace Hotel & Casino<br />
+                    Oriental Hotel & Casino<br />
                     6-8 Ahmadu Bello Way<br />
                     Victoria Island, Lagos, Nigeria
                   </p>
@@ -144,8 +145,8 @@ export default function ContactPage() {
                 <div>
                   <p className="text-sm font-bold text-[#0A2E1F] mb-1">Event Hours</p>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    October 24–26, 2026<br />
-                    Daily: 09:00 AM – 06:00 PM (WAT)
+                    {EVENT_DETAILS.displayDate}<br />
+                    Daily: 09:00 AM - 06:00 PM (WAT)
                   </p>
                 </div>
               </div>
@@ -166,7 +167,7 @@ export default function ContactPage() {
             {/* Replace this with an actual image of a map, the venue, or a Google Maps embed */}
             <Image
               src="/homepage3.png" // Placeholder image - replace with actual map or venue photo
-              alt="Federal Palace Hotel Map"
+              alt="Oriental Hotel Map"
               fill
               className="object-cover opacity-80 mix-blend-multiply"
               sizes="(max-width: 768px) 100vw, 50vw"

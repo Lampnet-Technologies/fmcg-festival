@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { EVENT_DETAILS } from "@/lib/event";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const epilogue = Epilogue({ subsets: ["latin"], variable: "--font-heading" });
@@ -21,9 +22,47 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FMCG Festival",
+  metadataBase: new URL(EVENT_DETAILS.baseUrl),
+  title: {
+    default: "FMCG Festival 2026",
+    template: "%s | FMCG Festival",
+  },
   description:
-    "Celebrating the best in Fast-Moving Consumer Goods (FMCG) with a festival of innovation, sustainability, and consumer engagement.",
+    "Join FMCG Festival 2026 in Lagos for consumer goods innovation, exhibitions, sponsorship opportunities, and industry networking.",
+  keywords: [
+    "FMCG Festival",
+    "FMCG event Lagos",
+    "consumer goods exhibition",
+    "FMCG sponsorship",
+    "Lagos trade show",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "FMCG Festival 2026",
+    description:
+      "A global platform connecting the FMCG value chain across manufacturing, packaging, distribution, retail, technology, and investment.",
+    url: EVENT_DETAILS.baseUrl,
+    siteName: "FMCG Festival",
+    images: [
+      {
+        url: "/homepage-main-hero.png",
+        width: 1200,
+        height: 630,
+        alt: "FMCG Festival exhibition floor",
+      },
+    ],
+    locale: "en_NG",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FMCG Festival 2026",
+    description:
+      "Register, exhibit, or sponsor at FMCG Festival 2026 in Lagos.",
+    images: ["/homepage-main-hero.png"],
+  },
 };
 
 export default function RootLayout({

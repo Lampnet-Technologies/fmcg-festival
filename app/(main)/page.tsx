@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -19,23 +18,24 @@ import {
   BadgeCheck,
   MapPin,
 } from "lucide-react";
-import { urlFor } from "@/sanity/lib/image";
+import { FestivalCountdown } from "@/components/FestivalCountdown";
+import { EVENT_DETAILS } from "@/lib/event";
 
 const SCHEDULE_PREVIEW = [
   {
-    day: "Day 1 · 09:00 AM",
-    title: "Opening Ceremony/Conference & Exhibition",
+    day: "Day 1",
+    title: "Opening Ceremony/Conference & Exhibition Day",
     desc: "Keynotes from industry leaders set the stage for three days of innovation and networking.",
     img: "/event1.png",
   },
   {
-    day: "Day 2 · 09:00 AM",
-    title: "Conference & Exhibition",
+    day: "Day 2",
+    title: "Conference & Exhibition Day",
     desc: "Panels explore the rise of direct-to-consumer brands and sustainable packaging innovations.",
     img: "/event2.png",
   },
   {
-    day: "Day 3 · 10:00 AM",
+    day: "Day 3",
     title: "Pitch competition/Fashion show/Closing ceremony",
     desc: "Finalists present innovations in sustainable packaging to a panel of retail giants.",
     img: "/event4.png",
@@ -43,8 +43,8 @@ const SCHEDULE_PREVIEW = [
 ];
 
 const STATS = [
-  { icon: "Users", value: "5k", label: "Attendees" },
-  { icon: "Building2", value: "450+", label: "Exhibitors" },
+  { icon: "Users", value: "5k+", label: "Attendees" },
+  { icon: "Building2", value: "70+", label: "Exhibitors" },
   { icon: "Globe", value: "20+", label: "Countries" },
   { icon: "CircleStarIcon", value: "95+", label: "Local & Global Brand" },
 ];
@@ -52,15 +52,15 @@ const STATS = [
 const WHY_EXHIBIT = [
   {
     icon: "CircleCheck",
-    text: "Access to 12,000+ high-intent trade buyers from 65+ countries.",
+    text: "The FMCG Festival is a one stop shop for the FMCG industry",
   },
   {
     icon: "CircleCheck",
-    text: "Showcase innovations in dedicated high-traffic Category Zones.",
+    text: "FMCG offers a unique platform connecting the FMCG value chain from raw materials to production to packaging/labeling to distribution of consumer goods.",
   },
   {
     icon: "CircleCheck",
-    text: "Pre-scheduled B2B meetings with regional retail giants.",
+    text: "Nigeria has the largest and most dynamic FMCG markets on the African continent",
   },
 ];
 
@@ -71,7 +71,7 @@ const WHY_VISIT = [
   },
   {
     icon: "BadgeCheck",
-    text: "Gain insights from 120+ global visionaries at the Main Stage.",
+    text: "Network with global manufacturers and key distribution companies and suppliers",
   },
   {
     icon: "BadgeCheck",
@@ -81,13 +81,13 @@ const WHY_VISIT = [
 
 const EXHIBITION_SECTORS = [
   { icon: "UtensilsCrossed", label: "Food & Beverage", count: "350+ Exhibitors" },
-  { icon: "Droplets", label: "Beauty & Hygiene", count: "120+ Exhibitors" },
-  { icon: "Settings", label: "Tech & Automation", count: "80+ Exhibitors" },
-  { icon: "Package", label: "Sustainable Pack", count: "80+ Exhibitors" },
-  { icon: "Truck", label: "Supply Chain", count: "60+ Exhibitors" },
+  { icon: "Droplets", label: "Beauty, Hygiene & Household Care", count: "120+ Exhibitors" },
+  { icon: "Settings", label: "Tech & Automation", count: "85+ Exhibitors" },
+  { icon: "Package", label: "Sustainable Pack", count: "90+ Exhibitors" },
+  { icon: "Truck", label: "Logistics & Supply Chain", count: "60+ Exhibitors" },
   { icon: "CreditCard", label: "FinTech & Retail", count: "45+ Exhibitors" },
-  { icon: "Home", label: "Household Care", count: "120+ Exhibitors" },
-  { icon: "Heart", label: "Health & Wellness", count: "100+ Exhibitors" },
+  { icon: "Home", label: "Manufacturing", count: "70+ Exhibitors" },
+  { icon: "Heart", label: "Health & Wellness", count: "110+ Exhibitors" },
 ];
 
 const NEWS_ITEMS = [
@@ -120,33 +120,6 @@ const NEWS_ITEMS = [
     cta: "/updates/q-and-a-julian-vance-on-the-future-of-genai-in-fmcg-packaging",
     img: "/blog-img2.png",
     imgDark: false,
-  },
-];
-
-const SPEAKERS = [
-  {
-    name: "Dr. Marcus Chen",
-    role: "CEO, GREENFOODS",
-    quote: "The Pivot to Regenerative FMCG Systems",
-    image: "/team1.png",
-  },
-  {
-    name: "Elena Rodriquez",
-    role: "VP MARKETING, RETAILFLOW",
-    quote: "Consumer Behavior in Post-Digital Era",
-    image: "/team2.png",
-  },
-  {
-    name: "Julian Vance",
-    role: "FOUNDER, PACKWISE AI",
-    quote: "Generative AI in Product Management",
-    image: "/team3.png",
-  },
-  {
-    name: "Sarah Whitlock",
-    role: "DIR. INNOVATION, PUREGROUP",
-    quote: "Redifining Clean Beauty Standards",
-    image: "/team4.png",
   },
 ];
 
@@ -216,7 +189,7 @@ export default async function HomePage() {
           {/* Left Content */}
           <div className="flex flex-col items-start gap-6">
             <div className="inline-flex items-center gap-2 bg-[#C5FA00] text-[#0A2E1F] font-light text-xs px-4 py-2 rounded-sm uppercase tracking-widest text-center md:text-left">
-              October 24–26, 2026 • The Innovation Hub
+              {EVENT_DETAILS.heroDate} - The Innovation Hub
             </div>
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-white leading-[1.1] max-w-2xl">
@@ -230,13 +203,13 @@ export default async function HomePage() {
 
             <p className="text-white text-sm md:text-base max-w-xl leading-relaxed flex items-center">
               <MapPin size={20} className="mr-2 text-[#C5FA00] shrink-0" />
-              Federal Palace Hotel, Victoria Island, Lagos
+              {EVENT_DETAILS.venueFull}
             </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto">
               <Link
                 href="/exhibitors"
-                className="bg-[#C5FA00] border border-[#C5FA00] text-[#0A2E1F] px-8 py-4 font-black text-sm rounded-sm hover:bg-[#0A2E1F] hover:text-[#C5FA00] transition-colors text-center w-full sm:w-auto"
+                className="bg-[#0A2E1F] border border-[#0A2E1F] text-[#C5FA00] px-8 py-4 font-black text-sm rounded-sm hover:bg-[#C5FA00] hover:text-[#0A2E1F] transition-colors text-center w-full sm:w-auto"
               >
                 Join Exhibitors
               </Link>
@@ -251,35 +224,13 @@ export default async function HomePage() {
 
           {/* Right Countdown */}
           <div className="flex items-center justify-center lg:justify-end mt-8 lg:mt-20">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 md:p-8 w-full max-w-lg">
-              <p className="text-white text-base md:text-lg font-semibold mb-6 text-center lg:text-left">
-                Countdown to Festival
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="text-center">
-                  <p className="text-3xl font-black text-white">182</p>
-                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">Days</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-3xl font-black text-white">14</p>
-                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">Hours</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-3xl font-black text-white">45</p>
-                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">Minutes</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-3xl font-black text-white">22</p>
-                  <p className="text-xs text-gray-300 uppercase tracking-widest mt-2">Seconds</p>
-                </div>
-              </div>
-            </div>
+            <FestivalCountdown startsAt={EVENT_DETAILS.startsAt} />
           </div>
         </div>
       </section>
 
       {/* ── Mission Section ──────────────────────────────────── */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-[#f8f9f5]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left column - Text and Stats */}
           <div>
@@ -316,7 +267,7 @@ export default async function HomePage() {
 
             <Link
               href="/about"
-              className="inline-block bg-[#0A2E1F] text-white px-8 py-4 rounded-sm text-sm font-black hover:bg-[#062015] transition-colors w-full sm:w-auto text-center"
+              className="inline-block bg-[#0A2E1F] text-white px-8 py-4 rounded-sm text-sm font-black hover:bg-[#C5FA00] hover:text-white transition-colors w-full sm:w-auto text-center"
             >
               Learn More About Us
             </Link>
@@ -373,7 +324,7 @@ export default async function HomePage() {
               </ul>
               <Link
                 href="/exhibitors"
-                className="mt-8 inline-block bg-[#0A2E1F] text-white px-8 py-4 rounded-sm text-sm font-black hover:bg-[#062015] transition-colors w-full sm:w-auto text-center"
+                className="mt-8 inline-block bg-[#0A2E1F] text-white px-8 py-4 rounded-sm text-sm font-black hover:bg-[#C5FA00] hover:text-white transition-colors w-full sm:w-auto text-center"
               >
                 Book Your Stand
               </Link>
@@ -424,7 +375,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto">
           {/* Header & Buttons */}
           <div className="text-center mb-16">
-            <h2 className="text-base font-bold text-[#0A2E1F] mb-3 uppercase tracking-widest">
+            <h2 className="text-3xl font-bold text-[#0A2E1F] mb-3 uppercase tracking-widest">
               Our Partners
             </h2>
             <p className="text-[#0A2E1F] text-base mb-8">
@@ -433,13 +384,13 @@ export default async function HomePage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/sponsorship"
-                className="bg-[#0A2E1F] border-2 border-[#0A2E1F] text-white px-6 py-2.5 rounded text-sm font-bold hover:bg-[#062015] hover:border-[#062015] transition-colors"
+                className="bg-[#0A2E1F] border-2 border-[#0A2E1F] text-white px-8 py-4 rounded text-sm font-bold hover:bg-white hover:text-[#0A2E1F] hover:border-[#062015] transition-colors"
               >
                 Become a Partner
               </Link>
               <Link
                 href="/sponsorship#sponsorship-tiers"
-                className="bg-transparent border-2 border-[#0A2E1F] text-[#0A2E1F] px-6 py-2.5 rounded text-sm font-bold hover:bg-[#0A2E1F]/5 transition-colors"
+                className="bg-transparent border-2 border-[#0A2E1F] text-[#0A2E1F] px-8 py-4 rounded text-sm font-bold hover:bg-[#0A2E1F]/5 transition-colors"
               >
                 See all Sponsors
               </Link>
@@ -463,7 +414,7 @@ export default async function HomePage() {
                       src={`/partner${i + 1}.png`}
                       alt={`International Partner ${i + 1}`}
                       fill
-                      className="object-contain p-6"
+                      className="object-contain p-2"
                       sizes="(max-width: 768px) 100vw, 25vw"
                     />
                   </div>
@@ -484,7 +435,7 @@ export default async function HomePage() {
                       src={`/partner${i + 4}.png`}
                       alt={`Local Partner ${i + 1}`}
                       fill
-                      className="object-contain p-6"
+                      className="object-contain p-2"
                       sizes="(max-width: 768px) 100vw, 25vw"
                     />
                   </div>
@@ -532,7 +483,7 @@ export default async function HomePage() {
           <div className="text-center mt-14">
             <Link
               href="/exhibitors"
-              className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
+              className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#C5FA00] hover:text-white transition-colors inline-block w-full sm:w-auto"
             >
               Book Your Stand
             </Link>
@@ -540,69 +491,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 2024 Keynote Lineup ───────────────────────────────── */}
-      <section className="py-20 px-6 bg-[#F2F4EF]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs font-bold text-[#506600] uppercase tracking-widest mb-2">
-              2026 Keynote Lineup
-            </p>
-            <h2 className="text-3xl font-black text-[#0A2E1F]">
-              Industry Visionaries
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {SPEAKERS.map((speaker: any) => (
-              <div
-                key={speaker._id || speaker.name}
-                className="group cursor-pointer flex flex-col h-full"
-              >
-                <div className="relative h-75 md:h-90 w-full rounded-xl overflow-hidden bg-gray-200 flex flex-col justify-end">
-                  {speaker.image && (
-                    <Image
-                      src={
-                        typeof speaker.image === "string"
-                          ? speaker.image
-                          : urlFor(speaker.image).url()
-                      }
-                      alt={speaker.name}
-                      fill
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-linear-to-t from-[#002E16]/80 via-transparent to-transparent" />
-                  <div className="relative p-5 flex flex-col gap-1">
-                    <h3 className="text-xl font-bold text-white">
-                      {speaker.name}
-                    </h3>
-                    <p className="text-xs font-bold uppercase tracking-wider text-[#C5FA00]">
-                      {speaker.role}
-                    </p>
-                  </div>
-                </div>
-                <p className="text-gray-600 text-sm mt-4 italic leading-relaxed">
-                  &ldquo;{speaker.quote || "Shaping the future of FMCG."}&rdquo;
-                </p>
-              </div>
-            ))}
-          </div>
-
-         {/*  <div className="text-center mt-14">
-            <Link
-              href="/line-up"
-              className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
-            >
-              View All 120+ Speakers
-            </Link>
-          </div> */}
-        </div>
-      </section>
-
       {/* ── Event Line-up Preview ────────────────────────────── */}
       <section className="py-20 px-6 bg-[#0A2E1F]">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="mb-14 text-center md:text-left">
             <h2 className="text-3xl font-black text-white mb-4">
               Event Line-up
@@ -655,20 +546,20 @@ export default async function HomePage() {
                     >
                       {item.title}
                     </h3>
-
-                    <p
-                      className={`w-full text-gray-300 text-sm leading-relaxed ${isReversed ? "md:text-right" : "md:text-left"
-                        }`}
-                    >
-                      {item.desc}
-                    </p>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="text-center mt-16">
+          <div className="text-center mt-16 gap-4 flex flex-col sm:flex-row justify-center">
+            <Link
+              href="/line-up"
+              className="border-2 border-white/30 bg-white text-[#0A2E1F] px-8 py-4 rounded-sm text-sm font-bold transition-colors inline-block w-full sm:w-auto"
+
+            >
+              See Full Line-up
+            </Link>
             <Link
               href="#"
               className="border-2 border-white/30 text-white px-8 py-4 rounded-sm text-sm font-bold hover:bg-white hover:text-[#0A2E1F] transition-colors inline-block w-full sm:w-auto"
@@ -784,6 +675,41 @@ export default async function HomePage() {
                 </Link>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Final Call to Action Banner ──────────── */}
+      <section className="relative py-24 px-6 bg-[#0A2E1F] overflow-hidden flex flex-col items-center justify-center text-center isolate">
+        {/* Decorative angled background to match the lighter green split in the image */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="absolute right-[-10%] top-0 bottom-0 w-[45%] bg-[#0e3b28] transform skew-x-[-15deg] translate-x-10 shadow-2xl" />
+        </div>
+
+        <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-6">
+          <p className="text-gray-100 text-sm md:text-base font-medium">
+            Join the FMCG Ecosystem - <br className="hidden md:block" />
+            Secure Your Spot Today
+          </p>
+
+          <p className="text-gray-300 text-sm md:text-base leading-relaxed max-w-2xl">
+            Be part of the most influential gathering of retail and manufacturing leaders in Africa. <br className="hidden md:block" />
+            Registration is now open for attendees and exhibitors.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 mt-4 w-full sm:w-auto">
+            <Link
+              href="/register"
+              className="bg-[#C5FA00] text-[#0A2E1F] px-10 py-3.5 rounded-sm font-bold text-sm hover:bg-[#b0df00] transition-colors w-full sm:w-auto text-center shadow-lg"
+            >
+              Register Now
+            </Link>
+            <Link
+              href="/brochure"
+              className="border-2 border-white text-white bg-transparent px-10 py-3.5 rounded-sm font-bold text-sm hover:bg-white/10 transition-colors w-full sm:w-auto text-center"
+            >
+              Download Brochure
+            </Link>
           </div>
         </div>
       </section>

@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function PrivacyPolicyPage() {
   return (
     <main className="flex-1 bg-white pb-20">

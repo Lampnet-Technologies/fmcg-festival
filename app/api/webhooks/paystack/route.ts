@@ -5,8 +5,12 @@ import { registrations, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function POST(req: Request) {
-    const secret = process.env.PAYSTACK_SECRET_KEY!;
+    const secret = process.env.PAYSTACK_SECRET_KEY;
     const signature = req.headers.get("x-paystack-signature");
+
+    if (!secret) {
+        return NextResponse.json({ message: "Payment service is not configured" }, { status: 500 });
+    }
 
     if (!signature) {
         return NextResponse.json({ message: "No signature found" }, { status: 400 });
@@ -25,13 +29,29 @@ export async function POST(req: Request) {
         return NextResponse.json({ message: "Invalid signature" }, { status: 400 });
     }
 
-    const event = JSON.parse(body);
+    let event;
+    try {
+        event = JSON.parse(body);
+    } catch {
+        return NextResponse.json({ message: "Invalid webhook payload" }, { status: 400 });
+    }
 
     // 2. Handle successful charge
     if (event.event === "charge.success") {
-        const { reference, metadata } = event.data;
+        const { amount, reference, metadata } = event.data;
 
         try {
+            const [registration] = await db
+                .select()
+                .from(registrations)
+                .where(eq(registrations.paystackReference, reference))
+                .limit(1);
+
+            if (!registration || registration.amountPaid !== amount) {
+                console.error(`Paystack amount mismatch for reference: ${reference}`);
+                return NextResponse.json({ message: "Payment amount mismatch" }, { status: 400 });
+            }
+
             // Update Registration status to 'successful'
             await db.update(registrations)
                 .set({ status: 'successful' })

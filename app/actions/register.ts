@@ -4,22 +4,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/db";
 import { registrations, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-
-const PRICING = {
-    visitor: 0,
-    // Exhibitor Tiers
-    exhibitor: 25000000,        // ₦250,000
-    exhibitor_4sqm: 70000000,   // ₦700,000
-    exhibitor_6sqm: 140000000,  // ₦1,400,000
-    exhibitor_9sqm: 210000000,  // ₦2,100,000
-    exhibitor_15sqm: 300000000, // ₦3,000,000
-    // Sponsorship Tiers
-    sponsorship_bronze: 500000000,   // ₦5,000,000
-    sponsorship_silver: 1000000000,  // ₦10,000,000
-    sponsorship_gold: 2000000000,    // ₦20,000,000
-    sponsorship_category: 3000000000, // ₦40,000,000
-    sponsorship_headline: 4000000000  // ₦50,000,000
-} as const;
+import { EVENT_DETAILS, PRICING, type TicketTier } from "@/lib/event";
 
 type RegistrationResult =
     | { success: true; type: "free" }
@@ -34,7 +19,7 @@ export async function processRegistration(formData: FormData): Promise<Registrat
         throw new Error("Invalid ticket tier selected.");
     }
 
-    const tier = tierValue as keyof typeof PRICING;
+    const tier = tierValue as TicketTier;
     const amountInKobo = PRICING[tier];
     const reference = `FMCG_${new Date().getTime()}_${user.id.slice(-5)}`;
 
@@ -92,6 +77,10 @@ export async function processRegistration(formData: FormData): Promise<Registrat
     });
 
     // 3. Initialize Paystack Transaction
+    if (!process.env.PAYSTACK_SECRET_KEY) {
+        throw new Error("Payment service is not configured.");
+    }
+
     const response = await fetch("https://api.paystack.co/transaction/initialize", {
         method: "POST",
         headers: {
@@ -102,7 +91,7 @@ export async function processRegistration(formData: FormData): Promise<Registrat
             email: formData.get("email") || primaryEmail,
             amount: amountInKobo,
             reference: reference,
-            callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?verify=true`,
+            callback_url: `${EVENT_DETAILS.baseUrl}/dashboard?verify=true`,
             metadata: {
                 userId: user.id,
                 purchaseType: tier,
@@ -111,9 +100,9 @@ export async function processRegistration(formData: FormData): Promise<Registrat
         }),
     });
 
-    const data = await response.json();
+    const data = await response.json().catch(() => null);
 
-    if (!data.status) {
+    if (!response.ok || !data?.status || !data?.data?.authorization_url) {
         throw new Error("Payment initialization failed");
     }
 

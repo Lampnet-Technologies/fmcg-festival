@@ -21,7 +21,10 @@ interface Update {
 }
 
 export default async function UpdatesPage() {
-    const updates: Update[] = await client.fetch(updatesQuery);
+    const updates: Update[] = await client.fetch(updatesQuery).catch((error) => {
+        console.error("Failed to fetch updates from Sanity:", error);
+        return [];
+    });
 
     const getTagColor = (tag: string) => {
         switch (tag) {

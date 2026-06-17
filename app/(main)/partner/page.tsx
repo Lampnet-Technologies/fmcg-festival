@@ -8,17 +8,17 @@ import {
 
 const STATS = [
   {
-    value: "65%",
+    value: "5000+",
     label: "Decision Makers",
     desc: "Visitors with C-level, VP, or Director level purchasing authority.",
   },
   {
     value: "$12B+",
     label: "Estimated Budget",
-    desc: "Total collective purchasing power of registered attendees for 2024.",
+    desc: "Total collective purchasing power of registered attendees for the current festival cycle.",
   },
   {
-    value: "85+",
+    value: "20+",
     label: "Countries",
     desc: "Global representation from retailers across 5 continents.",
   },
@@ -53,7 +53,8 @@ export default async function partnerPage() {
           </div>
 
           {/* Right – hero image with overlay badge */}
-          <div className="relative h-80 md:h-110 rounded-xl overflow-hidden bg-[#f4f4f0]">
+          <div className="relative h-80 md:h-110 rounded-xl overflow-visible bg-[#f4f4f0]">
+            <div className="absolute inset-0 rounded-xl overflow-hidden">
             <Image
               src="/ExhibitionHero.png"
               alt="Exhibition Hall"
@@ -62,13 +63,14 @@ export default async function partnerPage() {
               loading="eager"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
+            </div>
             {/* Badge */}
-            <div className="absolute bottom-1 left-[-6] bg-white/90 backdrop-blur-sm rounded-lg px-5 py-3 flex items-center gap-3 shadow-lg">
+            <div className="absolute bottom-[-12] left-[-12] z-20 bg-white/90 backdrop-blur-sm rounded-xl border border-gray-300 px-5 py-3 flex items-center gap-3 shadow-lg">
               <Users
                 className="w-6 h-6 text-[#0A2E1F] shrink-0"
                 strokeWidth={2}
               />
-              <div>
+              <div className="text-left leading-snug m-2">
                 <p className="text-xl font-normal text-[#0A2E1F] mb-1">5000+</p>
                 <p className="text-xs font-normal text-gray-500 uppercase tracking-widest">
                   Visitors
@@ -80,7 +82,7 @@ export default async function partnerPage() {
       </section>
 
       {/* ── Our Distinguishing Sectors ───────────────────────────────── */}
-      <section className="py-20 px-6 bg-[#EDEEE9] border-t border-gray-200 rounded-lg mx-10 mb-20">
+      <section className="py-20 px-6 mx-10 mb-20">
 
         {/*  Card 1 */}
         <div className="md:col-span-2 rounded-xl overflow-hidden flex flex-col md:flex-row mb-4">
@@ -97,7 +99,7 @@ export default async function partnerPage() {
           </div>
           {/* Right Content Block */}
           <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-            <p className="text-sm text-gray-500 leading-relaxed mb-6">
+            <p className="text-lg text-gray-500 leading-relaxed mb-6">
               Sinbol is a leading Nigerian company specializing in the production and distribution of high-quality edible oils and related products. With a commitment to excellence and sustainability, Sinbol has established itself as a trusted name in the food industry, providing nutritious and affordable cooking solutions to consumers across Nigeria and beyond.
             </p>
           </div>
@@ -118,7 +120,7 @@ export default async function partnerPage() {
           </div>
           {/* Right Content Block */}
           <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-            <p className="text-sm text-gray-500 leading-relaxed mb-6">
+            <p className="text-lg text-gray-500 leading-relaxed mb-6">
               Coronation Merchant Bank is a leading financial institution in Nigeria, providing a wide range of banking and financial services to individuals, businesses, and corporations. With a strong commitment to innovation and customer satisfaction, Coronation Merchant Bank has established itself as a trusted partner in the Nigerian banking industry.
             </p>
           </div>
@@ -139,7 +141,7 @@ export default async function partnerPage() {
           </div>
           {/* Right Content Block */}
           <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-            <p className="text-sm text-gray-500 leading-relaxed mb-6">
+            <p className="text-lg text-gray-500 leading-relaxed mb-6">
               AfroPack Engineering is a leading packaging solutions provider in Nigeria, specializing in the design, manufacturing, and distribution of high-quality packaging materials and equipment. With a commitment to innovation and sustainability, AfroPack Engineering has established itself as a trusted partner for businesses across various industries, providing customized packaging solutions that meet the evolving needs of the Nigerian market.
             </p>
           </div>
@@ -178,7 +180,7 @@ export default async function partnerPage() {
           </div>
           <div className="text-center mt-14">
             <Link
-              href="/register?booth=general"
+              href="/register"
               className="bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold text-sm hover:bg-[#062015] transition-colors inline-block w-full sm:w-auto"
             >
               Register Now

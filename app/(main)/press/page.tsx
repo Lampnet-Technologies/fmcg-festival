@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Download, Image as ImageIcon, FileText, Mail, FileVideo } from "lucide-react";
+import { EVENT_DETAILS } from "@/lib/event";
 
 export default function PressKitPage() {
   return (
@@ -14,7 +15,7 @@ export default function PressKitPage() {
             Official Press Kit
           </h1>
           <p className="text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
-            Everything you need to cover the 2026 FMCG Festival. Download high-resolution assets, read our latest announcements, and access brand guidelines.
+            Everything you need to cover the {EVENT_DETAILS.year} FMCG Festival. Download high-resolution assets, read our latest announcements, and access brand guidelines.
           </p>
         </div>
       </section>
@@ -23,7 +24,7 @@ export default function PressKitPage() {
       <section className="px-6 -mt-10 relative z-10 mb-20">
         <div className="max-w-5xl mx-auto bg-white border border-gray-200 rounded-xl shadow-sm p-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
-            <p className="text-2xl font-black text-[#0A2E1F]">Oct 24-26</p>
+            <p className="text-2xl font-black text-[#0A2E1F]">Nov 24-26</p>
             <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">2026 Dates</p>
           </div>
           <div>

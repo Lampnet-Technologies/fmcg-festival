@@ -4,83 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { processRegistration } from "@/app/actions/register";
+import { TIER_DETAILS, type TicketTier } from "@/lib/event";
 
-const TIER_DETAILS: Record<
-  string,
-  {
-    type: string;
-    title: string;
-    description: string;
-    price: string;
-  }
-> = {
-  visitor: {
-    type: "Visitor Pass",
-    title: "Visitor Pass",
-    description: "Access all sessions, networking areas, and event content at no cost.",
-    price: "Free Registration",
-  },
-  exhibitor: {
-    type: "Exhibitor Booth",
-    title: "Exhibitor Booth",
-    description: "Includes 3x3m booth, 2 staff passes, and branding visibility.",
-    price: "$450.00 / ₦250,000",
-  },
-  exhibitor_4sqm: {
-    type: "Exhibitor Booth",
-    title: "4 sqm Exhibitor Booth",
-    description: "Includes 4sqm booth space, 2 staff passes, and exhibition listing.",
-    price: "$500.00 / ₦700,000",
-  },
-  exhibitor_6sqm: {
-    type: "Exhibitor Booth",
-    title: "6 sqm Exhibitor Booth",
-    description: "Includes 6sqm booth space, 2 staff passes, and premium exhibition placement.",
-    price: "$1000.00 / ₦1,400,000",
-  },
-  exhibitor_9sqm: {
-    type: "Exhibitor Booth",
-    title: "9 sqm Exhibitor Booth",
-    description: "Includes 9sqm booth space, 2 staff passes, and enhanced branding visibility.",
-    price: "$1500.00 / ₦2,100,000",
-  },
-  exhibitor_15sqm: {
-    type: "Exhibitor Booth",
-    title: "15 sqm Exhibitor Booth",
-    description: "Includes 15sqm booth space, 2 staff passes, and premium placement with extra exposure.",
-    price: "$2000.00 / ₦3,000,000",
-  },
-  sponsorship_bronze: {
-    type: "Bronze Sponsorship",
-    title: "Bronze Sponsorship",
-    description: "Logo placement, exhibition space, and 2 delegate passes.",
-    price: "₦5M / $5,000",
-  },
-  sponsorship_headline: {
-    type: "Headline / Category Sponsorship",
-    title: "Headline / Category Sponsorship",
-    description: "Exclusive headline sponsor credit, billboards, private networking slots, and keynote visibility.",
-    price: "₦50M / $50,000",
-  },
-  sponsorship_silver: {
-    type: "Silver Sponsorship",
-    title: "Silver Sponsorship",
-    description: "Standard booth, media coverage, and logo exposure.",
-    price: "₦10M / $10,000",
-  },
-  sponsorship_category: {
-    type: "Category Sponsorship",
-    title: "Category Sponsorship",
-    description: "Exclusive category sponsor credit, billboards, and premium event exposure.",
-    price: "₦40M / $40,000",
-  },
-  sponsorship_gold: {
-    type: "Gold Sponsorship",
-    title: "Gold Sponsorship",
-    description: "Prime booth, keynote visibility, and premium branding.",
-    price: "₦20M / $20,000",
-  },
-};
+function isTicketTier(value: string): value is TicketTier {
+  return value in TIER_DETAILS;
+}
 
 export default function RegistrationForm({
   initialTier,
@@ -89,22 +17,22 @@ export default function RegistrationForm({
 }) {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
-  const [selectedTier, setSelectedTier] = useState(initialTier);
+  const [selectedTier] = useState(initialTier);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const tierData = TIER_DETAILS[selectedTier] || TIER_DETAILS.visitor;
-  const isSponsorshipTier = selectedTier.startsWith("sponsorship");
-  const isExhibitorTier = selectedTier.startsWith("exhibitor");
-  const isPaidTier = selectedTier !== "visitor";
-  const buttonText = selectedTier === "visitor" ? "Complete Registration" : "Continue to Payment";
+  const resolvedTier = isTicketTier(selectedTier) ? selectedTier : "visitor";
+  const tierData = TIER_DETAILS[resolvedTier];
+  const isSponsorshipTier = resolvedTier.startsWith("sponsorship");
+  const isPaidTier = resolvedTier !== "visitor";
+  const buttonText = resolvedTier === "visitor" ? "Complete Registration" : "Continue to Payment";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     setIsPending(true);
     const formData = new FormData(e.currentTarget);
-    formData.append("tier", selectedTier);
+    formData.append("tier", resolvedTier);
 
     try {
       const result = await processRegistration(formData);
@@ -118,7 +46,7 @@ export default function RegistrationForm({
       setShowSuccessModal(true);
     } catch (err) {
       console.error(err);
-      setError("Something went wrong while processing your registration. Please try again.");
+      setError("Registration could not be completed right now. Please try again or contact support if the issue continues.");
       setIsPending(false);
     }
   };
@@ -219,7 +147,7 @@ export default function RegistrationForm({
         <div className="bg-[#C5FA00]/20 p-4 rounded-md mb-8 border border-[#C5FA00]">
           <p className="text-sm font-bold text-[#0A2E1F]">
             You have pre-selected the{" "}
-            {selectedTier.replace("sponsorship_", "").toUpperCase()} Sponsorship
+            {resolvedTier.replace("sponsorship_", "").toUpperCase()} Sponsorship
             Tier.
           </p>
         </div>
@@ -240,7 +168,7 @@ export default function RegistrationForm({
           {isPending ? "Initializing Secure Payment..." : buttonText}
         </button>
         <p className="text-xs text-center text-gray-400 mt-4">
-          {selectedTier === "visitor"
+          {resolvedTier === "visitor"
             ? "No payment is required for Visitor Pass."
             : "Payments are processed securely via Paystack."}
         </p>

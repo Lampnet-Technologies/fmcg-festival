@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import RegistrationForm from "./RegistrationForm";
 import { Calendar, MapPin, CheckIcon, Mail } from "lucide-react";
+import { EVENT_DETAILS } from "@/lib/event";
 
 export default async function RegisterPage(props: {
   searchParams: Promise<{ tier?: string }>;
@@ -92,7 +93,7 @@ export default async function RegisterPage(props: {
               {/* Decorative image placeholder */}
               <div className="absolute inset-0 bg-[#0A2E1F]/10">
                 <Image
-                  src="/background.png"
+                  src="/Background.png"
                   alt="Venue"
                   fill
                   className="object-cover object-center"
@@ -106,11 +107,11 @@ export default async function RegisterPage(props: {
             <div className="space-y-2 text-sm text-gray-600">
               <p className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                November 24 - 26, 2026
+                {EVENT_DETAILS.displayDate}
               </p>
               <p className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
-                Lagos Oriental Hotel, Victoria Island
+                {EVENT_DETAILS.venueFull}
               </p>
             </div>
           </div>
@@ -125,7 +126,7 @@ export default async function RegisterPage(props: {
             <div className="space-y-2 text-sm text-gray-600">
               <p className="flex items-center gap-2 text-xs">
                 <Mail className="w-4 h-4" />
-                support@fmcgfestival.com
+                {EVENT_DETAILS.supportEmail}
               </p>
             </div>
           </div>

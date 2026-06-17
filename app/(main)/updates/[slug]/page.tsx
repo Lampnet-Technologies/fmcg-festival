@@ -73,7 +73,10 @@ const formatDate = (dateString: string) => {
 
 export default async function SingleUpdatePage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post: UpdatePost | null = await client.fetch(singleUpdateQuery, { slug });
+    const post: UpdatePost | null = await client.fetch(singleUpdateQuery, { slug }).catch((error) => {
+        console.error("Failed to fetch update from Sanity:", error);
+        return null;
+    });
 
     if (!post) {
         return (

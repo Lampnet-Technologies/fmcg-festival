@@ -2,26 +2,26 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 // 1. Refactored Data Structure: Support for standard links and dropdown menus
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Exhibitors", href: "/exhibitors" },
-  { label: "Sponsorship", href: "/sponsorship" },
   {
     label: "Event",
     subLinks: [
       { label: "About", href: "/about" },
       { label: "Event Line Up", href: "/line-up" },
       { label: "Blog/News", href: "/updates" },
-      { label: "Contact", href: "/contact" },
       { label: "Visitor Profile", href: "/visitor-profile" },
     ],
   },
+  { label: "Sponsorship", href: "/sponsorship" },
   { label: "Partners", href: "/partner" },
   { label: "Profile", href: "/dashboard" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
@@ -49,7 +49,7 @@ export function Navbar() {
         </Link>
 
         {/* ── Desktop Navigation ── */}
-        <div className="hidden lg:flex items-center space-x-8 text-sm font-bold text-gray-600 h-full">
+        <div className="hidden lg:flex items-center space-x-8 text-sm font-bold text-[#0A2E1F] h-full">
           {NAV_ITEMS.map((item) => {
             // Render Dropdown for items with subLinks
             if (item.subLinks) {

@@ -5,6 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
+import { EVENT_DETAILS } from "@/lib/event";
 
 export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] }) {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -60,6 +61,15 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                 </div> */}
 
                 {/* 2. Mapped Sanity Cards */}
+                {displayedExhibitors.length === 0 && (
+                    <div className="md:col-span-2 rounded-xl border border-dashed border-gray-300 bg-white p-8 text-center">
+                        <h3 className="text-lg font-black text-[#0A2E1F]">Directory updates are loading</h3>
+                        <p className="mt-3 text-sm text-gray-500">
+                            Exhibitor listings are being refreshed. Please check back soon or contact the team for current booth availability.
+                        </p>
+                    </div>
+                )}
+
                 {displayedExhibitors.map((exhibitor) => (
                     <div
                         key={exhibitor._id}
@@ -75,7 +85,7 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                         {/* The Image Wrapper - Completely transparent, no borders, just fills the card */}
                         <div className="relative w-full flex-1 flex items-center justify-center min-h-25 z-0">
                             <Image
-                                src={exhibitor.logo ? urlFor(exhibitor.logo).url() : "/partner-logo-placeholder.png"}
+                                src={exhibitor.logo ? urlFor(exhibitor.logo).url() : "/partner-logo-placeholder.jpg"}
                                 alt={`${exhibitor.companyName} logo`}
                                 fill
                                 className="object-contain transition-transform duration-300 group-hover:scale-105"
@@ -91,7 +101,7 @@ export default function FeaturedDirectory({ exhibitors }: { exhibitors: any[] })
                     </div>
                     <h3 className="text-lg font-black mb-3">Join the Roster</h3>
                     <p className="text-xs text-gray-300 leading-relaxed mb-8">
-                        Last few booth spaces available for the 2024 Festival. Showcase your brand to 15,000+ buyers.
+                        Last few booth spaces available for the {EVENT_DETAILS.year} Festival. Showcase your brand to 15,000+ buyers.
                     </p>
                     <Link href="/register" className="bg-[#C5FA00] text-[#0A2E1F] px-8 py-3 rounded-sm text-sm font-black hover:bg-[#b0df00] transition-colors w-full text-center">
                         Inquire Now

@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 import Link from "next/link";
 import RefreshButton from "./RefreshButton";
 import TicketCard from "@/components/TicketCard";
+import { EVENT_DETAILS } from "@/lib/event";
 
 // Next.js 15 requires searchParams to be a Promise
 export default async function DashboardPage(props: { 
@@ -42,16 +43,24 @@ export default async function DashboardPage(props: {
     if (pendingReg) {
       try {
         // Manually ask Paystack if this specific transaction was successful
-        const verifyRes = await fetch(`https://api.paystack.co/transaction/verify/${searchParams.reference}`, {
+        if (!process.env.PAYSTACK_SECRET_KEY) {
+          throw new Error("Payment service is not configured.");
+        }
+
+        const verifyRes = await fetch(`https://api.paystack.co/transaction/verify/${encodeURIComponent(searchParams.reference)}`, {
           headers: {
             Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
           },
           cache: "no-store"
         });
         
-        const verifyData = await verifyRes.json();
+        const verifyData = await verifyRes.json().catch(() => null);
 
-        if (verifyData.data?.status === "success") {
+        if (
+          verifyRes.ok &&
+          verifyData?.data?.status === "success" &&
+          verifyData.data.amount === pendingReg.amountPaid
+        ) {
           // Update the specific registration to successful
           await db.update(registrations)
             .set({ status: 'successful' })
@@ -67,7 +76,7 @@ export default async function DashboardPage(props: {
           // Manually update our local variable so the UI renders the ticket immediately
           pendingReg.status = "successful";
         } else {
-          // If Paystack says it's not successful yet, show the full-page loader
+          // If Paystack says it is not successful yet, show the full-page loader
           showFullPendingScreen = true;
         }
       } catch (err) {
@@ -104,8 +113,8 @@ export default async function DashboardPage(props: {
           </h1>
           <p className="text-gray-600">
             {userRegistrations.length > 1 
-              ? "Here are your official passes for the 2026 FMCG Festival." 
-              : "Here is your official pass for the 2026 FMCG Festival."}
+              ? `Here are your official passes for the ${EVENT_DETAILS.year} FMCG Festival.`
+              : `Here is your official pass for the ${EVENT_DETAILS.year} FMCG Festival.`}
           </p>
         </div>
 

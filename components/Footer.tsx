@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Globe, Mail, Link as LinkIcon } from "lucide-react";
+import { BsFacebook, BsLinkedin, BsX } from "react-icons/bs";
+import { EVENT_DETAILS } from "@/lib/event";
 
 export function Footer() {
   return (
@@ -11,14 +12,14 @@ export function Footer() {
             FMCG Festival
           </h2>
           <p className="text-sm text-gray-500 leading-relaxed mb-6">
-            Connecting the most innovative minds in the Fast-Moving Consumer
-            Goods sector. High-performance FMCG excellence. The definitive
-            gathering for the global consumer goods industry.
+            © {EVENT_DETAILS.year} FMCG Festival. High-performance FMCG excellence.
+            Leading the global conversation on consumer goods innovation
+            and supply chain resilience.
           </p>
-          <div className="flex items-center space-x-4 text-gray-400">
-            <Globe className="w-5 h-5 cursor-pointer hover:text-gray-600 transition-colors" />
-            <Mail className="w-5 h-5 cursor-pointer hover:text-gray-600 transition-colors" />
-            <LinkIcon className="w-5 h-5 cursor-pointer hover:text-gray-600 transition-colors" />
+          <div className="flex items-center space-x-4 text-[#0A2E1F]">
+            <BsLinkedin className="w-5 h-5 cursor-pointer transition-colors" />
+            <BsFacebook className="w-5 h-5 cursor-pointer transition-colors" />
+            <BsX className="w-5 h-5 cursor-pointer transition-colors" />
           </div>
         </div>
 
@@ -27,32 +28,44 @@ export function Footer() {
           {/* Company Column */}
           <div className="flex flex-col space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#0A2E1F]">
-              Company
+              Event Info
             </h3>
             <Link
-              href="/about"
+              href="/exhibitors"
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
-              About Us
+              Exhibition Details
             </Link>
             <Link
-              href="/sponsorship"
+              href="/"
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
-              Sponsors
+              Why Exhibit
+            </Link>
+            <Link
+              href="/visitor-profile"
+              className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
+            >
+              Visitor Profile
+            </Link>
+            <Link
+              href="/exhibitors"
+              className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
+            >
+              Event Board
             </Link>
           </div>
 
           {/* Support Column */}
           <div className="flex flex-col space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#0A2E1F]">
-              Support
+              Corporate
             </h3>
             <Link
-              href="/contact"
+              href="/about"
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
-              Contact Us
+              About Organizer
             </Link>
             <Link
               href="/privacy"
@@ -60,10 +73,22 @@ export function Footer() {
             >
               Privacy Policy
             </Link>
+            <Link
+              href="/partner"
+              className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
+            >
+              Partner Login
+            </Link>
+            <Link
+              href="/contact"
+              className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
+            >
+              Contact Us
+            </Link>
           </div>
 
           {/* Legal Column */}
-          <div className="flex flex-col space-y-4">
+          {/* <div className="flex flex-col space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#0A2E1F]">
               Legal
             </h3>
@@ -79,13 +104,13 @@ export function Footer() {
             >
               Press Kit
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* Copyright Bottom Bar */}
-      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
-        <p>© 2026 FMCG Festival. Organized by MABA.</p>
+      <div className="max-w-7xl mx-auto px-6 mt-14 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+        <p>© {EVENT_DETAILS.year} FMCG Festival. Organized by {EVENT_DETAILS.organizer}.</p>
       </div>
     </footer>
   );

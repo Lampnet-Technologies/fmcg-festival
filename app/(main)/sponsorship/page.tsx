@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Users, TrendingUp, BadgeCheck, Download, CheckCircle2Icon } from "lucide-react";
+import { EVENT_DETAILS, SPONSORSHIP_TIERS, TIER_DETAILS } from "@/lib/event";
 
 const WHY_SPONSOR = [
   {
@@ -38,75 +39,6 @@ const WHY_SPONSOR = [
   },
 ];
 
-const TIERS = [
-  {
-    name: "Bronze",
-    price: "₦5M / $5,000",
-    features: [
-      "Logo on official website",
-      "9 Sqr mtr exhibition Booth",
-      "Logo on official visitor bag to be given to 5000 visitors at the event",
-    ],
-    param: "sponsorship_bronze",
-    popular: false,
-    dark: false,
-  },
-  {
-    name: "Headline/ Category",
-    price: "₦40M / $40,000",
-    features: [
-      "20 Sqr Exhibition Booth",
-      "Exclusive headline sponsor credit",
-      "Company logo on billboards and outdoor adverts",
-      "Distribute promotional items and host private networking event in the event lounge during the 3 days",
-      "Keynote Speech opportunity",
-    ],
-    param: "sponsorship_headline",
-    popular: true, // Tagged as Premium in image
-    dark: true,
-  },
-  {
-    name: "Silver",
-    price: "₦10M / $10,000",
-    features: [
-      "Logo on official website",
-      "12 Sqr mtr exhibition Booth",
-      "Distribute promotional items and host private networking event in the event lounge during the 3 days",
-      "Logo on official visitor bag to be given to 5000 visitors at the event",
-    ],
-    param: "sponsorship_silver",
-    popular: false,
-    dark: false,
-  },
-  {
-    name: "Category",
-    price: "₦30M / $30,000",
-    features: [
-      "20 Sqr mtr exhibition Booth",
-      "Exclusive headline sponsor credit",
-      "Company logo on billboards and outdoor adverts",
-      "Keynote Speech opportunity",
-    ],
-    param: "sponsorship_category",
-    popular: true,
-    dark: true,
-  },
-  {
-    name: "Gold",
-    price: "₦20M / $20,000",
-    features: [
-      "Logo on official website",
-      "15 Sqr mtr exhibition Booth",
-      "Gold Sponsor credit on all event communications",
-      "Distribute promotional items and host private networking event in the event lounge during the 3 days",
-      "Logo on official visitor bag to be given to 5000 visitors at the event",
-    ],
-    param: "sponsorship_gold",
-    popular: false,
-    dark: false,
-  },
-];
-
 // Separated into two arrays for the new layout
 const INTERNATIONAL_SPONSORS = [
   "/support1.png",
@@ -122,6 +54,28 @@ const LOCAL_SPONSORS = [
   "/support3.png",
   "/support4.png",
   "/support5.png",
+];
+
+// Mock data for the "Event Line-up Preview" section
+const SCHEDULE_PREVIEW = [
+  {
+    day: "Day 1",
+    title: "Opening Ceremony/Conference & Exhibition Day",
+    desc: "Industry leaders discuss the impact of AI on consumer analytics.",
+    img: "/event1.png",
+  },
+  {
+    day: "Day 2",
+    title: "Conference & Exhibition Day ",
+    desc: "Case studies on circular economy initiatives from top brands.",
+    img: "/event2.png",
+  },
+  {
+    day: "Day 3",
+    title: "Pitch competition/Fashion show/Closing ceremony.",
+    desc: "Live unveiling of innovative products across all FMCG sectors.",
+    img: "/event4.png",
+  },
 ];
 
 // Mock data for the "Meet Our Sponsors" section
@@ -247,7 +201,7 @@ export default function SponsorshipPage() {
 
                   {item.stats && (
                     <div className="bg-[#EBEBE8] rounded-md py-6 px-8 flex items-center justify-center gap-8 shrink-0">
-                      {item.stats.map((s, index) => (
+                      {item.stats.map((s) => (
                         <div key={s.label} className="text-center">
                           <p className="text-lg font-medium text-[#0A2E1F]">
                             {s.value}
@@ -278,63 +232,125 @@ export default function SponsorshipPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-stretch justify-items-center">
-            {TIERS.map((tier) => (
-              <div
-                key={tier.name}
-                className={`relative rounded-xl p-7 flex flex-col w-full max-w-sm ${tier.dark
-                  ? "bg-[#0A2E1F] text-white shadow-2xl scale-105"
-                  : "bg-white border border-gray-200 text-[#0A2E1F]"
-                  }`}
-              >
-                {tier.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C5FA00] text-[#0A2E1F] text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
-                    Premium
-                  </span>
-                )}
-
-                <h3
-                  className={`text-lg font-normal mb-1 ${tier.dark ? "text-white" : "text-[#0A2E1F]"
+          <div className="flex flex-col gap-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-20 items-stretch justify-items-center">
+              {SPONSORSHIP_TIERS.slice(0, 3).map((tier) => (
+                <div
+                  key={tier.name}
+                  className={`relative rounded-xl p-7 flex flex-col w-full max-w-sm ${tier.dark
+                    ? "bg-[#0A2E1F] text-white shadow-2xl scale-112"
+                    : "bg-white border border-gray-200 text-[#0A2E1F]"
                     }`}
                 >
-                  {tier.name}
-                </h3>
-                <p
-                  className={`text-xs font-bold mb-6 ${tier.dark ? "text-gray-400" : "text-[#0A2E1F]"
-                    }`}
-                >
-                  {tier.price}
-                </p>
+                  {tier.popular && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C5FA00] text-[#0A2E1F] text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                      Premium
+                    </span>
+                  )}
 
-                <ul className="space-y-3 mb-8 flex-1">
-                  {tier.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className={`flex items-start gap-2 text-sm ${tier.dark ? "text-gray-300" : "text-gray-600"
-                        }`}
-                    >
-                      <span
-                        className={`mt-0.5 shrink-0 ${tier.dark ? "text-[#C5FA00]" : "text-[#84A900]"
+                  <h3
+                    className={`text-lg font-normal mb-1 ${tier.dark ? "text-white" : "text-[#0A2E1F]"
+                      }`}
+                  >
+                    {tier.name}
+                  </h3>
+                  <p
+                    className={`text-xs font-bold mb-6 ${tier.dark ? "text-gray-400" : "text-[#0A2E1F]"
+                      }`}
+                  >
+                    {TIER_DETAILS[tier.tier].price}
+                  </p>
+
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {tier.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className={`flex items-start gap-2 text-sm ${tier.dark ? "text-gray-300" : "text-gray-600"
                           }`}
                       >
-                        <CheckCircle2Icon className="w-4 h-4" />
-                      </span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                        <span
+                          className={`mt-0.5 shrink-0 ${tier.dark ? "text-[#C5FA00]" : "text-[#84A900]"
+                            }`}
+                        >
+                          <CheckCircle2Icon className="w-4 h-4" />
+                        </span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
 
-                <Link
-                  href={`/register?tier=${tier.param}`}
-                  className={`block w-full text-center py-3 rounded-sm font-black text-sm transition-colors ${tier.dark
-                    ? "bg-[#C5FA00] text-[#0A2E1F] hover:bg-[#b0df00]"
-                    : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  <Link
+                    href={`/register?tier=${tier.tier}`}
+                    className={`block w-full text-center py-3 rounded-sm font-black text-sm transition-colors ${tier.dark
+                      ? "bg-[#C5FA00] text-[#0A2E1F] hover:bg-[#b0df00]"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                      }`}
+                  >
+                    Select Tier
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center gap-20">
+              <div />
+              {SPONSORSHIP_TIERS.slice(3).map((tier) => (
+                <div
+                  key={tier.name}
+                  className={`relative rounded-xl p-7 flex flex-col w-full max-w-sm ${tier.dark
+                    ? "bg-[#0A2E1F] text-white shadow-2xl scale-112"
+                    : "bg-white border border-gray-200 text-[#0A2E1F]"
                     }`}
                 >
-                  Select Tier
-                </Link>
-              </div>
-            ))}
+                  {tier.popular && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#C5FA00] text-[#0A2E1F] text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                      Premium
+                    </span>
+                  )}
+
+                  <h3
+                    className={`text-lg font-normal mb-1 ${tier.dark ? "text-white" : "text-[#0A2E1F]"
+                      }`}
+                  >
+                    {tier.name}
+                  </h3>
+                  <p
+                    className={`text-xs font-bold mb-6 ${tier.dark ? "text-gray-400" : "text-[#0A2E1F]"
+                      }`}
+                  >
+                    {TIER_DETAILS[tier.tier].price}
+                  </p>
+
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {tier.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className={`flex items-start gap-2 text-sm ${tier.dark ? "text-gray-300" : "text-gray-600"
+                          }`}
+                      >
+                        <span
+                          className={`mt-0.5 shrink-0 ${tier.dark ? "text-[#C5FA00]" : "text-[#84A900]"
+                            }`}
+                        >
+                          <CheckCircle2Icon className="w-4 h-4" />
+                        </span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link
+                    href={`/register?tier=${tier.tier}`}
+                    className={`block w-full text-center py-3 rounded-sm font-black text-sm transition-colors ${tier.dark
+                      ? "bg-[#C5FA00] text-[#0A2E1F] hover:bg-[#b0df00]"
+                      : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                      }`}
+                  >
+                    Select Tier
+                  </Link>
+                </div>
+              ))}
+              <div />
+            </div>
           </div>
         </div>
       </section>
@@ -397,6 +413,91 @@ export default function SponsorshipPage() {
         </div>
       </section>
 
+      {/* ── Event Line-up Preview ────────────────────────────── */}
+      <section className="py-20 px-6 bg-[#0A2E1F]">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-12">
+            <h2 className="text-xl font-normal text-white mb-2">
+              Event Line-up
+            </h2>
+            <p className="text-[#7CB48C]">
+              A carefully curated schedule featuring global keynotes,
+              interactive panels, and networking galas.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-6 w-full max-w-304 mx-auto isolate">
+            {SCHEDULE_PREVIEW.map((item, i) => {
+              // Determine if the current item is on an alternating row (e.g., the 2nd item at index 1)
+              const isReversed = i % 2 !== 0;
+
+              return (
+                <div
+                  key={i}
+                  // Conditionally apply flex-row-reverse based on the isReversed boolean
+                  className={`relative flex flex-col w-full bg-none rounded-xl overflow-hidden min-h-75 ${isReversed ? "md:flex-row-reverse" : "md:flex-row"
+                    }`}
+                >
+                  {/* 1. The Mid White Line */}
+                  <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-white transform -translate-x-1/2 z-10" />
+
+                  {/* 2. The Small Green Circle */}
+                  <div className="hidden md:block absolute left-1/2 top-1/2 w-4 h-4 rounded-full bg-[#C5FA00] transform -translate-x-1/2 -translate-y-1/2 z-20" />
+
+                  {/* 3. Image Container */}
+                  <div className="relative w-full md:w-1/2 h-64 md:h-auto">
+                    <Image
+                      src={item.img}
+                      alt={item.title}
+                      fill
+                      className="object-cover opacity-60"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+
+                  {/* 4. Text Container */}
+                  <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
+                    {/* First Text (Day): Conditionally mirror alignment */}
+                    <p
+                      className={`w-full text-[#C5FA00] text-xs font-black uppercase tracking-widest mb-3 text-left ${isReversed ? "md:text-right" : "md:text-left"
+                        }`}
+                    >
+                      {item.day}
+                    </p>
+
+                    {/* Middle Text (Title): Always point towards the center line */}
+                    <h3
+                      className={`w-full text-white text-xl font-normal mb-2 text-left ${isReversed ? "md:text-right" : "md:text-left"
+                        }`}
+                    >
+                      {item.title}
+                    </h3>
+
+                    {/* Last Text (Desc): Conditionally mirror alignment */}
+                    {/*  <p
+                            className={`w-full text-[#7CB48C] text-sm leading-relaxed text-left ${
+                              isReversed ? "md:text-right" : "md:text-left"
+                            }`}
+                          >
+                            {item.desc}
+                          </p> */}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="#"
+              className="border border-white/30 bg-white text-[#0A2E1F] px-8 py-3 rounded-sm text-sm font-bold hover:bg-white/10 transition-colors inline-block"
+            >
+              Download Full Schedule (PDF)
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── Meet Our Sponsors ─────────────────────────────────── */}
       <section className="py-20 px-6 bg-[#f8f8f5]">
         <div className="max-w-6xl mx-auto">
@@ -406,8 +507,8 @@ export default function SponsorshipPage() {
           </h2>
 
           <div className="flex flex-col gap-12">
-            {visibleSponsorTiers.map((tierGroup, index) => (
-              <div key={index}>
+            {visibleSponsorTiers.map((tierGroup) => (
+              <div key={tierGroup.tier}>
                 {/* Tier Title */}
                 <h3 className="text-2xl font-bold text-[#0A2E1F] mb-6">
                   {tierGroup.tier}
@@ -450,7 +551,7 @@ export default function SponsorshipPage() {
             Ready to lead the conversation?
           </h2>
           <p className="text-[#9AD4AA] text-sm leading-relaxed mb-8 max-w-xl mx-auto">
-            Download our detailed 2024 sponsorship prospectus to explore the
+            Download our detailed {EVENT_DETAILS.year} sponsorship prospectus to explore the
             full range of custom activations and branding opportunities.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
