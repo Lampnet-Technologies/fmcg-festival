@@ -183,10 +183,10 @@ export default async function ExhibitorsPage() {
             <h2 className="text-center md:text-left text-lg font-bold text-[#0A2E1F] uppercase tracking-widest mb-8">
               Hotel / Accommodation
             </h2>
-            <div className="bg-[#ebf4ee] rounded-lg p-8 flex flex-col h-full justify-between">
+            <div className="bg-[#ebf4ee] rounded-lg p-8 flex flex-col justify-start">
               <div>
                 {/* Oriental Hotel Block */}
-                <div className="mb-8">
+                <div className="mb-4">
                   <h3 className="text-lg font-bold text-[#0A2E1F] mb-4">
                     Oriental Hotel Accommodation
                   </h3>
@@ -217,13 +217,12 @@ export default async function ExhibitorsPage() {
               </Link> */}
               <Link
                 href="/contact"
-                className="block w-full text-center py-3 mt-2 bg-[#0A2E1F] text-white font-bold rounded hover:bg-[#062015] transition-colors"
+                className="block w-full text-center py-3 mt-8 bg-[#0A2E1F] text-white font-bold rounded hover:bg-[#062015] transition-colors"
               >
                 Contact Us
               </Link>
             </div>
           </div>
-
         </div>
       </section>
 

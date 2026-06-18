@@ -198,7 +198,7 @@ export default async function HomePage() {
 
             <p className="text-white text-base md:text-lg max-w-xl leading-relaxed">
               A global platform connecting the FMCG value chain, fostering
-              innovation, and driving growth across the continent.
+              innovation, and driving growth across the globe.
             </p>
 
             <p className="text-white text-sm md:text-base max-w-xl leading-relaxed flex items-center">
