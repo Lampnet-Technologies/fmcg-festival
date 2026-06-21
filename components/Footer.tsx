@@ -19,7 +19,7 @@ export function Footer() {
           <div className="flex items-center space-x-4 text-[#0A2E1F]">
             <BsLinkedin className="w-5 h-5 cursor-pointer transition-colors" />
             <BsFacebook className="w-5 h-5 cursor-pointer transition-colors" />
-            <BsX className="w-5 h-5 cursor-pointer transition-colors" />
+            <BsX className="w-8 h-8 cursor-pointer transition-colors font-bold" />
           </div>
         </div>
 
