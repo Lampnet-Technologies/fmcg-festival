@@ -680,8 +680,9 @@ export default async function HomePage() {
       </section>
 
       {/* ── Final Call to Action Banner ──────────── */}
-      <section className="relative py-24 px-6 bg-[#0A2E1F] overflow-hidden flex flex-col items-center justify-center text-center isolate">
-        {/* Decorative angled background to match the lighter green split in the image */}
+      {/*  <section className="relative py-24 px-6 bg-[#0A2E1F] overflow-hidden flex flex-col items-center justify-center text-center isolate">
+     
+       ======= Decorative angled background to match the lighter green split in the image ======
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <div className="absolute right-[-10%] top-0 bottom-0 w-[45%] bg-[#0e3b28] transform skew-x-[-15deg] translate-x-10 shadow-2xl" />
         </div>
@@ -712,7 +713,7 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }

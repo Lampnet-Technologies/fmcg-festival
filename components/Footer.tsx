@@ -1,6 +1,48 @@
 import Link from "next/link";
-import { BsFacebook, BsLinkedin, BsX } from "react-icons/bs";
 import { EVENT_DETAILS } from "@/lib/event";
+
+const SOCIAL_LINKS = [
+  {
+    href: "https://linkedin.com",
+    label: "LinkedIn",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-3.5 w-3.5">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    ),
+  },
+  {
+    href: "https://x.com",
+    label: "X (formerly Twitter)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" className="h-3.5 w-3.5">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+  },
+  {
+    href: "https://instagram.com",
+    label: "Instagram",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-3.5 w-3.5">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+    ),
+  },
+  {
+    href: "https://facebook.com",
+    label: "Facebook",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-3.5 w-3.5">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+      </svg>
+    ),
+  },
+];
 
 export function Footer() {
   return (
@@ -16,10 +58,19 @@ export function Footer() {
             Leading the global conversation on consumer goods innovation
             and supply chain resilience.
           </p>
-          <div className="flex items-center space-x-4 text-[#0A2E1F]">
-            <BsLinkedin className="w-5 h-5 cursor-pointer transition-colors" />
-            <BsFacebook className="w-5 h-5 cursor-pointer transition-colors" />
-            <BsX className="w-8 h-8 cursor-pointer transition-colors font-bold" />
+          <div className="flex items-center gap-3 text-[#12865E]" aria-label="Social links">
+            {SOCIAL_LINKS.map((social) => (
+              <Link
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#12865E]/20 bg-[#12865E]/10 text-[#12865E] transition-colors hover:bg-[#12865E] hover:text-white"
+              >
+                {social.icon}
+              </Link>
+            ))}
           </div>
         </div>
 
@@ -37,10 +88,10 @@ export function Footer() {
               Exhibition Details
             </Link>
             <Link
-              href="/"
+              href="/updates"
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
-              Why Exhibit
+              Blog
             </Link>
             <Link
               href="/visitor-profile"
@@ -49,7 +100,7 @@ export function Footer() {
               Visitor Profile
             </Link>
             <Link
-              href="/exhibitors"
+              href="/line-up"
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               Event Board
