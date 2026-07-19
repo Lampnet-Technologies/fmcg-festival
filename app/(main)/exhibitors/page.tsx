@@ -82,7 +82,7 @@ export default async function ExhibitorsPage() {
           <div className="relative h-80 md:h-110 rounded-xl overflow-visible bg-[#f4f4f0]">
             <div className="absolute inset-0 rounded-xl overflow-hidden">
               <Image
-                src="/exhibitor1.png"
+                src="/exhibitor1.png?v=20260719"
                 alt="Exhibition Hall"
                 fill
                 className="object-cover"

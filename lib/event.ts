@@ -213,3 +213,71 @@ export const SPONSORSHIP_TIERS = [
   popular: boolean;
   dark: boolean;
 }>;
+
+export interface Partner {
+  name: string;
+  src: string;
+  alt: string;
+  type: "international" | "local";
+  description: string;
+}
+
+export const PARTNERS: Partner[] = [
+  {
+    name: "Coronation Merchant Bank",
+    src: "/partner1.png",
+    alt: "Coronation Merchant Bank Logo",
+    type: "international",
+    description: "Coronation Merchant Bank is a leading financial institution in Nigeria, providing a wide range of corporate and investment banking, wealth management, and treasury services to drive economic growth and business expansion."
+  },
+  {
+    name: "GOVA",
+    src: "/partner2.png",
+    alt: "GOVA Logo",
+    type: "international",
+    description: "GOVA is a global trading and brand distribution company, connecting major consumer goods brands with emerging and international retail markets."
+  },
+  {
+    name: "Sinbol",
+    src: "/partner3.png",
+    alt: "Sinbol Logo",
+    type: "international",
+    description: "Sinbol is a leading company specializing in the production and distribution of high-quality edible oils and related products, providing nutritious and sustainable cooking solutions across Africa."
+  },
+  {
+    name: "GG Group",
+    src: "/partner7.png",
+    alt: "GG Group Logo",
+    type: "international",
+    description: "GG Group is a multi-sector international enterprise focused on supply chain optimization, import-export facilitation, and strategic distribution partnerships."
+  },
+  {
+    name: "Nigerian Indonesian Chamber of Commerce and Industry",
+    src: "/partner8.jpeg",
+    alt: "Nigerian Indonesian Chamber of Commerce and Industry Logo",
+    type: "international",
+    description: "The Nigerian Indonesian Chamber of Commerce and Industry (NICCI) is dedicated to promoting bilateral trade, investment, and economic cooperation between Nigeria and Indonesia."
+  },
+  {
+    name: "AfroPack Engineering",
+    src: "/partner4.png",
+    alt: "AfroPack Engineering Logo",
+    type: "local",
+    description: "AfroPack Engineering is a premier packaging solutions provider, specializing in custom machinery, sustainable wrapping designs, and manufacturing equipment for FMCG companies."
+  },
+  {
+    name: "inAfrica",
+    src: "/partner5.png",
+    alt: "inAfrica Logo",
+    type: "local",
+    description: "inAfrica is an impact enterprise focused on building strategic local value chains, aggregating high-quality wholesale products for export and domestic retail distribution."
+  },
+  {
+    name: "NDBA",
+    src: "/partner6.png",
+    alt: "NDBA Logo",
+    type: "local",
+    description: "NDBA (National Dental Board of Anesthesiology) partners with local health, wellness, and consumer care brands to ensure standard compliance and educational support across healthcare channels."
+  }
+];
+

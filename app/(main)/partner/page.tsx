@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   Users,
 } from "lucide-react";
+import { PARTNERS } from "@/lib/event";
 
 
 
@@ -82,69 +83,85 @@ export default async function partnerPage() {
       </section>
 
       {/* ── Our Distinguishing Sectors ───────────────────────────────── */}
-      <section className="py-20 px-6 mx-10 mb-20">
-
-        {/*  Card 1 */}
-        <div className="md:col-span-2 rounded-xl overflow-hidden flex flex-col md:flex-row mb-4">
-          {/* Left Color Block */}
-          <div className="relative w-full md:w-1/2 bg-[#319B91] p-8 flex flex-col justify-center items-center text-center min-h-62.5">
-            <div className="absolute top-4 left-4">
-              <span className="bg-[#0A2E1F] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-sm shadow-sm">
-                Sinbol
-              </span>
+      <section className="py-20 px-6 max-w-7xl mx-auto mb-20" id="partners">
+        <h2 className="text-2xl md:text-3xl font-black text-[#0A2E1F] mb-10 text-center uppercase tracking-wider border-b-2 border-gray-200 pb-4">
+          International Partners
+        </h2>
+        <div className="flex flex-col gap-6 mb-20">
+          {PARTNERS.filter(p => p.type === "international").map((partner) => (
+            <div 
+              key={partner.name}
+              className="rounded-xl overflow-hidden flex flex-col md:flex-row bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              {/* Left Color Block */}
+              <div className="relative w-full md:w-1/2 lg:w-2/5 bg-[#319B91] p-8 flex flex-col justify-center items-center text-center min-h-[220px]">
+                <div className="absolute top-4 left-4 max-w-[90%]">
+                  <span className="bg-[#0A2E1F] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-sm shadow-sm block truncate">
+                    {partner.name}
+                  </span>
+                </div>
+                <div className="w-48 h-48 relative opacity-90 flex items-center justify-center">
+                  <Image 
+                    src={`${partner.src}?v=20260719`} 
+                    alt={partner.name} 
+                    fill 
+                    className="object-contain p-4" 
+                    sizes="(max-width: 768px) 100vw, 33vw" 
+                  />
+                </div>
+              </div>
+              {/* Right Content Block */}
+              <div className="w-full md:w-1/2 lg:w-3/5 p-8 flex flex-col justify-center">
+                <span className="bg-[#B5F0C4] text-[#195130] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-4 self-start">
+                  International Partner
+                </span>
+                <h3 className="text-xl font-bold text-[#0A2E1F] mb-3">{partner.name}</h3>
+                <p className="text-base text-gray-500 leading-relaxed">
+                  {partner.description}
+                </p>
+              </div>
             </div>
-            <div className="w-54 h-54 relative mb-4 opacity-90">
-              <Image src="/partner3.png" alt="Sinbol" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
-            </div>
-          </div>
-          {/* Right Content Block */}
-          <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-            <p className="text-lg text-gray-500 leading-relaxed mb-6">
-              Sinbol is a leading Nigerian company specializing in the production and distribution of high-quality edible oils and related products. With a commitment to excellence and sustainability, Sinbol has established itself as a trusted name in the food industry, providing nutritious and affordable cooking solutions to consumers across Nigeria and beyond.
-            </p>
-          </div>
+          ))}
         </div>
 
-        {/*  Card 2 */}
-        <div className="md:col-span-2 rounded-xl overflow-hidden flex flex-col md:flex-row mb-4">
-          {/* Left Color Block */}
-          <div className="relative w-full md:w-1/2 bg-[#319B91] p-8 flex flex-col justify-center items-center text-center min-h-62.5">
-            <div className="absolute top-4 left-4">
-              <span className="bg-[#0A2E1F] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-sm shadow-sm">
-                Coronation Merchant Bank
-              </span>
+        <h2 className="text-2xl md:text-3xl font-black text-[#0A2E1F] mb-10 text-center uppercase tracking-wider border-b-2 border-gray-200 pb-4">
+          Local Partners
+        </h2>
+        <div className="flex flex-col gap-6">
+          {PARTNERS.filter(p => p.type === "local").map((partner) => (
+            <div 
+              key={partner.name}
+              className="rounded-xl overflow-hidden flex flex-col md:flex-row bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              {/* Left Color Block */}
+              <div className="relative w-full md:w-1/2 lg:w-2/5 bg-[#319B91] p-8 flex flex-col justify-center items-center text-center min-h-[220px]">
+                <div className="absolute top-4 left-4 max-w-[90%]">
+                  <span className="bg-[#0A2E1F] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-sm shadow-sm block truncate">
+                    {partner.name}
+                  </span>
+                </div>
+                <div className="w-48 h-48 relative opacity-90 flex items-center justify-center">
+                  <Image 
+                    src={`${partner.src}?v=20260719`} 
+                    alt={partner.name} 
+                    fill 
+                    className="object-contain p-4" 
+                    sizes="(max-width: 768px) 100vw, 33vw" 
+                  />
+                </div>
+              </div>
+              {/* Right Content Block */}
+              <div className="w-full md:w-1/2 lg:w-3/5 p-8 flex flex-col justify-center">
+                <span className="bg-[#E2F0B5] text-[#485119] px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-4 self-start">
+                  Local Partner
+                </span>
+                <h3 className="text-xl font-bold text-[#0A2E1F] mb-3">{partner.name}</h3>
+                <p className="text-base text-gray-500 leading-relaxed">
+                  {partner.description}
+                </p>
+              </div>
             </div>
-            <div className="w-54 h-54 relative mb-4 opacity-90">
-              <Image src="/partner1.png" alt="Coronation Merchant Bank" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
-            </div>
-          </div>
-          {/* Right Content Block */}
-          <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-            <p className="text-lg text-gray-500 leading-relaxed mb-6">
-              Coronation Merchant Bank is a leading financial institution in Nigeria, providing a wide range of banking and financial services to individuals, businesses, and corporations. With a strong commitment to innovation and customer satisfaction, Coronation Merchant Bank has established itself as a trusted partner in the Nigerian banking industry.
-            </p>
-          </div>
-        </div>
-
-        {/*  Card 3 */}
-        <div className="md:col-span-2 rounded-xl overflow-hidden flex flex-col md:flex-row">
-          {/* Left Color Block */}
-          <div className="relative w-full md:w-1/2 bg-[#319B91] p-8 flex flex-col justify-center items-center text-center min-h-62.5">
-            <div className="absolute top-4 left-4">
-              <span className="bg-[#0A2E1F] text-white text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded-sm shadow-sm">
-                AfroPack Engineering
-              </span>
-            </div>
-            <div className="w-54 h-54 relative mb-4 opacity-90">
-              <Image src="/partner4.png" alt="AfroPack Engineering" fill className="object-contain" sizes="(max-width: 768px) 100vw, 50vw" />
-            </div>
-          </div>
-          {/* Right Content Block */}
-          <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-            <p className="text-lg text-gray-500 leading-relaxed mb-6">
-              AfroPack Engineering is a leading packaging solutions provider in Nigeria, specializing in the design, manufacturing, and distribution of high-quality packaging materials and equipment. With a commitment to innovation and sustainability, AfroPack Engineering has established itself as a trusted partner for businesses across various industries, providing customized packaging solutions that meet the evolving needs of the Nigerian market.
-            </p>
-          </div>
+          ))}
         </div>
       </section>
 

@@ -161,7 +161,7 @@ export default function AboutPage() {
           <div className="relative">
             <div className="relative h-100 md:h-120 rounded-xl overflow-hidden bg-gray-100">
               <Image
-                src="/about2.png"
+                src="/about2.png?v=20260719"
                 alt="Handshake at festival"
                 fill
                 className="object-cover"

@@ -19,7 +19,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { FestivalCountdown } from "@/components/FestivalCountdown";
-import { EVENT_DETAILS } from "@/lib/event";
+import { EVENT_DETAILS, PARTNERS } from "@/lib/event";
 
 const SCHEDULE_PREVIEW = [
   {
@@ -333,7 +333,7 @@ export default async function HomePage() {
             {/* Center image */}
             <div className="relative w-full h-75 md:h-100 lg:h-125 rounded-2xl bg-white overflow-hidden order-1 lg:order-2 isolate">
               <Image
-                src="/homepage3.png"
+                src="/homepage3.png?v=20260719"
                 alt="Exhibition"
                 fill
                 sizes="(max-width: 1024px) 100vw, 33vw"
@@ -404,18 +404,18 @@ export default async function HomePage() {
               <h3 className="text-xl md:text-2xl font-bold text-[#0A2E1F] w-full md:w-1/5 text-center md:text-left leading-tight">
                 International<br className="hidden md:block" /> Partners
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full md:w-4/5">
-                {Array.from({ length: 3 }).map((_, i) => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 w-full md:w-4/5">
+                {PARTNERS.filter(p => p.type === "international").map((partner) => (
                   <div
-                    key={`intl-${i}`}
-                    className="relative h-32 md:h-40 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-6 shadow-sm hover:shadow-md transition-shadow"
+                    key={partner.name}
+                    className="relative h-28 md:h-32 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-4 shadow-sm hover:shadow-md transition-shadow"
                   >
                     <Image
-                      src={`/partner${i + 1}.png`}
-                      alt={`International Partner ${i + 1}`}
+                      src={`${partner.src}?v=20260719`}
+                      alt={partner.alt}
                       fill
-                      className="object-contain p-2"
-                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-contain p-3"
+                      sizes="(max-width: 768px) 50vw, 15vw"
                     />
                   </div>
                 ))}
@@ -425,18 +425,18 @@ export default async function HomePage() {
             {/* Local Partners Row */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
               {/* Logos on the left for desktop, ordered first for mobile */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full md:w-4/5 order-2 md:order-1">
-                {Array.from({ length: 3 }).map((_, i) => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 w-full md:w-4/5 order-2 md:order-1">
+                {PARTNERS.filter(p => p.type === "local").map((partner) => (
                   <div
-                    key={`local-${i}`}
-                    className="relative h-32 md:h-40 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-6 shadow-sm hover:shadow-md transition-shadow"
+                    key={partner.name}
+                    className="relative h-28 md:h-32 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-4 shadow-sm hover:shadow-md transition-shadow"
                   >
                     <Image
-                      src={`/partner${i + 4}.png`}
-                      alt={`Local Partner ${i + 1}`}
+                      src={`${partner.src}?v=20260719`}
+                      alt={partner.alt}
                       fill
-                      className="object-contain p-2"
-                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-contain p-3"
+                      sizes="(max-width: 768px) 50vw, 15vw"
                     />
                   </div>
                 ))}
