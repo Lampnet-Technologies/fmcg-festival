@@ -19,7 +19,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { FestivalCountdown } from "@/components/FestivalCountdown";
-import { EVENT_DETAILS, PARTNERS } from "@/lib/event";
+import { EVENT_DETAILS, HOMEPAGE_INTERNATIONAL_PARTNERS, HOMEPAGE_LOCAL_PARTNERS } from "@/lib/event";
 
 const SCHEDULE_PREVIEW = [
   {
@@ -404,8 +404,8 @@ export default async function HomePage() {
               <h3 className="text-xl md:text-2xl font-bold text-[#0A2E1F] w-full md:w-1/5 text-center md:text-left leading-tight">
                 International<br className="hidden md:block" /> Partners
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 w-full md:w-4/5">
-                {PARTNERS.filter(p => p.type === "international").map((partner) => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 w-full md:w-4/5">
+                {HOMEPAGE_INTERNATIONAL_PARTNERS.map((partner) => (
                   <div
                     key={partner.name}
                     className="relative h-28 md:h-32 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-4 shadow-sm hover:shadow-md transition-shadow"
@@ -426,7 +426,7 @@ export default async function HomePage() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
               {/* Logos on the left for desktop, ordered first for mobile */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 w-full md:w-4/5 order-2 md:order-1">
-                {PARTNERS.filter(p => p.type === "local").map((partner) => (
+                {HOMEPAGE_LOCAL_PARTNERS.map((partner) => (
                   <div
                     key={partner.name}
                     className="relative h-28 md:h-32 bg-white border border-gray-100 rounded-xl flex items-center justify-center p-4 shadow-sm hover:shadow-md transition-shadow"
