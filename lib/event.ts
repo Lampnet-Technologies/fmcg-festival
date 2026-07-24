@@ -237,23 +237,30 @@ export const HOMEPAGE_INTERNATIONAL_PARTNERS: Partner[] = [
     type: "international",
     description: "GG Group is a multi-sector international enterprise focused on supply chain optimization, import-export facilitation, and strategic distribution partnerships."
   },
+  /*   {
+      name: "GOVA",
+      src: "/partner2.png",
+      alt: "GOVA Logo",
+      type: "international",
+      description: "GOVA is a global trading and brand distribution company, connecting major consumer goods brands with emerging and international retail markets."
+    } */
   {
-    name: "GOVA",
-    src: "/partner2.png",
-    alt: "GOVA Logo",
+    name: "Opay",
+    src: "/partner9.png",
+    alt: "Opay Logo",
     type: "international",
-    description: "GOVA is a global trading and brand distribution company, connecting major consumer goods brands with emerging and international retail markets."
-  }
+    description: "Opay is a leading fintech company in Nigeria, providing innovative financial services and solutions to millions of users."
+  },
 ];
 
 export const HOMEPAGE_LOCAL_PARTNERS: Partner[] = [
-  {
-    name: "AfroPack Engineering",
-    src: "/partner4.png",
-    alt: "AfroPack Engineering Logo",
-    type: "local",
-    description: "AfroPack Engineering is a premier packaging solutions provider, specializing in custom machinery, sustainable wrapping designs, and manufacturing equipment for FMCG companies."
-  },
+  /*   {
+      name: "AfroPack Engineering",
+      src: "/partner4.png",
+      alt: "AfroPack Engineering Logo",
+      type: "local",
+      description: "AfroPack Engineering is a premier packaging solutions provider, specializing in custom machinery, sustainable wrapping designs, and manufacturing equipment for FMCG companies."
+    }, */
   {
     name: "Nigerian Indonesian Chamber of Commerce and Industry",
     src: "/partner8.jpeg",
@@ -261,13 +268,13 @@ export const HOMEPAGE_LOCAL_PARTNERS: Partner[] = [
     type: "local",
     description: "The Nigerian Indonesian Chamber of Commerce and Industry (NICCI) is dedicated to promoting bilateral trade, investment, and economic cooperation between Nigeria and Indonesia."
   },
-  {
-    name: "Sinbol",
-    src: "/partner3.png",
-    alt: "Sinbol Logo",
-    type: "local",
-    description: "Sinbol is a leading company specializing in the production and distribution of high-quality edible oils and related products, providing nutritious and sustainable cooking solutions across Africa."
-  }
+  /*   {
+      name: "Sinbol",
+      src: "/partner3.png",
+      alt: "Sinbol Logo",
+      type: "local",
+      description: "Sinbol is a leading company specializing in the production and distribution of high-quality edible oils and related products, providing nutritious and sustainable cooking solutions across Africa."
+    } */
 ];
 
 export const DISTINGUISHED_PARTNERS: Partner[] = [
@@ -275,7 +282,7 @@ export const DISTINGUISHED_PARTNERS: Partner[] = [
     name: "inAfrica",
     src: "/partner5.png",
     alt: "inAfrica Logo",
-    type: "local",
+    type: "international",
     description: "inAfrica is an impact enterprise focused on building strategic local value chains, aggregating high-quality wholesale products for export and domestic retail distribution."
   },
   {
@@ -289,8 +296,15 @@ export const DISTINGUISHED_PARTNERS: Partner[] = [
     name: "Nigerian Indonesian Chamber of Commerce and Industry",
     src: "/partner8.jpeg",
     alt: "Nigerian Indonesian Chamber of Commerce and Industry Logo",
-    type: "international",
+    type: "local",
     description: "The Nigerian Indonesian Chamber of Commerce and Industry (NICCI) is dedicated to promoting bilateral trade, investment, and economic cooperation between Nigeria and Indonesia."
-  }
+  },
+  {
+    name: "Opay",
+    src: "/partner9.png",
+    alt: "Opay Logo",
+    type: "international",
+    description: "Opay is a leading fintech company in Nigeria, providing innovative financial services and solutions to millions of users."
+  },
 ];
 
