@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import { FestivalCountdown } from "@/components/FestivalCountdown";
 import { EVENT_DETAILS, HOMEPAGE_INTERNATIONAL_PARTNERS, HOMEPAGE_LOCAL_PARTNERS } from "@/lib/event";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const SCHEDULE_PREVIEW = [
   {
@@ -143,6 +145,13 @@ const BOTTOM_CTA = [
 ];
 
 export default async function HomePage() {
+  const session = await auth();
+  if (session?.userId) {
+    redirect("/dashboard");
+  } else {
+    redirect("/sign-in");
+  }
+
   const iconMap: Record<
     string,
     React.ComponentType<{ size?: number; className?: string }>
