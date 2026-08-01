@@ -90,7 +90,7 @@ export function Navbar() {
         {/* ── Desktop Auth Actions ── */}
         <div className="hidden lg:flex items-center space-x-6">
           <a
-            href={`${DYNAMIC_APP_URL}/sign-in`}
+            href={DYNAMIC_APP_URL}
             className="text-sm font-bold text-gray-600 hover:text-[#0A2E1F] transition-colors"
           >
             LogIn
@@ -169,7 +169,7 @@ export function Navbar() {
             <div className="pt-6">
               <div className="flex flex-col space-y-5 mb-6">
                 <a
-                  href={`${DYNAMIC_APP_URL}/sign-in`}
+                  href={DYNAMIC_APP_URL}
                   onClick={closeMenu}
                   className="text-lg font-bold text-gray-600 text-left"
                 >

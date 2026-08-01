@@ -24,6 +24,8 @@ const NAV_ITEMS = [
   { label: "Contact", href: "/contact" },
 ];
 
+const hasClerkConfig = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // State specifically for the mobile dropdown accordion
@@ -93,16 +95,20 @@ export function Navbar() {
 
         {/* ── Desktop Auth Actions ── */}
         <div className="hidden lg:flex items-center space-x-6">
-          <Show when="signed-out">
-            <SignInButton>
-              <button className="text-sm font-bold text-gray-600 hover:text-[#0A2E1F] transition-colors">
-                LogIn
-              </button>
-            </SignInButton>
-          </Show>
-          <Show when="signed-in">
-            <UserButton />
-          </Show>
+          {hasClerkConfig && (
+            <>
+              <Show when="signed-out">
+                <SignInButton>
+                  <button className="text-sm font-bold text-gray-600 hover:text-[#0A2E1F] transition-colors">
+                    LogIn
+                  </button>
+                </SignInButton>
+              </Show>
+              <Show when="signed-in">
+                <UserButton />
+              </Show>
+            </>
+          )}
           <Link
             href="/register"
             className="bg-[#C5FA00] text-[#0A2E1F] px-6 py-2.5 rounded-sm text-sm font-black hover:bg-[#b0df00] transition-colors shadow-sm"
@@ -113,9 +119,11 @@ export function Navbar() {
 
         {/* ── Mobile Header Controls ── */}
         <div className="flex lg:hidden items-center gap-4">
-          <Show when="signed-in">
-            <UserButton />
-          </Show>
+          {hasClerkConfig && (
+            <Show when="signed-in">
+              <UserButton />
+            </Show>
+          )}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-[#0A2E1F] p-2 -mr-2 focus:outline-none"
@@ -181,15 +189,17 @@ export function Navbar() {
 
             <div className="pt-6">
               {/* Mobile Auth Actions */}
-              <Show when="signed-out">
-                <div className="flex flex-col space-y-5 mb-6">
-                  <SignInButton>
-                    <button onClick={closeMenu} className="text-lg font-bold text-gray-600 text-left">
-                      LogIn
-                    </button>
-                  </SignInButton>
-                </div>
-              </Show>
+              {hasClerkConfig && (
+                <Show when="signed-out">
+                  <div className="flex flex-col space-y-5 mb-6">
+                    <SignInButton>
+                      <button onClick={closeMenu} className="text-lg font-bold text-gray-600 text-left">
+                        LogIn
+                      </button>
+                    </SignInButton>
+                  </div>
+                </Show>
+              )}
 
               {/* Mobile Register Button */}
               <Link
