@@ -26,15 +26,30 @@ export const exhibitorsQuery = groq`
 
 // Fetch all updates/blog posts for the Updates page
 export const updatesQuery = groq`
-  *[_type == "update"] | order(publishedAt desc) {
+  *[_type == "update"] | order(coalesce(publishedAt, _createdAt) desc) {
     _id,
     title,
     slug,
     tag,
     publishedAt,
+    _createdAt,
     excerpt,
     mainImage,
     body
+  }
+`;
+
+// Fetch the latest 3 updates/blog posts for the Homepage preview
+export const latestUpdatesQuery = groq`
+  *[_type == "update"] | order(coalesce(publishedAt, _createdAt) desc)[0...3] {
+    _id,
+    title,
+    slug,
+    tag,
+    publishedAt,
+    _createdAt,
+    excerpt,
+    mainImage
   }
 `;
 
@@ -46,6 +61,7 @@ export const singleUpdateQuery = groq`
     slug,
     tag,
     publishedAt,
+    _createdAt,
     excerpt,
     mainImage,
     body

@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build",
+    "build:static": "node scripts/build-static.mjs",
     "start": "next start",
+    "start:standalone": "node .next/standalone/server.js",
     "lint": "eslint"
   },
   "dependencies": {
@@ -17,7 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
-    "lucide-react": "^1.11.0",
+    "lucide-react": "^1.26.0",
     "next": "16.2.4",
     "next-sanity": "^12.3.0",
     "postgres": "^3.4.9",

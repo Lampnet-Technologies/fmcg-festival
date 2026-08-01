@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { client } from "@/sanity/lib/client";
+import { client, sanityConfigured } from "@/sanity/lib/client";
 import { exhibitorsQuery } from "@/sanity/queries";
 import {
   Utensils,
@@ -41,10 +41,12 @@ const STATS = [
 ];
 
 export default async function ExhibitorsPage() {
-  const exhibitors = await client.fetch(exhibitorsQuery).catch((error) => {
-    console.error("Failed to fetch exhibitors from Sanity:", error);
-    return [];
-  });
+  const exhibitors = !sanityConfigured
+    ? []
+    : await client.fetch(exhibitorsQuery).catch((error) => {
+        console.error("Failed to fetch exhibitors from Sanity:", error);
+        return [];
+      });
 
   return (
     <main className="flex-1 bg-[#f4f4f0]">

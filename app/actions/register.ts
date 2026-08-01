@@ -6,7 +6,7 @@ import { registrations, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { EVENT_DETAILS, PRICING, type TicketTier } from "@/lib/event";
 
-type RegistrationResult =
+export type RegistrationResult =
     | { success: true; type: "free" }
     | { success: true; type: "payment"; authorizationUrl: string };
 

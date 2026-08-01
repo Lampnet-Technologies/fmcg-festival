@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
           <hr className="border-gray-200 my-10" />
 
           <p className="text-sm italic">
-            To exercise your data rights or ask questions about this policy, please reach out to our Data Protection Officer at <a href="mailto:privacy@fmcgfestival.com" className="text-[#0A2E1F] font-bold hover:underline">privacy@fmcgfestival.com</a>.
+            To exercise your data rights or ask questions about this policy, please reach out to our Data Protection Officer at <a href="mailto:privacy@thefmcgfestival.com" className="text-[#0A2E1F] font-bold hover:underline">privacy@thefmcgfestival.com</a>.
           </p>
 
         </div>

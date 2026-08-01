@@ -10,8 +10,8 @@ export const EVENT_DETAILS = {
   city: "Lagos",
   country: "Nigeria",
   organizer: "MABA",
-  supportEmail: "support@fmcgfestival.com",
-  baseUrl: process.env.NEXT_PUBLIC_BASE_URL || "https://fmcgfestival.com",
+  supportEmail: "support@thefmcgfestival.com",
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL || "https://thefmcgfestival.com",
 } as const;
 
 export const PRICING = {

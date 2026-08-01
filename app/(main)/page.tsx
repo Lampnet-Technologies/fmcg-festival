@@ -20,6 +20,9 @@ import {
 } from "lucide-react";
 import { FestivalCountdown } from "@/components/FestivalCountdown";
 import { EVENT_DETAILS, HOMEPAGE_INTERNATIONAL_PARTNERS, HOMEPAGE_LOCAL_PARTNERS } from "@/lib/event";
+import { client, sanityConfigured } from "@/sanity/lib/client";
+import { latestUpdatesQuery } from "@/sanity/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 const SCHEDULE_PREVIEW = [
   {
@@ -90,38 +93,22 @@ const EXHIBITION_SECTORS = [
   { icon: "Heart", label: "Health & Wellness", count: "110+ Exhibitors" },
 ];
 
-const NEWS_ITEMS = [
-  {
-    tag: "PRESS RELEASE",
-    tagColor: "text-gray-500",
-    date: "OCT 12, 2024",
-    title: '"Circular Hub" Zone announced for the 2024 Main Floor.',
-    desc: "The festival expands its sustainability footprint with a dedicated pavilion for circular packaging.",
-    cta: "/updates/circular-hub-zone-announced-for-the-2024-main-floor",
-    img: "/blog-img1.png",
-    imgDark: true,
-  },
-  {
-    tag: "SOCIAL FEED",
-    tagColor: "text-gray-500",
-    date: "3 HOURS AGO",
-    title: "Just finalized our exhibit plans for #FMCGFestival2024. Can't wait!!",
-    desc: "@GlobalRetailer: Looking forward to meeting the next generation of supply chain disruptors in this hub.",
-    cta: "/updates/just-finalized-our-exhibit-plans-for-fmcgfestival2024-can-t-wait",
-    img: null,
-    center: true,
-  },
-  {
-    tag: "SPEAKER SPOTLIGHT",
-    tagColor: "text-gray-500",
-    date: "OCT 16, 2024",
-    title: "Q&A: Julian Vance on the future of GenAI in FMCG packaging.",
-    desc: "Discover how artificial intelligence is slashing prototyping times for major global brands by up to 70%.",
-    cta: "/updates/q-and-a-julian-vance-on-the-future-of-genai-in-fmcg-packaging",
-    img: "/blog-img2.png",
-    imgDark: false,
-  },
-];
+interface LatestUpdate {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  tag: string;
+  publishedAt: string | null;
+  _createdAt: string;
+  excerpt: string;
+  mainImage?: { asset: { _ref: string } };
+}
+
+function formatUpdateDate(dateString: string) {
+  return new Date(dateString)
+    .toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
+    .toUpperCase();
+}
 
 const BOTTOM_CTA = [
   {
@@ -143,6 +130,13 @@ const BOTTOM_CTA = [
 ];
 
 export default async function HomePage() {
+  const latestUpdates: LatestUpdate[] = !sanityConfigured
+    ? []
+    : await client.fetch(latestUpdatesQuery).catch((error) => {
+        console.error("Failed to fetch latest updates from Sanity:", error);
+        return [];
+      });
+
   const iconMap: Record<
     string,
     React.ComponentType<{ size?: number; className?: string }>
@@ -189,7 +183,7 @@ export default async function HomePage() {
           {/* Left Content */}
           <div className="flex flex-col items-start gap-6">
             <div className="inline-flex items-center gap-2 bg-[#C5FA00] text-[#0A2E1F] font-light text-xs px-4 py-2 rounded-sm uppercase tracking-widest text-center md:text-left">
-              {EVENT_DETAILS.heroDate} - The Innovation Hub
+              {EVENT_DETAILS.heroDate} - The FMCG Festival
             </div>
 
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-white leading-[1.1] max-w-2xl">
@@ -588,53 +582,59 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {NEWS_ITEMS.map((item, i) => (
-              <Link
-                href={item.cta}
-                key={i}
-                className="group rounded-xl overflow-hidden border border-gray-200 bg-white flex flex-col shadow-sm hover:shadow-xl transition-all duration-300"
-              >
-                {/* Image Container with Zoom Hover Effect */}
-                {item.img ? (
-                  <div className={`relative h-56 w-full shrink-0 overflow-hidden ${item.imgDark ? "bg-gray-900" : "bg-gray-100"}`}>
-                    <Image
-                      src={item.img}
-                      alt={item.title}
-                      fill
-                      className={`object-cover transition-transform duration-500 group-hover:scale-105 ${item.imgDark ? "opacity-70" : "opacity-100"}`}
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
-                ) : (
-                  <div className="h-56 flex items-center justify-center bg-gray-50 border-b border-gray-100 overflow-hidden">
-                    <div className="text-gray-400 group-hover:scale-110 transition-transform duration-500">
-                      {getIcon("Camera")}
+            {latestUpdates.length > 0 ? (
+              latestUpdates.map((update) => (
+                <Link
+                  href={`/updates/${update.slug.current}`}
+                  key={update._id}
+                  className="group rounded-xl overflow-hidden border border-gray-200 bg-white flex flex-col shadow-sm hover:shadow-xl transition-all duration-300"
+                >
+                  {/* Image Container with Zoom Hover Effect */}
+                  {update.mainImage ? (
+                    <div className="relative h-56 w-full shrink-0 overflow-hidden bg-gray-100">
+                      <Image
+                        src={urlFor(update.mainImage).url()}
+                        alt={update.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-56 flex items-center justify-center bg-gray-50 border-b border-gray-100 overflow-hidden">
+                      <div className="text-gray-400 group-hover:scale-110 transition-transform duration-500">
+                        {getIcon("Camera")}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Card Content */}
+                  <div className="p-8 flex flex-col flex-1">
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-[#84A900]">
+                        {update.tag || "UPDATE"}
+                      </span>
+                      <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                        {formatUpdateDate(update.publishedAt || update._createdAt)}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-[#0A2E1F] leading-snug mb-3 group-hover:text-[#84A900] transition-colors">
+                      {update.title}
+                    </h3>
+                    <p className="text-sm text-gray-500 leading-relaxed flex-1">
+                      {update.excerpt}
+                    </p>
+                    <div className="mt-6 flex items-center text-xs font-black text-[#0A2E1F] group-hover:text-[#84A900] transition-colors">
+                      Read Article <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
                     </div>
                   </div>
-                )}
-
-                {/* Card Content */}
-                <div className="p-8 flex flex-col flex-1">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[#84A900]">
-                      {item.tag || "UPDATE"}
-                    </span>
-                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
-                      {item.date}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-[#0A2E1F] leading-snug mb-3 group-hover:text-[#84A900] transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed flex-1">
-                    {item.desc}
-                  </p>
-                  <div className="mt-6 flex items-center text-xs font-black text-[#0A2E1F] group-hover:text-[#84A900] transition-colors">
-                    Read Article <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))
+            ) : (
+              <p className="text-gray-500 col-span-full text-center py-10">
+                No updates yet. Check back soon!
+              </p>
+            )}
           </div>
         </div>
       </section>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { client } from "@/sanity/lib/client";
+import { client, sanityConfigured } from "@/sanity/lib/client";
 import { updatesQuery } from "@/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -11,7 +11,8 @@ interface Update {
         current: string;
     };
     tag: string;
-    publishedAt: string;
+    publishedAt: string | null;
+    _createdAt: string;
     excerpt: string;
     mainImage?: {
         asset: {
@@ -21,10 +22,12 @@ interface Update {
 }
 
 export default async function UpdatesPage() {
-    const updates: Update[] = await client.fetch(updatesQuery).catch((error) => {
-        console.error("Failed to fetch updates from Sanity:", error);
-        return [];
-    });
+    const updates: Update[] = !sanityConfigured
+        ? []
+        : await client.fetch(updatesQuery).catch((error) => {
+            console.error("Failed to fetch updates from Sanity:", error);
+            return [];
+        });
 
     const getTagColor = (tag: string) => {
         switch (tag) {
@@ -91,7 +94,7 @@ export default async function UpdatesPage() {
                                             {update.tag}
                                         </span>
                                         <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
-                                            {formatDate(update.publishedAt)}
+                                            {formatDate(update.publishedAt || update._createdAt)}
                                         </span>
                                     </div>
                                     <h3 className="text-xl font-black text-[#0A2E1F] mb-3 line-clamp-2 group-hover:text-[#C5FA00] transition-colors">

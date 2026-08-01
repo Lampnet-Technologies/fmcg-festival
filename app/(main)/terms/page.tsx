@@ -62,7 +62,7 @@ export default function TermsPage() {
           <hr className="border-gray-200 my-10" />
 
           <p className="text-sm italic">
-            For questions regarding these terms, please contact <a href="mailto:legal@fmcgfestival.com" className="text-[#0A2E1F] font-bold hover:underline">legal@fmcgfestival.com</a>.
+            For questions regarding these terms, please contact <a href="mailto:legal@thefmcgfestival.com" className="text-[#0A2E1F] font-bold hover:underline">legal@thefmcgfestival.com</a>.
           </p>
 
         </div>

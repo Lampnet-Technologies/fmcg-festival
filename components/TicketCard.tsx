@@ -5,11 +5,11 @@ import QRCode from "react-qr-code";
 import { DownloadCloud } from "lucide-react";
 
 type Registration = {
-    id: string;
-    purchaseType: string;
-    status: string | null;
-    paystackReference: string | null;
-    amountPaid: number;
+    id?: string | null;
+    purchaseType?: string | null;
+    status?: string | null;
+    paystackReference?: string | null;
+    amountPaid?: number | null;
 };
 
 type UserDetails = {
@@ -128,33 +128,40 @@ const TIER_STYLES: Record<
     },
 };
 
-function formatTicketLabel(purchaseType: string) {
-    return TIER_LABELS[purchaseType] || purchaseType.replace(/_/g, " ").toUpperCase();
+function formatTicketLabel(purchaseType?: string | null) {
+    const normalizedType = purchaseType ?? "visitor";
+    return TIER_LABELS[normalizedType] || normalizedType.replace(/_/g, " ").toUpperCase();
 }
 
-function formatPaymentLabel(purchaseType: string) {
-    if (purchaseType.startsWith("sponsorship")) return "Sponsor Tier";
-    if (purchaseType.startsWith("exhibitor")) return "Exhibitor Booth";
+function formatPaymentLabel(purchaseType?: string | null) {
+    const normalizedType = purchaseType ?? "visitor";
+    if (normalizedType.startsWith("sponsorship")) return "Sponsor Tier";
+    if (normalizedType.startsWith("exhibitor")) return "Exhibitor Booth";
     return "Ticket Type";
 }
 
 function buildQrPayload(registration: Registration, user: UserDetails, ticketLabel: string) {
+    const purchaseType = registration.purchaseType ?? "visitor";
+    const status = registration.status ?? "pending";
+    const reference = registration.paystackReference ?? "";
+
     return [
         "FMCG FESTIVAL TICKET",
         `Name: ${user.firstName} ${user.lastName}`.trim(),
         `Email: ${user.email}`,
         `Ticket: ${ticketLabel}`,
-        `Type: ${formatPaymentLabel(registration.purchaseType)}`,
-        `Status: ${registration.status === "successful" ? "PAID" : "PENDING"}`,
-        `Reference: ${registration.paystackReference}`,
+        `Type: ${formatPaymentLabel(purchaseType)}`,
+        `Status: ${status === "successful" ? "PAID" : "PENDING"}`,
+        `Reference: ${reference}`,
     ]
         .filter(Boolean)
         .join("\n");
 }
 
 export default function TicketCard({ registration, user }: TicketCardProps) {
-    const ticketLabel = formatTicketLabel(registration.purchaseType);
-    const ticketStyle = TIER_STYLES[registration.purchaseType] || TIER_STYLES.visitor;
+    const purchaseType = registration.purchaseType ?? "visitor";
+    const ticketLabel = formatTicketLabel(purchaseType);
+    const ticketStyle = TIER_STYLES[purchaseType] || TIER_STYLES.visitor;
     const statusLabel = registration.status === "successful" ? "PAID" : "PENDING";
     const qrValue = useMemo(
         () => buildQrPayload(registration, user, ticketLabel),
@@ -168,7 +175,7 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
             `Email: ${user.email}`,
             `Ticket: ${ticketLabel}`,
             `Status: ${statusLabel}`,
-            `Reference: ${registration.paystackReference}`,
+            `Reference: ${registration.paystackReference ?? ""}`,
             "",
             "Scan the QR code to verify this ticket.",
         ]
@@ -198,7 +205,7 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
                             {user.firstName} {user.lastName}
                         </h3>
                         <p className={`mt-2 text-sm ${ticketStyle.subtext}`}>
-                            {formatPaymentLabel(registration.purchaseType)} • {statusLabel}
+                            {formatPaymentLabel(purchaseType)} • {statusLabel}
                         </p>
                     </div>
 
@@ -206,7 +213,7 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
                         type="button"
                         onClick={handleDownload}
                         className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                            registration.purchaseType === 'visitor'
+                            purchaseType === 'visitor'
                                 ? 'border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200'
                                 : 'border-white/20 bg-white/10 text-white hover:bg-white/20'
                         }`}
@@ -235,7 +242,7 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
                                     <p className={`text-[10px] uppercase tracking-[0.35em] ${ticketStyle.subtext}`}>
                                         Reference
                                     </p>
-                                    <p className={`font-semibold ${ticketStyle.heading}`}>{registration.paystackReference}</p>
+                                    <p className={`font-semibold ${ticketStyle.heading}`}>{registration.paystackReference ?? ""}</p>
                                 </div>
                             </div>
                         </div>

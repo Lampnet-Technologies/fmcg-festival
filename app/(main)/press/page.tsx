@@ -84,7 +84,7 @@ export default function PressKitPage() {
             <h2 className="text-2xl font-black text-[#0A2E1F] mb-2">Need something specific?</h2>
             <p className="text-gray-600">Our PR team is available for interview requests, media passes, and custom assets.</p>
           </div>
-          <a href="mailto:press@fmcgfestival.com" className="shrink-0 flex items-center gap-3 bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold hover:bg-[#062015] transition-colors">
+          <a href="mailto:press@thefmcgfestival.com" className="shrink-0 flex items-center gap-3 bg-[#0A2E1F] text-white px-8 py-4 rounded-sm font-bold hover:bg-[#062015] transition-colors">
             <Mail className="w-5 h-5" /> Contact Press Office
           </a>
         </div>
