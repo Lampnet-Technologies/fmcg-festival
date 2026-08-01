@@ -13,7 +13,6 @@ const isPublicRoute = createRouteMatcher([
   '/api/webhooks/paystack',
   'studio(.*)',
   '/partner',
- /*  '/profile', */
 ]);
 
 export default clerkMiddleware(async (auth, request) => {
