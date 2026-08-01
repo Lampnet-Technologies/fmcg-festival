@@ -21,6 +21,8 @@ const swaps = [
   [p("components", "Navbar.tsx"), p("components", "Navbar.static.tsx")],
   [p("app", "(main)", "register", "page.tsx"), p("app", "(main)", "register", "page.static.tsx")],
   [p("app", "(main)", "dashboard", "page.tsx"), p("app", "(main)", "dashboard", "page.static.tsx")],
+  [p("app", "(main)", "sign-in", "[[...sign-in]]", "page.tsx"), p("app", "(main)", "sign-in", "[[...sign-in]]", "page.static.tsx")],
+  [p("app", "(main)", "sign-up", "[[...sign-up]]", "page.tsx"), p("app", "(main)", "sign-up", "[[...sign-up]]", "page.static.tsx")],
 ];
 
 // Dynamic-only route trees that don't belong in a static export. Moved
