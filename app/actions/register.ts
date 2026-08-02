@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { registrations, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { EVENT_DETAILS, PRICING, type TicketTier } from "@/lib/event";
+import { headers } from "next/headers";
 
 type RegistrationResult =
     | { success: true; type: "free" }
@@ -81,6 +82,11 @@ export async function processRegistration(formData: FormData): Promise<Registrat
         throw new Error("Payment service is not configured.");
     }
 
+    const headersList = await headers();
+    const host = headersList.get("x-forwarded-host") || headersList.get("host");
+    const proto = headersList.get("x-forwarded-proto") || "https";
+    const appUrl = host ? `${proto}://${host}` : EVENT_DETAILS.baseUrl;
+
     const response = await fetch("https://api.paystack.co/transaction/initialize", {
         method: "POST",
         headers: {
@@ -91,7 +97,7 @@ export async function processRegistration(formData: FormData): Promise<Registrat
             email: formData.get("email") || primaryEmail,
             amount: amountInKobo,
             reference: reference,
-            callback_url: `${EVENT_DETAILS.baseUrl}/dashboard?verify=true`,
+            callback_url: `${appUrl}/dashboard?verify=true`,
             metadata: {
                 userId: user.id,
                 purchaseType: tier,

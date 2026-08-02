@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EVENT_DETAILS } from "@/lib/event";
+import { getMarketingUrl } from "@/lib/utils";
 
 const SOCIAL_LINKS = [
   {
@@ -82,25 +83,25 @@ export function Footer() {
               Event Info
             </h3>
             <Link
-              href="/exhibitors"
+              href={getMarketingUrl("/exhibitors")}
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               Exhibition Details
             </Link>
             <Link
-              href="/updates"
+              href={getMarketingUrl("/updates")}
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               Blog
             </Link>
             <Link
-              href="/visitor-profile"
+              href={getMarketingUrl("/visitor-profile")}
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               Visitor Profile
             </Link>
             <Link
-              href="/line-up"
+              href={getMarketingUrl("/line-up")}
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               Event Board
@@ -113,25 +114,25 @@ export function Footer() {
               Corporate
             </h3>
             <Link
-              href="/about"
+              href={getMarketingUrl("/about")}
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               About Organizer
             </Link>
             <Link
-              href="/privacy"
+              href={getMarketingUrl("/privacy")}
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               Privacy Policy
             </Link>
             <Link
-              href="/partner"
+              href={getMarketingUrl("/partner")}
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               Partner Login
             </Link>
             <Link
-              href="/contact"
+              href={getMarketingUrl("/contact")}
               className="text-sm text-gray-500 hover:text-gray-900 underline decoration-transparent hover:decoration-gray-300 transition-all"
             >
               Contact Us
