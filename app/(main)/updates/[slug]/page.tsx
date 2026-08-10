@@ -2,10 +2,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { client } from "@/sanity/lib/client";
+import { PortableText } from "@portabletext/react";
+import { client, sanityConfigured } from "@/sanity/lib/client";
 import { singleUpdateQuery } from "@/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
-import { PortableText } from "@portabletext/react";
+
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+    const slugs: { slug: { current: string } }[] = !sanityConfigured
+        ? []
+        : await client
+            .fetch(`*[_type == "update" && defined(slug.current)]{ slug }`)
+            .catch(() => []);
+
+    // `output: export` requires at least one static path for a dynamic route.
+    // Fall back to a placeholder when Sanity isn't configured or has no posts
+    // yet; the page below renders an "Update not found" state for it.
+    if (slugs.length === 0) return [{ slug: "sample" }];
+
+    return slugs.map(({ slug }) => ({ slug: slug.current }));
+}
 
 interface UpdatePost {
     _id: string;
@@ -14,7 +32,8 @@ interface UpdatePost {
         current: string;
     };
     tag: string;
-    publishedAt: string;
+    publishedAt: string | null;
+    _createdAt: string;
     excerpt: string;
     mainImage?: {
         asset: {
@@ -73,10 +92,12 @@ const formatDate = (dateString: string) => {
 
 export default async function SingleUpdatePage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post: UpdatePost | null = await client.fetch(singleUpdateQuery, { slug }).catch((error) => {
-        console.error("Failed to fetch update from Sanity:", error);
-        return null;
-    });
+    const post: UpdatePost | null = !sanityConfigured
+        ? null
+        : await client.fetch(singleUpdateQuery, { slug }).catch((error) => {
+            console.error("Failed to fetch update from Sanity:", error);
+            return null;
+        });
 
     if (!post) {
         return (
@@ -108,7 +129,7 @@ export default async function SingleUpdatePage({ params }: { params: Promise<{ s
                         {post.tag}
                     </span>
                     <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
-                        {formatDate(post.publishedAt)}
+                        {formatDate(post.publishedAt || post._createdAt)}
                     </span>
                 </div>
 

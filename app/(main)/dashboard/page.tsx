@@ -20,11 +20,22 @@ export default async function DashboardPage(props: {
     redirect("/sign-in");
   }
 
+  type DashboardRegistration = {
+    id: string;
+    userId?: string | null;
+    purchaseType?: string | null;
+    amountPaid?: number | null;
+    status?: string | null;
+    paystackReference?: string | null;
+    ticketNumber?: string | null;
+    createdAt?: Date | string | null;
+  };
+
   // 1. Fetch ALL registrations for this user (Removed .limit(1))
-  const userRegistrations = await db
+  const userRegistrations = (await db
     .select()
     .from(registrations)
-    .where(eq(registrations.userId, user.id));
+    .where(eq(registrations.userId, user.id))) as DashboardRegistration[];
 
   // If they have no tickets at all, send them to register
   if (!userRegistrations || userRegistrations.length === 0) {
@@ -38,7 +49,8 @@ export default async function DashboardPage(props: {
   if (searchParams.reference) {
     // Find the specific ticket that matches this Paystack reference
     const pendingReg = userRegistrations.find(
-      (r) => r.status === "pending" && r.paystackReference === searchParams.reference
+      (r: { status?: string | null; paystackReference?: string | null }) =>
+        r.status === "pending" && r.paystackReference === searchParams.reference
     );
 
     if (pendingReg) {
@@ -121,7 +133,16 @@ export default async function DashboardPage(props: {
 
         {/* Map through all the user's tickets */}
         <div className="space-y-8">
-          {userRegistrations.map((registration) => (
+          {userRegistrations.map((registration: {
+            id?: string | null;
+            paystackReference?: string | null;
+            status?: string | null;
+            purchaseType?: string | null;
+            amountPaid?: number | null;
+            ticketNumber?: string | null;
+            createdAt?: Date | string | null;
+            userId?: string | null;
+          }) => (
             <TicketCard
               key={registration.id || registration.paystackReference}
               registration={registration}

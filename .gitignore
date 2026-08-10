@@ -73,3 +73,9 @@ Thumbs.db
 
 # dist/build
 dist/
+
+# clerk configuration (can include secrets)
+/.clerk/
+
+# transient holding dir used by scripts/build-static.mjs
+/.static-build-excluded/

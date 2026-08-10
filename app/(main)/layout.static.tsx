@@ -2,20 +2,18 @@ import type { Metadata } from "next";
 import { Geist_Mono, Inter, Epilogue } from "next/font/google";
 import "../globals.css";
 import { cn } from "@/lib/utils";
-import { ClerkProvider } from "@clerk/nextjs";
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { EVENT_DETAILS } from "@/lib/event";
 import SanityNotice from "@/components/SanityNotice";
 
+// Static-export build of the root layout: no ClerkProvider. Importing
+// @clerk/nextjs here (even unused) taints every page with a server action
+// reference, which `output: "export"` rejects outright.
+
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const epilogue = Epilogue({ subsets: ["latin"], variable: "--font-heading" });
-
-/* const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-}); */
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -71,10 +69,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  const hasClerkConfig = Boolean(clerkPublishableKey);
-
-  const shell = (
+  return (
     <html
       lang="en"
       className={cn(
@@ -95,10 +90,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-
-  if (!hasClerkConfig) {
-    return shell;
-  }
-
-  return <ClerkProvider publishableKey={clerkPublishableKey}>{shell}</ClerkProvider>;
 }

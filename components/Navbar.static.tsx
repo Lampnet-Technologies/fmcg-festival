@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { getMarketingUrl } from "@/lib/utils";
+import { DYNAMIC_APP_URL } from "@/lib/dynamicApp";
 
-// 1. Refactored Data Structure: Support for standard links and dropdown menus
+// Static-export build of the Navbar: no Clerk. Sign In / Register / Profile
+// link out to the live Vercel app, which handles auth, payments, and the dashboard.
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Exhibitors", href: "/exhibitors" },
@@ -21,18 +21,14 @@ const NAV_ITEMS = [
   },
   { label: "Sponsorship", href: "/sponsorship" },
   { label: "Partners", href: "/partner" },
-  { label: "Profile", href: "/dashboard" },
+  { label: "Profile", href: `${DYNAMIC_APP_URL}/dashboard` },
   { label: "Contact", href: "/contact" },
 ];
 
-const hasClerkConfig = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
-
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // State specifically for the mobile dropdown accordion
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
 
-  // Helper to cleanly close the menu when routing
   const closeMenu = () => {
     setIsMobileMenuOpen(false);
     setIsMobileDropdownOpen(false);
@@ -42,9 +38,9 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 h-20 flex items-center justify-between">
 
-        {/* ── Logo (Size Reduced & Spacing Tightened) ── */}
+        {/* ── Logo ── */}
         <Link
-          href={getMarketingUrl("/")}
+          href="/"
           onClick={closeMenu}
           className="text-xl font-black text-[#0A2E1F] tracking-tight shrink-0 flex items-center gap-2"
         >
@@ -54,7 +50,6 @@ export function Navbar() {
         {/* ── Desktop Navigation ── */}
         <div className="hidden lg:flex items-center space-x-8 text-sm font-bold text-[#0A2E1F] h-full">
           {NAV_ITEMS.map((item) => {
-            // Render Dropdown for items with subLinks
             if (item.subLinks) {
               return (
                 <div key={item.label} className="relative group h-full flex items-center">
@@ -63,13 +58,12 @@ export function Navbar() {
                     <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-[#0A2E1F] transition-transform group-hover:-rotate-180 duration-300" />
                   </button>
 
-                  {/* Dropdown Box (Invisible bridge + visible panel) */}
                   <div className="absolute top-20 left-0 w-56 invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                     <div className="bg-white border border-gray-100 shadow-xl rounded-lg overflow-hidden py-2 flex flex-col relative top-2.5">
                       {item.subLinks.map((subLink) => (
                         <Link
                           key={subLink.label}
-                          href={getMarketingUrl(subLink.href)}
+                          href={subLink.href}
                           className="px-5 py-3 text-sm font-medium text-gray-600 hover:text-[#0A2E1F] hover:bg-gray-50 transition-colors"
                         >
                           {subLink.label}
@@ -81,11 +75,10 @@ export function Navbar() {
               );
             }
 
-            // Render Standard Links
             return (
               <Link
                 key={item.label}
-                href={getMarketingUrl(item.href)}
+                href={item.href}
                 className="hover:text-[#0A2E1F] transition-colors"
               >
                 {item.label}
@@ -96,35 +89,22 @@ export function Navbar() {
 
         {/* ── Desktop Auth Actions ── */}
         <div className="hidden lg:flex items-center space-x-6">
-          {hasClerkConfig && (
-            <>
-              <Show when="signed-out">
-                <SignInButton>
-                  <button className="text-sm font-bold text-gray-600 hover:text-[#0A2E1F] transition-colors">
-                    LogIn
-                  </button>
-                </SignInButton>
-              </Show>
-              <Show when="signed-in">
-                <UserButton />
-              </Show>
-            </>
-          )}
-          <Link
-            href={getMarketingUrl("/register")}
+          <a
+            href={DYNAMIC_APP_URL}
+            className="text-sm font-bold text-gray-600 hover:text-[#0A2E1F] transition-colors"
+          >
+            LogIn
+          </a>
+          <a
+            href={`${DYNAMIC_APP_URL}/register`}
             className="bg-[#C5FA00] text-[#0A2E1F] px-6 py-2.5 rounded-sm text-sm font-black hover:bg-[#b0df00] transition-colors shadow-sm"
           >
             Register Now
-          </Link>
+          </a>
         </div>
 
         {/* ── Mobile Header Controls ── */}
         <div className="flex lg:hidden items-center gap-4">
-          {hasClerkConfig && (
-            <Show when="signed-in">
-              <UserButton />
-            </Show>
-          )}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-[#0A2E1F] p-2 -mr-2 focus:outline-none"
@@ -140,7 +120,6 @@ export function Navbar() {
         <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl flex flex-col z-50">
           <div className="flex flex-col px-6 py-8 space-y-2">
 
-            {/* Mobile Links mapping */}
             {NAV_ITEMS.map((item) => {
               if (item.subLinks) {
                 return (
@@ -156,7 +135,6 @@ export function Navbar() {
                       />
                     </button>
 
-                    {/* Mobile Accordion Content */}
                     <div
                       className={`flex flex-col space-y-4 overflow-hidden transition-all duration-300 ${isMobileDropdownOpen ? "max-h-75 mb-4 mt-2 opacity-100" : "max-h-0 opacity-0"
                         }`}
@@ -164,7 +142,7 @@ export function Navbar() {
                       {item.subLinks.map((subLink) => (
                         <Link
                           key={subLink.label}
-                          href={getMarketingUrl(subLink.href)}
+                          href={subLink.href}
                           onClick={closeMenu}
                           className="pl-4 text-lg font-medium text-gray-600 hover:text-[#84A900]"
                         >
@@ -179,7 +157,7 @@ export function Navbar() {
               return (
                 <Link
                   key={item.label}
-                  href={getMarketingUrl(item.href)}
+                  href={item.href}
                   onClick={closeMenu}
                   className="py-4 border-b border-gray-50 text-xl font-bold text-[#0A2E1F] hover:text-[#84A900] transition-colors"
                 >
@@ -189,27 +167,23 @@ export function Navbar() {
             })}
 
             <div className="pt-6">
-              {/* Mobile Auth Actions */}
-              {hasClerkConfig && (
-                <Show when="signed-out">
-                  <div className="flex flex-col space-y-5 mb-6">
-                    <SignInButton>
-                      <button onClick={closeMenu} className="text-lg font-bold text-gray-600 text-left">
-                        LogIn
-                      </button>
-                    </SignInButton>
-                  </div>
-                </Show>
-              )}
+              <div className="flex flex-col space-y-5 mb-6">
+                <a
+                  href={DYNAMIC_APP_URL}
+                  onClick={closeMenu}
+                  className="text-lg font-bold text-gray-600 text-left"
+                >
+                  LogIn
+                </a>
+              </div>
 
-              {/* Mobile Register Button */}
-              <Link
-                href={getMarketingUrl("/register")}
+              <a
+                href={`${DYNAMIC_APP_URL}/register`}
                 onClick={closeMenu}
                 className="bg-[#0A2E1F] text-[#C5FA00] px-6 py-4 rounded-sm text-center text-lg font-black hover:bg-[#062015] transition-colors w-full inline-block shadow-md"
               >
                 Register Now
-              </Link>
+              </a>
             </div>
           </div>
         </div>

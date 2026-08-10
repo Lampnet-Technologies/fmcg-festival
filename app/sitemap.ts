@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { EVENT_DETAILS } from "@/lib/event";
 
+export const dynamic = "force-static";
+
 const routes = [
   "",
   "/about",

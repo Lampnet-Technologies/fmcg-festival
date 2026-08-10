@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { client } from "@/sanity/lib/client";
+import { client, sanityConfigured } from "@/sanity/lib/client";
 import { exhibitorsQuery } from "@/sanity/queries";
 import {
   Utensils,
@@ -41,10 +41,12 @@ const STATS = [
 ];
 
 export default async function ExhibitorsPage() {
-  const fetchedExhibitors = await client.fetch(exhibitorsQuery).catch((error) => {
-    console.error("Failed to fetch exhibitors from Sanity:", error);
-    return [];
-  });
+  const fetchedExhibitors = !sanityConfigured
+    ? []
+    : await client.fetch(exhibitorsQuery).catch((error) => {
+        console.error("Failed to fetch exhibitors from Sanity:", error);
+        return [];
+      });
 
   // Filter out Lampnet and Sinbol case-insensitively
   const exhibitors = fetchedExhibitors.filter((exhibitor: any) => {

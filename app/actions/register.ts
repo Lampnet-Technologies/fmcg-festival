@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 import { EVENT_DETAILS, PRICING, type TicketTier } from "@/lib/event";
 import { headers } from "next/headers";
 
-type RegistrationResult =
+export type RegistrationResult =
     | { success: true; type: "free" }
     | { success: true; type: "payment"; authorizationUrl: string };
 
