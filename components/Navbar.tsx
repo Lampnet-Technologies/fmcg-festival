@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { getMarketingUrl } from "@/lib/utils";
 
 // 1. Refactored Data Structure: Support for standard links and dropdown menus
 const NAV_ITEMS = [
@@ -43,7 +44,7 @@ export function Navbar() {
 
         {/* ── Logo (Size Reduced & Spacing Tightened) ── */}
         <Link
-          href="/"
+          href={getMarketingUrl("/")}
           onClick={closeMenu}
           className="text-xl font-black text-[#0A2E1F] tracking-tight shrink-0 flex items-center gap-2"
         >
@@ -68,7 +69,7 @@ export function Navbar() {
                       {item.subLinks.map((subLink) => (
                         <Link
                           key={subLink.label}
-                          href={subLink.href}
+                          href={getMarketingUrl(subLink.href)}
                           className="px-5 py-3 text-sm font-medium text-gray-600 hover:text-[#0A2E1F] hover:bg-gray-50 transition-colors"
                         >
                           {subLink.label}
@@ -84,7 +85,7 @@ export function Navbar() {
             return (
               <Link
                 key={item.label}
-                href={item.href}
+                href={getMarketingUrl(item.href)}
                 className="hover:text-[#0A2E1F] transition-colors"
               >
                 {item.label}
@@ -110,7 +111,7 @@ export function Navbar() {
             </>
           )}
           <Link
-            href="/register"
+            href={getMarketingUrl("/register")}
             className="bg-[#C5FA00] text-[#0A2E1F] px-6 py-2.5 rounded-sm text-sm font-black hover:bg-[#b0df00] transition-colors shadow-sm"
           >
             Register Now
@@ -163,7 +164,7 @@ export function Navbar() {
                       {item.subLinks.map((subLink) => (
                         <Link
                           key={subLink.label}
-                          href={subLink.href}
+                          href={getMarketingUrl(subLink.href)}
                           onClick={closeMenu}
                           className="pl-4 text-lg font-medium text-gray-600 hover:text-[#84A900]"
                         >
@@ -178,7 +179,7 @@ export function Navbar() {
               return (
                 <Link
                   key={item.label}
-                  href={item.href}
+                  href={getMarketingUrl(item.href)}
                   onClick={closeMenu}
                   className="py-4 border-b border-gray-50 text-xl font-bold text-[#0A2E1F] hover:text-[#84A900] transition-colors"
                 >
@@ -203,7 +204,7 @@ export function Navbar() {
 
               {/* Mobile Register Button */}
               <Link
-                href="/register"
+                href={getMarketingUrl("/register")}
                 onClick={closeMenu}
                 className="bg-[#0A2E1F] text-[#C5FA00] px-6 py-4 rounded-sm text-center text-lg font-black hover:bg-[#062015] transition-colors w-full inline-block shadow-md"
               >

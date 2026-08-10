@@ -12,6 +12,7 @@ import { EVENT_DETAILS } from "@/lib/event";
 export default async function DashboardPage(props: { 
   searchParams: Promise<{ reference?: string; verify?: string }> 
 }) {
+  try {
   const user = await currentUser();
   const searchParams = await props.searchParams;
   
@@ -175,4 +176,37 @@ export default async function DashboardPage(props: {
       </div>
     </main>
   );
+  } catch (error: any) {
+    if (
+      error &&
+      (error.digest === "NEXT_REDIRECT" ||
+        error.digest === "DYNAMIC_SERVER_USAGE" ||
+        error.message?.includes("Dynamic server usage") ||
+        error.message === "NEXT_REDIRECT")
+    ) {
+      throw error;
+    }
+    console.error("FATAL ERROR: Failed to render DashboardPage:", error);
+    return (
+      <main className="flex-1 bg-gray-50 flex items-center justify-center py-16 px-6 min-h-[50vh]">
+        <div className="bg-white border border-red-100 p-8 rounded-lg shadow-md max-w-md w-full text-center">
+          <h1 className="text-2xl font-black text-red-700 mb-4">Dashboard Error</h1>
+          <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+            There was an error loading your dashboard or verifying your ticket.
+          </p>
+          <p className="text-xs text-gray-400 bg-gray-50 p-3 rounded border font-mono break-all text-left">
+            Error: {error instanceof Error ? error.message : String(error)}
+          </p>
+          <div className="mt-6">
+            <Link
+              href="/"
+              className="inline-block bg-[#0A2E1F] text-white px-6 py-3 rounded-sm text-sm font-semibold hover:bg-[#062015] transition"
+            >
+              Back to Home
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
 }

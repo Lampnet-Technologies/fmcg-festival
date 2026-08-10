@@ -41,12 +41,18 @@ const STATS = [
 ];
 
 export default async function ExhibitorsPage() {
-  const exhibitors = !sanityConfigured
+  const fetchedExhibitors = !sanityConfigured
     ? []
     : await client.fetch(exhibitorsQuery).catch((error) => {
         console.error("Failed to fetch exhibitors from Sanity:", error);
         return [];
       });
+
+  // Filter out Lampnet and Sinbol case-insensitively
+  const exhibitors = fetchedExhibitors.filter((exhibitor: any) => {
+    const name = exhibitor.companyName?.toLowerCase() || "";
+    return !name.includes("lampnet") && !name.includes("sinbol");
+  });
 
   return (
     <main className="flex-1 bg-[#f4f4f0]">
