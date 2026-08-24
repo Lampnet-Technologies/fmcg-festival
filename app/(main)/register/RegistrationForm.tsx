@@ -37,12 +37,6 @@ export default function RegistrationForm({
     try {
       const result = await processRegistration(formData);
 
-      if (!result.success) {
-        setError(result.error);
-        setIsPending(false);
-        return;
-      }
-
       if (result.type === "payment") {
         window.location.href = result.authorizationUrl;
         return;
@@ -99,25 +93,49 @@ export default function RegistrationForm({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div>
           <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
-            Full Name
+            First Name
           </label>
           <input
             required
-            name="fullName"
+            name="firstName"
             type="text"
-            placeholder="John Doe"
+            placeholder="John"
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
           />
         </div>
         <div>
           <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
-            Organization
+            Last Name
           </label>
           <input
             required
-            name="organization"
+            name="lastName"
+            type="text"
+            placeholder="Doe"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
+            Company Name
+          </label>
+          <input
+            required
+            name="companyName"
             type="text"
             placeholder="Company Ltd"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
+            Position Held
+          </label>
+          <input
+            required
+            name="positionHeld"
+            type="text"
+            placeholder="Director of Operations"
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
           />
         </div>
@@ -135,13 +153,59 @@ export default function RegistrationForm({
         </div>
         <div>
           <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
-            Phone Number
+            Contact Number
           </label>
           <input
             required
-            name="phone"
+            name="contactNumber"
             type="text"
-            placeholder="+234 000 0000"
+            placeholder="+234 700 000 0000"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
+            Whatsapp Number
+          </label>
+          <input
+            name="whatsappNumber"
+            type="text"
+            placeholder="+234 700 000 0000"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
+            Country of Residence
+          </label>
+          <input
+            required
+            name="country"
+            type="text"
+            placeholder="Nigeria"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
+            City of Residence
+          </label>
+          <input
+            required
+            name="city"
+            type="text"
+            placeholder="Lagos"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+          />
+        </div>
+        <div className="md:col-span-2">
+          <label className="block text-sm font-bold text-[#0A2E1F] mb-2">
+            Other Information
+          </label>
+          <textarea
+            name="otherInfo"
+            rows={3}
+            placeholder="Any special requirements, interests, or questions..."
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
           />
         </div>

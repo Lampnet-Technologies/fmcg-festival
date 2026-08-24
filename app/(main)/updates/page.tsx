@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { client, sanityConfigured } from "@/sanity/lib/client";
+import { client } from "@/sanity/lib/client";
 import { updatesQuery } from "@/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -11,8 +11,7 @@ interface Update {
         current: string;
     };
     tag: string;
-    publishedAt: string | null;
-    _createdAt: string;
+    publishedAt: string;
     excerpt: string;
     mainImage?: {
         asset: {
@@ -22,12 +21,10 @@ interface Update {
 }
 
 export default async function UpdatesPage() {
-    const updates: Update[] = !sanityConfigured
-        ? []
-        : await client.fetch(updatesQuery).catch((error) => {
-            console.error("Failed to fetch updates from Sanity:", error);
-            return [];
-        });
+    const updates: Update[] = await client.fetch(updatesQuery).catch((error) => {
+        console.error("Failed to fetch updates from Sanity:", error);
+        return [];
+    });
 
     const getTagColor = (tag: string) => {
         switch (tag) {
@@ -76,7 +73,7 @@ export default async function UpdatesPage() {
                                 href={`/updates/${update.slug.current}`}
                                 className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
                             >
-                                {update.mainImage && (
+                                {update.mainImage ? (
                                     <div className="relative h-48 overflow-hidden bg-gray-200">
                                         <Image
                                             src={urlFor(update.mainImage).url()}
@@ -87,14 +84,27 @@ export default async function UpdatesPage() {
                                             loading="eager"
                                         />
                                     </div>
-                                )}
+                                ) : update._id === "static-opay-post" ? (
+                                    <div className="relative h-48 overflow-hidden bg-[#319B91]/10 flex items-center justify-center p-8">
+                                        <div className="relative w-32 h-32">
+                                            <Image
+                                                src="/partner9.png"
+                                                alt={update.title}
+                                                fill
+                                                className="object-contain group-hover:scale-105 transition-transform"
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                loading="eager"
+                                            />
+                                        </div>
+                                    </div>
+                                ) : null}
                                 <div className="p-6">
                                     <div className="flex items-center gap-3 mb-4">
                                         <span className={`text-xs font-bold uppercase tracking-widest ${getTagColor(update.tag)}`}>
                                             {update.tag}
                                         </span>
                                         <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
-                                            {formatDate(update.publishedAt || update._createdAt)}
+                                            {formatDate(update.publishedAt)}
                                         </span>
                                     </div>
                                     <h3 className="text-xl font-black text-[#0A2E1F] mb-3 line-clamp-2 group-hover:text-[#C5FA00] transition-colors">

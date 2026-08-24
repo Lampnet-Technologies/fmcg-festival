@@ -60,6 +60,17 @@ export async function processRegistration(formData: FormData): Promise<Registrat
         }
         // ---------------------------------
 
+        const firstName = formData.get("firstName") as string | null;
+        const lastName = formData.get("lastName") as string | null;
+        const companyName = formData.get("companyName") as string | null;
+        const positionHeld = formData.get("positionHeld") as string | null;
+        const email = formData.get("email") as string | null;
+        const contactNumber = formData.get("contactNumber") as string | null;
+        const whatsappNumber = formData.get("whatsappNumber") as string | null;
+        const country = formData.get("country") as string | null;
+        const city = formData.get("city") as string | null;
+        const otherInfo = formData.get("otherInfo") as string | null;
+
         // 1. If it is a free Visitor Pass
         if (amountInKobo === 0) {
             await db.insert(registrations).values({
@@ -68,6 +79,16 @@ export async function processRegistration(formData: FormData): Promise<Registrat
                 amountPaid: 0,
                 status: "successful",
                 paystackReference: reference,
+                firstName,
+                lastName,
+                companyName,
+                positionHeld,
+                email: email || primaryEmail,
+                contactNumber,
+                whatsappNumber,
+                country,
+                city,
+                otherInfo,
             });
             return { success: true, type: "free" };
         }
@@ -79,6 +100,16 @@ export async function processRegistration(formData: FormData): Promise<Registrat
             amountPaid: amountInKobo,
             status: "pending",
             paystackReference: reference,
+            firstName,
+            lastName,
+            companyName,
+            positionHeld,
+            email: email || primaryEmail,
+            contactNumber,
+            whatsappNumber,
+            country,
+            city,
+            otherInfo,
         });
 
         // 3. Initialize Paystack Transaction
@@ -98,14 +129,22 @@ export async function processRegistration(formData: FormData): Promise<Registrat
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                email: formData.get("email") || primaryEmail,
+                email: email || primaryEmail,
                 amount: amountInKobo,
                 reference: reference,
                 callback_url: `${appUrl}/dashboard?verify=true`,
                 metadata: {
                     userId: user.id,
                     purchaseType: tier,
-                    organization: formData.get("organization"),
+                    organization: companyName,
+                    firstName,
+                    lastName,
+                    positionHeld,
+                    contactNumber,
+                    whatsappNumber,
+                    country,
+                    city,
+                    otherInfo,
                 },
             }),
         });

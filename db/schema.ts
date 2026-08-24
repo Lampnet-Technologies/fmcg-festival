@@ -19,5 +19,15 @@ export const registrations = pgTable("registrations", {
     status: text("status").default("pending"), // 'pending', 'successful', 'failed'
     paystackReference: text("paystack_reference").unique(),
     ticketNumber: text("ticket_number").unique(), // Unique ticket identifier for QR codes
+    firstName: text("first_name"),
+    lastName: text("last_name"),
+    companyName: text("company_name"),
+    positionHeld: text("position_held"),
+    email: text("email"),
+    contactNumber: text("contact_number"),
+    whatsappNumber: text("whatsapp_number"),
+    country: text("country"),
+    city: text("city"),
+    otherInfo: text("other_info"),
     createdAt: timestamp("created_at").defaultNow(),
 });

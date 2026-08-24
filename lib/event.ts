@@ -249,7 +249,7 @@ export const HOMEPAGE_INTERNATIONAL_PARTNERS: Partner[] = [
     src: "/partner9.png",
     alt: "Opay Logo",
     type: "international",
-    description: "Opay is a leading fintech company in Nigeria, providing innovative financial services and solutions to millions of users."
+    description: "Opay becomes the Fintech Headline Sponsor for The FMCG Festival 2026\n\nNigeria's leading Fintech brand, Opay headlines the premier B2B exhibition for the fast moving consumer goods industry.\n\nA B2B exhibition organized by MABA in partnership with the Nigerian-Indonesian Chamber of Commerce and Industry and reGenesis, a US based Agri-tech company alongside other local and international partners.\n\nThe FMCG Festival, Africa's premier B2B and consumer goods exhibition will be hosting over 5000 visitors and over 100 local and international exhibitors including manufacturing companies, consumer goods companies, distributors, suppliers technology brands and global buyers at the prestigious Oriental hotel Victoria Island Lagos Nigeria from 9-11th November 2026."
   },
 ];
 
@@ -304,7 +304,7 @@ export const DISTINGUISHED_PARTNERS: Partner[] = [
     src: "/partner9.png",
     alt: "Opay Logo",
     type: "international",
-    description: "Opay is a leading fintech company in Nigeria, providing innovative financial services and solutions to millions of users."
+    description: "Opay becomes the Fintech Headline Sponsor for The FMCG Festival 2026\n\nNigeria's leading Fintech brand, Opay headlines the premier B2B exhibition for the fast moving consumer goods industry.\n\nA B2B exhibition organized by MABA in partnership with the Nigerian-Indonesian Chamber of Commerce and Industry and reGenesis, a US based Agri-tech company alongside other local and international partners.\n\nThe FMCG Festival, Africa's premier B2B and consumer goods exhibition will be hosting over 5000 visitors and over 100 local and international exhibitors including manufacturing companies, consumer goods companies, distributors, suppliers technology brands and global buyers at the prestigious Oriental hotel Victoria Island Lagos Nigeria from 9-11th November 2026."
   },
 ];
 

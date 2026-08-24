@@ -2,28 +2,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { PortableText } from "@portabletext/react";
-import { client, sanityConfigured } from "@/sanity/lib/client";
+import { client } from "@/sanity/lib/client";
 import { singleUpdateQuery } from "@/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
-
-export const dynamic = "force-static";
-export const dynamicParams = false;
-
-export async function generateStaticParams() {
-    const slugs: { slug: { current: string } }[] = !sanityConfigured
-        ? []
-        : await client
-            .fetch(`*[_type == "update" && defined(slug.current)]{ slug }`)
-            .catch(() => []);
-
-    // `output: export` requires at least one static path for a dynamic route.
-    // Fall back to a placeholder when Sanity isn't configured or has no posts
-    // yet; the page below renders an "Update not found" state for it.
-    if (slugs.length === 0) return [{ slug: "sample" }];
-
-    return slugs.map(({ slug }) => ({ slug: slug.current }));
-}
+import { PortableText } from "@portabletext/react";
 
 interface UpdatePost {
     _id: string;
@@ -32,8 +14,7 @@ interface UpdatePost {
         current: string;
     };
     tag: string;
-    publishedAt: string | null;
-    _createdAt: string;
+    publishedAt: string;
     excerpt: string;
     mainImage?: {
         asset: {
@@ -82,8 +63,11 @@ const portableTextComponents = {
     },
 };
 
-const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+const formatDate = (dateString?: string) => {
+    if (!dateString) return "RECENT";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "RECENT";
+    return date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -92,12 +76,51 @@ const formatDate = (dateString: string) => {
 
 export default async function SingleUpdatePage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post: UpdatePost | null = !sanityConfigured
-        ? null
-        : await client.fetch(singleUpdateQuery, { slug }).catch((error) => {
+    let post: UpdatePost | null = null;
+
+    if (slug === "opay-fintech-headline-sponsor-fmcg-festival-2026") {
+        post = {
+            _id: "static-opay-post",
+            title: "Opay becomes the Fintech Headline Sponsor for The FMCG Festival 2026",
+            slug: { current: "opay-fintech-headline-sponsor-fmcg-festival-2026" },
+            tag: "PRESS RELEASE",
+            publishedAt: "2026-08-24T12:00:00.000Z",
+            excerpt: "Nigeria's leading Fintech brand, Opay headlines the premier B2B exhibition for the fast moving consumer goods industry.",
+            body: [
+                {
+                    _key: "block1",
+                    _type: "block",
+                    children: [
+                        {
+                            _key: "span1",
+                            _type: "span",
+                            text: "Nigeria's leading Fintech brand, Opay headlines the premier B2B exhibition for the fast moving consumer goods industry. A B2B exhibition organized by MABA in partnership with the Nigerian-Indonesian Chamber of Commerce and Industry and reGenesis, a US based Agri-tech company alongside other local and international partners.",
+                            marks: []
+                        }
+                    ],
+                    style: "normal"
+                },
+                {
+                    _key: "block2",
+                    _type: "block",
+                    children: [
+                        {
+                            _key: "span2",
+                            _type: "span",
+                            text: "The FMCG Festival, Africa's premier B2B and consumer goods exhibition will be hosting over 5000 visitors and over 100 local and international exhibitors including manufacturing companies, consumer goods companies, distributors, suppliers technology brands and global buyers at the prestigious Oriental hotel Victoria Island Lagos Nigeria from 9-11th November 2026.",
+                            marks: []
+                        }
+                    ],
+                    style: "normal"
+                }
+            ]
+        };
+    } else {
+        post = await client.fetch(singleUpdateQuery, { slug }).catch((error) => {
             console.error("Failed to fetch update from Sanity:", error);
             return null;
         });
+    }
 
     if (!post) {
         return (
@@ -111,6 +134,9 @@ export default async function SingleUpdatePage({ params }: { params: Promise<{ s
             </main>
         );
     }
+
+    const isStaticPost = post._id === "static-opay-post";
+    const imageUrl = isStaticPost ? "/partner9.png" : post.mainImage ? urlFor(post.mainImage).url() : null;
 
     return (
         <main className="flex-1 bg-white min-h-screen pb-20">
@@ -129,7 +155,7 @@ export default async function SingleUpdatePage({ params }: { params: Promise<{ s
                         {post.tag}
                     </span>
                     <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
-                        {formatDate(post.publishedAt || post._createdAt)}
+                        {formatDate(post.publishedAt)}
                     </span>
                 </div>
 
@@ -143,11 +169,11 @@ export default async function SingleUpdatePage({ params }: { params: Promise<{ s
             </header>
 
             {/* Main Feature Image */}
-            {post.mainImage && (
+            {imageUrl && (
                 <div className="max-w-5xl mx-auto px-6 mb-12">
                     <div className="relative w-full h-100 md:h-150 rounded-2xl overflow-hidden bg-gray-100">
                         <Image
-                            src={urlFor(post.mainImage).url()}
+                            src={imageUrl}
                             alt={post.title}
                             fill
                             className="object-cover"
