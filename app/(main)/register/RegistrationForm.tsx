@@ -37,6 +37,12 @@ export default function RegistrationForm({
     try {
       const result = await processRegistration(formData);
 
+      if (!result.success) {
+        setError(result.error);
+        setIsPending(false);
+        return;
+      }
+
       if (result.type === "payment") {
         window.location.href = result.authorizationUrl;
         return;
