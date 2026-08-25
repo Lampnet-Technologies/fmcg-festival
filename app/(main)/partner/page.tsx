@@ -112,11 +112,17 @@ export default async function partnerPage() {
               </div>
               {/* Right Content Block */}
               <div className="w-full md:w-1/2 lg:w-3/5 p-8 flex flex-col justify-center">
-                <span className={`${partner.type === 'international' ? 'bg-[#B5F0C4] text-[#195130]' : 'bg-[#E2F0B5] text-[#485119]'} px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-4 self-start`}>
-                  {partner.type === 'international' ? 'International Partner' : 'Local Partner'}
-                </span>
+                {partner.name === "Opay" ? (
+                  <span className="bg-[#C5FA00] text-[#0A2E1F] px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-wider inline-block mb-4 self-start shadow-sm border border-[#0A2E1F]/10">
+                    Fintech Headline Sponsor
+                  </span>
+                ) : (
+                  <span className={`${partner.type === 'international' ? 'bg-[#B5F0C4] text-[#195130]' : 'bg-[#E2F0B5] text-[#485119]'} px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-4 self-start`}>
+                    {partner.type === 'international' ? 'International Partner' : 'Local Partner'}
+                  </span>
+                )}
                 <h3 className="text-xl font-bold text-[#0A2E1F] mb-3">{partner.name}</h3>
-                <p className="text-base text-gray-500 leading-relaxed">
+                <p className="text-base text-gray-500 leading-relaxed whitespace-pre-line">
                   {partner.description}
                 </p>
               </div>

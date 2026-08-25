@@ -380,6 +380,47 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Headline Sponsor Section ───────────────────────────────────── */}
+      <section className="py-20 px-6 bg-gradient-to-br from-[#0A2E1F] to-[#124430] text-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Logo & Headline */}
+          <div className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <span className="bg-[#C5FA00] text-[#0A2E1F] text-[10px] font-black px-4 py-2 uppercase tracking-widest rounded-sm mb-6 inline-block">
+              Fintech Headline Sponsor
+            </span>
+            <div className="relative w-48 h-48 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex items-center justify-center mb-6">
+              <div className="relative w-36 h-36">
+                <Image
+                  src="/partner9.png"
+                  alt="OPay Logo"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                />
+              </div>
+            </div>
+          </div>
+          {/* Content */}
+          <div className="lg:col-span-8">
+            <h2 className="text-3xl md:text-4xl font-black mb-6 leading-tight">
+              Opay becomes the Fintech Headline Sponsor for The FMCG Festival 2026
+            </h2>
+            <p className="text-gray-300 text-lg leading-relaxed mb-6">
+              Nigeria&apos;s leading Fintech brand, Opay headlines the premier B2B exhibition for the fast moving consumer goods industry.
+            </p>
+            <p className="text-gray-300 text-base leading-relaxed mb-8">
+              A B2B exhibition organized by MABA in partnership with the Nigerian-Indonesian Chamber of Commerce and Industry and reGenesis, a US based Agri-tech company alongside other local and international partners. The FMCG Festival, Africa&apos;s premier B2B and consumer goods exhibition will be hosting over 5,000 visitors and over 100 local and international exhibitors at the prestigious Oriental hotel Victoria Island Lagos Nigeria from 9-11th November 2026.
+            </p>
+            <Link
+              href="/updates/opay-fintech-headline-sponsor-fmcg-festival-2026"
+              className="inline-flex items-center bg-[#C5FA00] text-[#0A2E1F] px-8 py-4 font-black text-sm rounded-sm hover:bg-[#b5e500] transition-colors"
+            >
+              Read Official Press Release
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── Our Partners ──────────────────────────────────────── */}
       <section className="py-24 px-6 bg-[#f8f9f5]">
         <div className="max-w-7xl mx-auto">
