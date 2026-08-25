@@ -276,8 +276,8 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
                             <p className={`text-xs uppercase tracking-[0.3em] ${ticketStyle.subtext}`}>
                                 Registration Details
                             </p>
-                            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                                <div>
+                            <div className="mt-4 flex flex-wrap gap-4 sm:gap-6">
+                                <div className="min-w-[120px] flex-1">
                                     <p className={`text-[10px] uppercase tracking-[0.35em] ${ticketStyle.subtext}`}>
                                         Tier
                                     </p>
@@ -285,13 +285,13 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
                                         {ticketLabel}
                                     </p>
                                 </div>
-                                <div>
+                                <div className="min-w-[120px] flex-1">
                                     <p className={`text-[10px] uppercase tracking-[0.35em] ${ticketStyle.subtext}`}>
                                         Reference
                                     </p>
-                                    <p className={`font-semibold ${ticketStyle.heading}`}>{registration.paystackReference ?? ""}</p>
+                                    <p className={`font-semibold break-all ${ticketStyle.heading}`}>{registration.paystackReference ?? ""}</p>
                                 </div>
-                                <div>
+                                <div className="min-w-[120px] flex-1">
                                     <p className={`text-[10px] uppercase tracking-[0.35em] ${ticketStyle.subtext}`}>
                                         Registered On
                                     </p>
