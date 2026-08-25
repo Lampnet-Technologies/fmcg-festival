@@ -10,6 +10,17 @@ type Registration = {
     status?: string | null;
     paystackReference?: string | null;
     amountPaid?: number | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    companyName?: string | null;
+    positionHeld?: string | null;
+    email?: string | null;
+    contactNumber?: string | null;
+    whatsappNumber?: string | null;
+    country?: string | null;
+    city?: string | null;
+    otherInfo?: string | null;
+    createdAt?: Date | string | null;
 };
 
 type UserDetails = {
@@ -144,15 +155,32 @@ function buildQrPayload(registration: Registration, user: UserDetails, ticketLab
     const purchaseType = registration.purchaseType ?? "visitor";
     const status = registration.status ?? "pending";
     const reference = registration.paystackReference ?? "";
+    
+    const formattedRegDate = registration.createdAt 
+        ? new Date(registration.createdAt).toLocaleString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        }) 
+        : "N/A";
 
     return [
         "FMCG FESTIVAL TICKET",
         `Name: ${user.firstName} ${user.lastName}`.trim(),
         `Email: ${user.email}`,
+        `Company: ${registration.companyName || "N/A"}`,
+        `Position: ${registration.positionHeld || "N/A"}`,
+        `Contact: ${registration.contactNumber || "N/A"}`,
+        `Whatsapp: ${registration.whatsappNumber || "N/A"}`,
+        `Location: ${registration.city || "N/A"}, ${registration.country || "N/A"}`,
         `Ticket: ${ticketLabel}`,
         `Type: ${formatPaymentLabel(purchaseType)}`,
         `Status: ${status === "successful" ? "PAID" : "PENDING"}`,
         `Reference: ${reference}`,
+        `Registered On: ${formattedRegDate}`,
+        registration.otherInfo ? `Other Info: ${registration.otherInfo}` : "",
     ]
         .filter(Boolean)
         .join("\n");
@@ -163,6 +191,18 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
     const ticketLabel = formatTicketLabel(purchaseType);
     const ticketStyle = TIER_STYLES[purchaseType] || TIER_STYLES.visitor;
     const statusLabel = registration.status === "successful" ? "PAID" : "PENDING";
+    const formattedDate = useMemo(() => {
+        if (!registration.createdAt) return "N/A";
+        const date = new Date(registration.createdAt);
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }, [registration.createdAt]);
+
     const qrValue = useMemo(
         () => buildQrPayload(registration, user, ticketLabel),
         [registration, user, ticketLabel]
@@ -173,9 +213,16 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
             "FMCG FESTIVAL TICKET",
             `Name: ${user.firstName} ${user.lastName}`.trim(),
             `Email: ${user.email}`,
+            `Company: ${registration.companyName || "N/A"}`,
+            `Position: ${registration.positionHeld || "N/A"}`,
+            `Contact: ${registration.contactNumber || "N/A"}`,
+            `Whatsapp: ${registration.whatsappNumber || "N/A"}`,
+            `Location: ${registration.city || "N/A"}, ${registration.country || "N/A"}`,
             `Ticket: ${ticketLabel}`,
             `Status: ${statusLabel}`,
             `Reference: ${registration.paystackReference ?? ""}`,
+            `Registered On: ${formattedDate}`,
+            registration.otherInfo ? `Other Info: ${registration.otherInfo}` : "",
             "",
             "Scan the QR code to verify this ticket.",
         ]
@@ -229,7 +276,7 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
                             <p className={`text-xs uppercase tracking-[0.3em] ${ticketStyle.subtext}`}>
                                 Registration Details
                             </p>
-                            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                            <div className="mt-4 grid gap-3 sm:grid-cols-3">
                                 <div>
                                     <p className={`text-[10px] uppercase tracking-[0.35em] ${ticketStyle.subtext}`}>
                                         Tier
@@ -243,6 +290,14 @@ export default function TicketCard({ registration, user }: TicketCardProps) {
                                         Reference
                                     </p>
                                     <p className={`font-semibold ${ticketStyle.heading}`}>{registration.paystackReference ?? ""}</p>
+                                </div>
+                                <div>
+                                    <p className={`text-[10px] uppercase tracking-[0.35em] ${ticketStyle.subtext}`}>
+                                        Registered On
+                                    </p>
+                                    <p className={`font-semibold ${ticketStyle.heading}`}>
+                                        {formattedDate}
+                                    </p>
                                 </div>
                             </div>
                         </div>
