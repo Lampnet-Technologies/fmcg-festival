@@ -29,6 +29,9 @@ export default async function DashboardPage(props: {
     paystackReference?: string | null;
     ticketNumber?: string | null;
     createdAt?: Date | string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    email?: string | null;
   };
 
   // 1. Fetch ALL registrations for this user (Removed .limit(1))
@@ -142,14 +145,17 @@ export default async function DashboardPage(props: {
             ticketNumber?: string | null;
             createdAt?: Date | string | null;
             userId?: string | null;
+            firstName?: string | null;
+            lastName?: string | null;
+            email?: string | null;
           }) => (
             <TicketCard
               key={registration.id || registration.paystackReference}
               registration={registration}
               user={{
-                firstName: user.firstName || "Attendee",
-                lastName: user.lastName || "",
-                email: user.emailAddresses[0]?.emailAddress || "",
+                firstName: registration.firstName || user.firstName || "Attendee",
+                lastName: registration.lastName || user.lastName || "",
+                email: registration.email || user.emailAddresses[0]?.emailAddress || "",
               }}
             />
           ))}
