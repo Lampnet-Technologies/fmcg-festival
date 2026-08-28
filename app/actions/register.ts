@@ -6,6 +6,7 @@ import { registrations, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { EVENT_DETAILS, PRICING, type TicketTier } from "@/lib/event";
 import { headers } from "next/headers";
+import { sendConfirmationEmail } from "@/lib/email";
 
 export type RegistrationResult =
     | { success: true; type: "free" }
@@ -89,6 +90,20 @@ export async function processRegistration(formData: FormData): Promise<Registrat
                 country,
                 city,
                 otherInfo,
+            });
+            await sendConfirmationEmail({
+                email: email || primaryEmail,
+                firstName: firstName || user.firstName || "Attendee",
+                lastName: lastName || user.lastName || "",
+                companyName,
+                positionHeld,
+                contactNumber,
+                whatsappNumber,
+                country,
+                city,
+                otherInfo,
+                ticketNumber: reference,
+                purchaseType: tier,
             });
             return { success: true, type: "free" };
         }

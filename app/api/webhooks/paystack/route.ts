@@ -3,6 +3,7 @@ import crypto from "crypto";
 import { db } from "@/db";
 import { registrations, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { sendConfirmationEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
     const secret = process.env.PAYSTACK_SECRET_KEY;
@@ -65,7 +66,23 @@ export async function POST(req: Request) {
                     .where(eq(users.id, metadata.userId));
             }
 
-            console.log(`Payment confirmed for reference: ${reference}`);
+            // Send confirmation email
+            await sendConfirmationEmail({
+                email: registration.email || "",
+                firstName: registration.firstName || "Attendee",
+                lastName: registration.lastName || "",
+                companyName: registration.companyName,
+                positionHeld: registration.positionHeld,
+                contactNumber: registration.contactNumber,
+                whatsappNumber: registration.whatsappNumber,
+                country: registration.country,
+                city: registration.city,
+                otherInfo: registration.otherInfo,
+                ticketNumber: registration.ticketNumber || registration.paystackReference || reference || "",
+                purchaseType: registration.purchaseType,
+            });
+
+            console.log(`Payment confirmed and email queued for reference: ${reference}`);
         } catch (err) {
             console.error("Database update failed inside Webhook", err);
             // Still return 200 to Paystack so they don't keep retrying, 
