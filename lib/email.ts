@@ -1,9 +1,6 @@
 import { Resend } from "resend";
 import QRCode from "qrcode";
 import { EVENT_DETAILS } from "@/lib/event";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface EmailParams {
     email: string;
     firstName: string;
@@ -37,6 +34,8 @@ export async function sendConfirmationEmail({
         console.warn("RESEND_API_KEY is not configured. Skipping confirmation email.");
         return;
     }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     try {
         // Format ticket type display
