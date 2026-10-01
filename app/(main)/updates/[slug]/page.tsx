@@ -74,6 +74,26 @@ const formatDate = (dateString?: string) => {
     }).toUpperCase();
 };
 
+export async function generateStaticParams() {
+    try {
+        const posts = await client.fetch<Array<{ slug?: { current?: string } }>>(
+            `*[_type == "post" && defined(slug.current)]{ "slug": slug }`
+        );
+        const sanitySlugs = (posts || [])
+            .map((p) => ({ slug: p.slug?.current || "" }))
+            .filter((p) => Boolean(p.slug));
+        
+        const allSlugs = new Set([
+            "opay-fintech-headline-sponsor-fmcg-festival-2026",
+            ...sanitySlugs.map((s) => s.slug),
+        ]);
+        
+        return Array.from(allSlugs).map((slug) => ({ slug }));
+    } catch {
+        return [{ slug: "opay-fintech-headline-sponsor-fmcg-festival-2026" }];
+    }
+}
+
 export default async function SingleUpdatePage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     let post: UpdatePost | null = null;

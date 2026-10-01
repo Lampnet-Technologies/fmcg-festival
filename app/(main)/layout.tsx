@@ -8,6 +8,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { EVENT_DETAILS } from "@/lib/event";
 import SanityNotice from "@/components/SanityNotice";
+import { MetaPixel } from "@/components/MetaPixel";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const epilogue = Epilogue({ subsets: ["latin"], variable: "--font-heading" });
@@ -87,6 +88,7 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
+        <MetaPixel />
         <Navbar />
         <SanityNotice />
         {children}
