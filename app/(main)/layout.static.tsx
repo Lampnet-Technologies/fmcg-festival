@@ -8,6 +8,10 @@ import { Footer } from "@/components/Footer";
 import { EVENT_DETAILS } from "@/lib/event";
 import SanityNotice from "@/components/SanityNotice";
 import { MetaPixel } from "@/components/MetaPixel";
+import {
+  GoogleTagManagerNoScript,
+  GoogleTagManagerScript,
+} from "@/components/GoogleTagManager";
 
 // Static-export build of the root layout: no ClerkProvider. Importing
 // @clerk/nextjs here (even unused) taints every page with a server action
@@ -82,7 +86,11 @@ export default function RootLayout({
         epilogue.variable,
       )}
     >
+      <head>
+        <GoogleTagManagerScript />
+      </head>
       <body className="min-h-full flex flex-col">
+        <GoogleTagManagerNoScript />
         <MetaPixel />
         <Navbar />
         <SanityNotice />

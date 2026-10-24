@@ -9,6 +9,10 @@ import { Footer } from "@/components/Footer";
 import { EVENT_DETAILS } from "@/lib/event";
 import SanityNotice from "@/components/SanityNotice";
 import { MetaPixel } from "@/components/MetaPixel";
+import {
+  GoogleTagManagerNoScript,
+  GoogleTagManagerScript,
+} from "@/components/GoogleTagManager";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const epilogue = Epilogue({ subsets: ["latin"], variable: "--font-heading" });
@@ -87,7 +91,11 @@ export default function RootLayout({
         epilogue.variable,
       )}
     >
+      <head>
+        <GoogleTagManagerScript />
+      </head>
       <body className="min-h-full flex flex-col">
+        <GoogleTagManagerNoScript />
         <MetaPixel />
         <Navbar />
         <SanityNotice />
