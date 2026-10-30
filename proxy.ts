@@ -20,6 +20,9 @@ const isPublicRoute = createRouteMatcher([
   '/api/health/sanity',
   '/api/webhooks/clerk',
   '/api/webhooks/paystack',
+  '/api/market-register',
+  '/quick-pass',
+  '/badge(.*)',
   '/studio(.*)',
 ]);
 
